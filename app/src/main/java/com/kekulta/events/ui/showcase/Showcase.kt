@@ -2,22 +2,20 @@ package com.kekulta.events.ui.showcase
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
@@ -34,12 +32,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
+import com.kekulta.events.ui.avatar.AddBadge
 import com.kekulta.events.ui.avatar.Avatar
 import com.kekulta.events.ui.avatar.MeetAvatar
 import com.kekulta.events.ui.buttons.EventsButtonDefaults
@@ -92,6 +90,7 @@ fun Showcase(
             Text(
                 text = "Enable contrast background",
                 modifier = Modifier
+                    .fillMaxSize()
                     .padding(ButtonDefaults.ContentPadding)
                     .weight(1f, true)
             )
@@ -347,26 +346,10 @@ fun IconsButtonGroup(
 fun MeetAvatarsGroup(snackbarHostState: SnackbarHostState) {
     val scope = rememberCoroutineScope()
 
-
-    @Composable
-    fun BoxScope.SmallPlusBadge(onClick: () -> Unit) {
-
-        Icon(
-            painter = painterResource(id = R.drawable.icon_plus),
-            modifier = Modifier
-                .size(16.dp)
-                .padding(2.dp)
-                .clip(CircleShape)
-                .background(Color.Black)
-                .clickable(onClick = onClick),
-            contentDescription = "Add badge",
-            tint = EventsTheme.colors.neutralOffWhite,
-        )
-    }
     MeetAvatar(
         url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
         badge = {
-            SmallPlusBadge {
+            AddBadge(modifier = Modifier.fillMaxSize(1f)) {
                 scope.launch { snackbarHostState.showSnackbar("Change avatar") }
             }
         },
@@ -374,7 +357,7 @@ fun MeetAvatarsGroup(snackbarHostState: SnackbarHostState) {
     TempSpacer()
     MeetAvatar(
         badge = {
-            SmallPlusBadge {
+            AddBadge(modifier = Modifier.fillMaxSize(1f)) {
                 scope.launch { snackbarHostState.showSnackbar("Change avatar") }
             }
         },
@@ -391,25 +374,11 @@ fun MeetAvatarsGroup(snackbarHostState: SnackbarHostState) {
 fun AvatarsGroup(snackbarHostState: SnackbarHostState) {
     val scope = rememberCoroutineScope()
 
-    @Composable
-    fun BoxScope.PlusBadge(onClick: () -> Unit) {
-
-        Icon(
-            painter = painterResource(id = R.drawable.icon_plus),
-            modifier = Modifier
-                .size(32.dp)
-                .padding(4.dp)
-                .clip(CircleShape)
-                .background(Color.Black)
-                .clickable(onClick = onClick),
-            contentDescription = "Add badge",
-            tint = EventsTheme.colors.neutralOffWhite,
-        )
-    }
+    TempSpacer()
     Avatar(
         url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
         badge = {
-            PlusBadge {
+            AddBadge {
                 scope.launch { snackbarHostState.showSnackbar("Change avatar") }
             }
         },
@@ -417,7 +386,7 @@ fun AvatarsGroup(snackbarHostState: SnackbarHostState) {
     TempSpacer()
     Avatar(
         badge = {
-            PlusBadge {
+            AddBadge {
                 scope.launch { snackbarHostState.showSnackbar("Change avatar") }
             }
         },
