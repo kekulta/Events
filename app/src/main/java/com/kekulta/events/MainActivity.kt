@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
                         snackbarHostState.showSnackbar(text)
                     }
                 }
+
                 val focusManager = LocalFocusManager.current
                 Scaffold(snackbarHost = {
                     SnackbarHost(hostState = snackbarHostState)

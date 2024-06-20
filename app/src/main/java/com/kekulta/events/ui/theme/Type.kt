@@ -35,7 +35,7 @@ data class EventsTypography(
     val metadata3: TextStyle,
 )
 
-private val scaleFactor = 1.2
+private const val scaleFactor = 1.25
 
 val EventsTypographyValue = EventsTypography(
     heading1 = TextStyle(
