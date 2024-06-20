@@ -1,12 +1,14 @@
-package com.kekulta.events.ui.avatar
+package com.kekulta.events.ui.base.avatar
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,48 +28,13 @@ import com.kekulta.events.R
 import com.kekulta.events.ui.theme.EventsTheme
 
 @Composable
-fun Avatar(
-    modifier: Modifier = Modifier,
-    url: String? = null,
-    badgeSize: Float = 0.33f,
-    badge: @Composable (BoxScope.() -> Unit)? = null
-) {
-    BasicAvatar(badgeSize = badgeSize, modifier = modifier.size(100.dp), placeholder = {
-        Icon(
-            modifier = Modifier
-                .fillMaxSize(0.66f)
-                .aspectRatio(1f),
-            painter = painterResource(id = R.drawable.icon_avatar),
-            contentDescription = "Default avatar"
-        )
-    }, shape = CircleShape, badge = badge, url = url)
-}
-
-@Composable
-fun MeetAvatar(
-    modifier: Modifier = Modifier,
-    url: String? = null,
-    badgeSize: Float = 0.33f,
-    badge: @Composable (BoxScope.() -> Unit)? = null
-) {
-    BasicAvatar(badgeSize = badgeSize, modifier = modifier.size(48.dp), placeholder = {
-        Image(
-            modifier = Modifier
-                .fillMaxSize()
-                .aspectRatio(1f),
-            painter = painterResource(id = R.drawable.icon_meet_avatar),
-            contentDescription = "Default avatar"
-        )
-    }, shape = RoundedCornerShape(33), badge = badge, url = url)
-}
-
-@Composable
 fun BasicAvatar(
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit),
     shape: Shape,
     url: String? = null,
     badgeSize: Float = 0.20f,
+    borderStroke: BorderStroke = BorderStroke(0.dp, Color.Transparent),
     badge: @Composable (BoxScope.() -> Unit)? = null
 ) {
     val isLoaded = remember {
@@ -81,20 +48,28 @@ fun BasicAvatar(
             )
             .size(48.dp), contentAlignment = Alignment.Center
     ) {
-        if (!isLoaded.value) {
-            placeholder()
-        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .border(borderStroke, shape)
+                .padding(borderStroke.width)
+                .fillMaxSize()
+        ) {
+            if (!isLoaded.value) {
+                placeholder()
+            }
 
-        if (url != null) {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .aspectRatio(1f)
-                    .clip(shape),
-                model = url,
-                onSuccess = { isLoaded.value = true },
-                contentDescription = "Avatar",
-            )
+            if (url != null) {
+                AsyncImage(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .aspectRatio(1f)
+                        .clip(shape),
+                    model = url,
+                    onSuccess = { isLoaded.value = true },
+                    contentDescription = "Avatar",
+                )
+            }
         }
         Box(
             contentAlignment = Alignment.Center,
@@ -108,8 +83,7 @@ fun BasicAvatar(
 }
 
 @Composable
-fun BoxScope.AddBadge(modifier: Modifier = Modifier, onClick: () -> Unit) {
-
+fun AddBadge(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Icon(
         painter = painterResource(id = R.drawable.icon_plus),
         modifier = modifier
@@ -121,3 +95,4 @@ fun BoxScope.AddBadge(modifier: Modifier = Modifier, onClick: () -> Unit) {
         tint = EventsTheme.colors.neutralOffWhite,
     )
 }
+

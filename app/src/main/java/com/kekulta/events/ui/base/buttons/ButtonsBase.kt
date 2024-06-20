@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.buttons
+package com.kekulta.events.ui.base.buttons
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.InteractionSource

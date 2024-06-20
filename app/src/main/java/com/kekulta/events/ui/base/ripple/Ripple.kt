@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.ripple
+package com.kekulta.events.ui.base.ripple
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

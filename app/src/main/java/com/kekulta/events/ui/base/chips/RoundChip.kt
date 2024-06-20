@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.chips
+package com.kekulta.events.ui.base.chips
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,12 +14,11 @@ import com.kekulta.events.ui.theme.EventsTheme
 fun RoundChip(text: String) {
     Text(
         modifier = Modifier
-            .padding(2.dp)
             .background(
                 EventsTheme.colors.brandBackground,
                 shape = RoundedCornerShape(40.dp)
             )
-            .padding(PaddingValues(horizontal = 12.dp, vertical = 8.dp)),
+            .padding(PaddingValues(horizontal = 10.dp, vertical = 4.dp)),
         text = text,
         style = EventsTheme.typography.metadata3,
         color = EventsTheme.colors.brandDark

@@ -1,5 +1,3 @@
-package com.kekulta.events.ui.showcase
-
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -7,17 +5,15 @@ import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text2.input.rememberTextFieldState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHostState
@@ -37,21 +33,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
-import com.kekulta.events.ui.avatar.AddBadge
-import com.kekulta.events.ui.avatar.Avatar
-import com.kekulta.events.ui.avatar.MeetAvatar
-import com.kekulta.events.ui.buttons.EventsButtonDefaults
-import com.kekulta.events.ui.buttons.EventsFilledButton
-import com.kekulta.events.ui.buttons.EventsOutlinedButton
-import com.kekulta.events.ui.buttons.EventsTextButton
-import com.kekulta.events.ui.chips.RoundChip
-import com.kekulta.events.ui.search.SearchField
+import com.kekulta.events.ui.base.buttons.EventsButtonDefaults
+import com.kekulta.events.ui.base.buttons.EventsFilledButton
+import com.kekulta.events.ui.base.buttons.EventsOutlinedButton
+import com.kekulta.events.ui.base.buttons.EventsTextButton
+import com.kekulta.events.ui.base.chips.RoundChip
+import com.kekulta.events.ui.elements.EventSquareAvatar
+import com.kekulta.events.ui.elements.SearchField
+import com.kekulta.events.ui.elements.UserCircleAddAvatar
+import com.kekulta.events.ui.elements.UserCircleAvatar
+import com.kekulta.events.ui.elements.UserSquareAvatar
 import com.kekulta.events.ui.theme.EventsTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun Showcase(
-    innerPadding: PaddingValues,
+fun ShowcaseFirst(
     snackbarHostState: SnackbarHostState,
 ) {
     val isHighContrast = remember {
@@ -62,8 +58,6 @@ fun Showcase(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .background(background)
-            .padding(innerPadding)
-            .verticalScroll(rememberScrollState())
     ) {
         val focusedSource = remember { MutableInteractionSource() }
         val hoveredSource = remember { MutableInteractionSource() }
@@ -137,7 +131,7 @@ fun Showcase(
 fun TempSpacer() {
     Spacer(
         modifier = Modifier
-            .fillMaxWidth()
+            .width(20.dp)
             .height(20.dp)
     )
 }
@@ -346,57 +340,39 @@ fun IconsButtonGroup(
 fun MeetAvatarsGroup(snackbarHostState: SnackbarHostState) {
     val scope = rememberCoroutineScope()
 
-    MeetAvatar(
-        url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
-        badge = {
-            AddBadge(modifier = Modifier.fillMaxSize(1f)) {
-                scope.launch { snackbarHostState.showSnackbar("Change avatar") }
-            }
-        },
-    )
-    TempSpacer()
-    MeetAvatar(
-        badge = {
-            AddBadge(modifier = Modifier.fillMaxSize(1f)) {
-                scope.launch { snackbarHostState.showSnackbar("Change avatar") }
-            }
-        },
-    )
-    TempSpacer()
-    MeetAvatar(
+    EventSquareAvatar(
         url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
     )
     TempSpacer()
-    MeetAvatar()
+    EventSquareAvatar()
 }
 
 @Composable
 fun AvatarsGroup(snackbarHostState: SnackbarHostState) {
     val scope = rememberCoroutineScope()
 
-    TempSpacer()
-    Avatar(
+    UserSquareAvatar(
         url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
-        badge = {
-            AddBadge {
-                scope.launch { snackbarHostState.showSnackbar("Change avatar") }
-            }
-        },
+        drawBorder = true,
     )
     TempSpacer()
-    Avatar(
-        badge = {
-            AddBadge {
-                scope.launch { snackbarHostState.showSnackbar("Change avatar") }
-            }
-        },
+    UserSquareAvatar(
     )
     TempSpacer()
-    Avatar(
+    UserCircleAvatar(
         url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
     )
     TempSpacer()
-    Avatar()
+    UserCircleAvatar()
+    TempSpacer()
+    UserCircleAddAvatar(
+        url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
+        onBadgeClick = { scope.launch { snackbarHostState.showSnackbar("Change avatar") } }
+    )
+    TempSpacer()
+    UserCircleAddAvatar(
+        onBadgeClick = { scope.launch { snackbarHostState.showSnackbar("Change avatar") } }
+    )
 }
 
 @Composable

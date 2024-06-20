@@ -35,35 +35,43 @@ data class EventsTypography(
     val metadata3: TextStyle,
 )
 
+private val scaleFactor = 1.2
+
 val EventsTypographyValue = EventsTypography(
     heading1 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Bold, fontSize = 32.sp
+        fontFamily = sfProFontFamily, fontWeight = FontWeight.Bold, fontSize = 32.sp * scaleFactor,
     ),
     heading2 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp
+        fontFamily = sfProFontFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp * scaleFactor
     ),
     subheading1 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 18.sp
+        fontFamily = sfProFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp * scaleFactor
     ),
     subheading2 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp
+        fontFamily = sfProFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp * scaleFactor
     ),
     bodyText1 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 14.sp
+        fontFamily = sfProFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp * scaleFactor
     ),
     bodyText2 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 14.sp
+        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 14.sp * scaleFactor
     ),
     metadata1 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 12.sp
+        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 12.sp * scaleFactor
     ),
     metadata2 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 10.sp
+        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 10.sp * scaleFactor
     ),
     metadata3 = TextStyle(
         fontFamily = sfProFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 12.sp,
+        fontSize = 10.sp * scaleFactor,
     ),
 )
 

@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.buttons
+package com.kekulta.events.ui.base.buttons
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.kekulta.events.ui.ripple.PressOnlyRipple
+import com.kekulta.events.ui.base.ripple.PressOnlyRipple
 import com.kekulta.events.ui.theme.EventsTheme
 
 

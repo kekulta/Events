@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.search
+package com.kekulta.events.ui.elements
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -33,7 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
-import com.kekulta.events.ui.buttons.focusBorder
+import com.kekulta.events.ui.base.buttons.focusBorder
 import com.kekulta.events.ui.theme.EventsTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -54,8 +54,7 @@ fun SearchField(
     val leadingIconTint by rememberUpdatedState(if (state.text.isEmpty()) EventsTheme.colors.neutralDisabled else EventsTheme.colors.neutralActive)
 
     Row(
-        modifier = Modifier
-            .then(modifier)
+        modifier = modifier
             .focusable(interactionSource = interactionSource)
             .hoverable(interactionSource = interactionSource)
             .padding(2.dp)
