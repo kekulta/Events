@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import com.kekulta.events.R
 
@@ -35,47 +36,97 @@ data class EventsTypography(
     val metadata3: TextStyle,
 )
 
-private const val scaleFactor = 1.25
 
 val EventsTypographyValue = EventsTypography(
     heading1 = TextStyle(
         fontFamily = sfProFontFamily, fontWeight = FontWeight.Bold, fontSize = 32.sp * scaleFactor,
+        lineHeight = 38.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     heading2 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp * scaleFactor
+        fontFamily = sfProFontFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp * scaleFactor,
+        lineHeight = 28.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     subheading1 = TextStyle(
         fontFamily = sfProFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 18.sp * scaleFactor
+        fontSize = 18.sp * scaleFactor,
+        lineHeight = 30.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     subheading2 = TextStyle(
         fontFamily = sfProFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp * scaleFactor
+        fontSize = 16.sp * scaleFactor,
+        lineHeight = 28.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     bodyText1 = TextStyle(
         fontFamily = sfProFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp * scaleFactor
+        fontSize = 14.sp * scaleFactor,
+        lineHeight = 24.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     bodyText2 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 14.sp * scaleFactor
+        fontFamily = sfProFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp * scaleFactor,
+        lineHeight = 24.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     metadata1 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 12.sp * scaleFactor
+        fontFamily = sfProFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp * scaleFactor,
+        lineHeight = 20.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     metadata2 = TextStyle(
-        fontFamily = sfProFontFamily, fontWeight = FontWeight.Normal, fontSize = 10.sp * scaleFactor
+        fontFamily = sfProFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp * scaleFactor,
+        lineHeight = 16.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
     metadata3 = TextStyle(
         fontFamily = sfProFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 10.sp * scaleFactor,
+        lineHeight = 16.sp * scaleFactor,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.None
+        )
     ),
 )
 
-val LocalEventsTypography = staticCompositionLocalOf {
+val LocalTypography = staticCompositionLocalOf {
     EventsTypographyValue
 }
 

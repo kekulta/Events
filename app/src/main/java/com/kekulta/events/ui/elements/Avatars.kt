@@ -23,7 +23,7 @@ fun EventSquareAvatar(
     modifier: Modifier = Modifier,
     url: String? = null,
 ) {
-    BasicAvatar(modifier = modifier.size(60.dp), placeholder = {
+    BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX24), placeholder = {
         Image(
             modifier = Modifier
                 .fillMaxSize()
@@ -39,7 +39,7 @@ fun CommunitySquareAvatar(
     modifier: Modifier = Modifier,
     url: String? = null,
 ) {
-    BasicAvatar(modifier = modifier.size(60.dp), placeholder = {
+    BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX24), placeholder = {
         Image(
             modifier = Modifier
                 .fillMaxSize()
@@ -56,17 +56,22 @@ fun UserCircleAddAvatar(
     url: String? = null,
     onBadgeClick: () -> Unit = {},
 ) {
-    BasicAvatar(badgeSize = 0.33f, modifier = modifier.size(100.dp), placeholder = {
-        Icon(
-            modifier = Modifier
-                .fillMaxSize(0.66f)
-                .aspectRatio(1f),
-            painter = painterResource(id = R.drawable.icon_avatar),
-            contentDescription = "Default avatar"
-        )
-    }, shape = CircleShape, badge = {
-        AddBadge(onClick = onBadgeClick)
-    }, url = url
+    BasicAvatar(badgeSize = 0.33f,
+        modifier = modifier.size(EventsTheme.sizes.sizeX50),
+        placeholder = {
+            Icon(
+                modifier = Modifier
+                    .fillMaxSize(0.66f)
+                    .aspectRatio(1f),
+                painter = painterResource(id = R.drawable.icon_avatar),
+                contentDescription = "Default avatar"
+            )
+        },
+        shape = CircleShape,
+        badge = {
+            AddBadge(onClick = onBadgeClick)
+        },
+        url = url
     )
 }
 
@@ -75,7 +80,7 @@ fun UserCircleAvatar(
     modifier: Modifier = Modifier,
     url: String? = null,
 ) {
-    BasicAvatar(modifier = modifier.size(100.dp), placeholder = {
+    BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX50), placeholder = {
         Icon(
             modifier = Modifier
                 .fillMaxSize(0.66f)
@@ -94,8 +99,7 @@ fun UserSquareAvatar(
     url: String? = null,
 ) {
     BasicAvatar(
-        modifier = modifier.size(60.dp),
-        placeholder = {
+        modifier = modifier.size(EventsTheme.sizes.sizeX24), placeholder = {
             Icon(
                 modifier = Modifier
                     .fillMaxSize(0.66f)
@@ -103,12 +107,8 @@ fun UserSquareAvatar(
                 painter = painterResource(id = R.drawable.icon_avatar),
                 contentDescription = "Default avatar"
             )
-        },
-        borderStroke = if (drawBorder) BorderStroke(
-            2.dp,
-            EventsTheme.colors.brandBackground
-        ) else BorderStroke(0.dp, Color.Transparent),
-        shape = RoundedCornerShape(33),
-        url = url
+        }, borderStroke = if (drawBorder) BorderStroke(
+            EventsTheme.sizes.sizeX1, EventsTheme.colors.brandBackground
+        ) else BorderStroke(0.dp, Color.Transparent), shape = RoundedCornerShape(33), url = url
     )
 }

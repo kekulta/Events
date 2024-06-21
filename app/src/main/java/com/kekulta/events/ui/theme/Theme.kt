@@ -1,9 +1,10 @@
 package com.kekulta.events.ui.theme
 
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+
+const val scaleFactor = 1.25
 
 @Composable
 fun EventsTheme(
@@ -11,7 +12,8 @@ fun EventsTheme(
 ) {
     CompositionLocalProvider(
         LocalColorScheme provides LightColorScheme,
-        LocalEventsTypography provides EventsTypographyValue,
+        LocalTypography provides EventsTypographyValue,
+        LocalSizeSystem provides EventsLocalSizeSystem,
     ) {
         MaterialTheme(
             content = content
@@ -23,5 +25,7 @@ object EventsTheme {
     val colors: EventsColorScheme
         @Composable get() = LocalColorScheme.current
     val typography: EventsTypography
-        @Composable get() = LocalEventsTypography.current
+        @Composable get() = LocalTypography.current
+    val sizes: EventsSizeSystem
+        @Composable get() = LocalSizeSystem.current
 }

@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.kekulta.events.ui.base.chips.RoundChip
 import com.kekulta.events.ui.base.rows.FlowRow
 import com.kekulta.events.ui.theme.EventsTheme
@@ -38,21 +37,22 @@ fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick
         ), verticalAlignment = Alignment.Top
     ) {
         EventSquareAvatar(
-            modifier = Modifier.padding(start = 24.dp, end = 20.dp),
+            modifier = Modifier.padding(EventsTheme.sizes.sizeX2),
             url = eventVo.avatar
         )
-        Column {
+        Column(
+            modifier = Modifier
+                .padding(start = EventsTheme.sizes.sizeX6),
+        ) {
             Row {
                 Text(
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(bottom = 8.dp),
+                        .weight(1f),
                     text = eventVo.name,
                     style = EventsTheme.typography.bodyText1
                 )
                 if (eventVo.note != null) {
                     Text(
-                        modifier = Modifier.padding(end = 24.dp),
                         text = eventVo.note,
                         color = EventsTheme.colors.neutralWeak,
                         style = EventsTheme.typography.metadata2,
@@ -60,14 +60,14 @@ fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick
                 }
             }
             Text(
-                modifier = Modifier.padding(bottom = 8.dp),
                 text = "${eventVo.date} — ${eventVo.place}",
                 style = EventsTheme.typography.metadata1,
                 color = EventsTheme.colors.neutralWeak
             )
             FlowRow(
-                horizontalGap = 4.dp,
-                verticalGap = 4.dp,
+                modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX2),
+                horizontalGap = EventsTheme.sizes.sizeX2,
+                verticalGap = EventsTheme.sizes.sizeX2,
             ) {
                 eventVo.tags.forEach { tag ->
                     RoundChip(text = tag)

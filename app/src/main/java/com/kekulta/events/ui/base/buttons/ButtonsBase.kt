@@ -13,7 +13,6 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.kekulta.events.ui.theme.EventsTheme
 
 fun Modifier.focusBorder(
@@ -64,7 +63,7 @@ data class StatedColor(
 
 object EventsButtonDefaults {
     @Composable
-    fun filledDefaults(): EventsButtonColorStateList {
+    fun filledColorsDefaults(): EventsButtonColorStateList {
         return EventsButtonColorStateList(
             container = StatedColor(
                 normal = EventsTheme.colors.brandDefault,
@@ -83,7 +82,7 @@ object EventsButtonDefaults {
     }
 
     @Composable
-    fun outlinedDefaults(): EventsButtonColorStateList {
+    fun outlinedColorsDefaults(): EventsButtonColorStateList {
         return EventsButtonColorStateList(
             container = StatedColor(
                 normal = EventsTheme.colors.neutralWhite,
@@ -105,7 +104,7 @@ object EventsButtonDefaults {
     }
 
     @Composable
-    fun textDefaults(): EventsButtonColorStateList {
+    fun textColorsDefaults(): EventsButtonColorStateList {
         return EventsButtonColorStateList(
             container = StatedColor(
                 normal = Color.Transparent,
@@ -124,5 +123,16 @@ object EventsButtonDefaults {
         )
     }
 
-    fun iconPadding() = PaddingValues(horizontal = 18.dp, vertical = 4.dp)
+    @Composable
+    fun paddingDefaults(): PaddingValues {
+        return PaddingValues(
+            horizontal = EventsTheme.sizes.sizeX24,
+            vertical = EventsTheme.sizes.sizeX6
+        )
+    }
+
+    @Composable
+    fun iconPaddingDefaults() =
+        /* TODO: Does noy comply with figma */
+        PaddingValues(horizontal = EventsTheme.sizes.sizeX10, vertical = EventsTheme.sizes.sizeX5)
 }

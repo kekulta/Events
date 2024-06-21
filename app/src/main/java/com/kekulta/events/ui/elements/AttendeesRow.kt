@@ -4,12 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.kekulta.events.ui.base.rows.OverlappingRow
 import com.kekulta.events.ui.theme.EventsTheme
 
@@ -18,12 +16,11 @@ import com.kekulta.events.ui.theme.EventsTheme
 fun AttendeesRow(avatars: List<String?>, modifier: Modifier = Modifier, showAvatarsNum: Int = 5) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .sizeIn(minHeight = 48.dp),
+            .fillMaxWidth(),
         contentAlignment = Alignment.CenterStart,
     ) {
         if (avatars.isEmpty()) {
-            Text(modifier = Modifier.padding(start = 24.dp), text = "Be the first!")
+            Text(text = "Be the first!")
         } else {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -39,7 +36,7 @@ fun AttendeesRow(avatars: List<String?>, modifier: Modifier = Modifier, showAvat
 
                 if (avatars.size > showAvatarsNum) {
                     Text(
-                        modifier = Modifier.padding(start = 14.dp),
+                        modifier = Modifier.padding(start = EventsTheme.sizes.sizeX5),
                         text = "+${avatars.size - showAvatarsNum}",
                         style = EventsTheme.typography.bodyText1
                     )

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalContentColor
@@ -24,8 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.kekulta.events.ui.base.ripple.ContentRipple
 import com.kekulta.events.ui.theme.EventsTheme
 
@@ -35,14 +34,13 @@ fun EventsButton(
     onClick: () -> Unit,
     colors: EventsButtonColorStateList,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) {
     val hovered = interactionSource.collectIsHoveredAsState()
     val focused = interactionSource.collectIsFocusedAsState()
-
 
     val containerColor = statedColor(
         color = colors.container,
@@ -60,6 +58,7 @@ fun EventsButton(
     )
     ContentRipple(contentColor = contentColor.value) {
         Box(
+            contentAlignment = Alignment.Center,
             modifier = modifier
                 .defaultMinSize(
                     minHeight = ButtonDefaults.MinHeight,
@@ -67,11 +66,11 @@ fun EventsButton(
                 )
                 .clip(ButtonDefaults.shape)
                 .focusBorder(
-                    width = 8.dp,
+                    width = EventsTheme.sizes.sizeX4,
                     color = colors.focusBorder,
                     shape = ButtonDefaults.shape, interactionSource = interactionSource,
                 )
-                .padding(PaddingValues(8.dp))
+                .padding(PaddingValues(EventsTheme.sizes.sizeX4))
                 .clip(ButtonDefaults.shape)
                 .clickable(
                     interactionSource = interactionSource,
@@ -80,19 +79,17 @@ fun EventsButton(
                     enabled = enabled,
                 )
                 .background(containerColor.value)
-                .border(BorderStroke(1.5.dp, borderColor.value), ButtonDefaults.shape),
+                .border(BorderStroke(EventsTheme.sizes.sizeX1, borderColor.value), ButtonDefaults.shape),
             propagateMinConstraints = true
         ) {
             CompositionLocalProvider(LocalContentColor provides contentColor.value) {
                 ProvideTextStyle(value = EventsTheme.typography.subheading2) {
                     Row(
-                        Modifier
-                            .defaultMinSize(
-                                minHeight = 48.dp,
-                            )
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .wrapContentSize()
                             .padding(contentPadding),
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
                         content = content
                     )
                 }
@@ -106,13 +103,13 @@ fun EventsFilledButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit,
 ) {
     EventsButton(
         onClick = onClick,
-        colors = EventsButtonDefaults.filledDefaults(),
+        colors = EventsButtonDefaults.filledColorsDefaults(),
         modifier = modifier,
         enabled = enabled,
         contentPadding = contentPadding,
@@ -126,13 +123,13 @@ fun EventsTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit,
 ) {
     EventsButton(
         onClick = onClick,
-        colors = EventsButtonDefaults.textDefaults(),
+        colors = EventsButtonDefaults.textColorsDefaults(),
         modifier = modifier,
         enabled = enabled,
         contentPadding = contentPadding,
@@ -146,13 +143,13 @@ fun EventsOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit,
 ) {
     EventsButton(
         onClick = onClick,
-        colors = EventsButtonDefaults.outlinedDefaults(),
+        colors = EventsButtonDefaults.outlinedColorsDefaults(),
         modifier = modifier,
         enabled = enabled,
         contentPadding = contentPadding,

@@ -31,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
 import com.kekulta.events.ui.base.buttons.focusBorder
 import com.kekulta.events.ui.theme.EventsTheme
@@ -57,28 +56,35 @@ fun SearchField(
         modifier = modifier
             .focusable(interactionSource = interactionSource)
             .hoverable(interactionSource = interactionSource)
-            .padding(2.dp)
+            .height(EventsTheme.sizes.sizeX18)
+            .padding(EventsTheme.sizes.sizeX1)
             .focusBorder(
-                width = 2.dp,
+                width = EventsTheme.sizes.sizeX1,
                 color = EventsTheme.colors.neutralLine,
-                shape = RoundedCornerShape(4.dp),
+                shape = RoundedCornerShape(EventsTheme.sizes.sizeX2),
                 enabled = shouldDrawBorder,
                 interactionSource = interactionSource
             )
             .fillMaxWidth()
-            .height(36.dp)
-            .background(EventsTheme.colors.neutralOffWhite, RoundedCornerShape(4.dp)),
+            .background(
+                EventsTheme.colors.neutralOffWhite,
+                RoundedCornerShape(EventsTheme.sizes.sizeX2)
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             painterResource(id = R.drawable.icon_search),
             "Search Icon",
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
+            modifier = Modifier
+                .padding(start = EventsTheme.sizes.sizeX4)
+                .size(EventsTheme.sizes.sizeX12),
             tint = leadingIconTint,
         )
         Box(
             contentAlignment = Alignment.CenterStart,
-            modifier = Modifier.weight(1f, true),
+            modifier = Modifier
+                .padding(start = EventsTheme.sizes.sizeX4)
+                .weight(1f, true),
         ) {
             Text(
                 text = "Search",
@@ -101,6 +107,6 @@ fun SearchField(
                 state = state,
             )
         }
-        Spacer(modifier = Modifier.size(8.dp))
+        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX4))
     }
 }

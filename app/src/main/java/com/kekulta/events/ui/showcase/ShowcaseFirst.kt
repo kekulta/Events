@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -265,16 +266,26 @@ fun OutlinedButtonsGroup(
     hoveredSource: MutableInteractionSource,
     enabled: Boolean,
 ) {
-    EventsOutlinedButton(onClick = {}) {
+    EventsOutlinedButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
+        onClick = {}) {
         Text(text = "Normal Button")
     }
     EventsOutlinedButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
         onClick = {},
         interactionSource = hoveredSource,
     ) {
         Text(text = "Hovered Button")
     }
     EventsOutlinedButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
         onClick = {},
         interactionSource = focusedSource,
     ) {
@@ -282,6 +293,9 @@ fun OutlinedButtonsGroup(
     }
 
     EventsOutlinedButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
         onClick = {},
         enabled = enabled,
     ) {
@@ -295,16 +309,26 @@ fun FilledButtonsGroup(
     hoveredSource: MutableInteractionSource,
     enabled: Boolean,
 ) {
-    EventsFilledButton(onClick = {}) {
+    EventsFilledButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
+        onClick = {}) {
         Text(text = "Normal Button")
     }
     EventsFilledButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
         onClick = {},
         interactionSource = hoveredSource,
     ) {
         Text(text = "Hovered Button")
     }
     EventsFilledButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
         onClick = {},
         interactionSource = focusedSource,
     ) {
@@ -312,6 +336,9 @@ fun FilledButtonsGroup(
     }
 
     EventsFilledButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .fillMaxWidth(),
         onClick = {},
         enabled = enabled,
     ) {
@@ -326,10 +353,10 @@ fun IconsButtonGroup(
 ) {
     EventsOutlinedButton(
         onClick = {},
-        contentPadding = EventsButtonDefaults.iconPadding(),
+        contentPadding = EventsButtonDefaults.iconPaddingDefaults(),
     ) {
         Icon(
-            modifier = Modifier.size(32.dp),
+            modifier = Modifier.size(EventsTheme.sizes.sizeX10),
             painter = painterResource(id = R.drawable.icon_delete),
             contentDescription = "Delete icon"
         )

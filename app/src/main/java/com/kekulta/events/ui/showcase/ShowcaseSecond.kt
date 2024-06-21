@@ -1,5 +1,8 @@
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -16,6 +19,7 @@ import com.kekulta.events.ui.elements.CommunityElement
 import com.kekulta.events.ui.elements.CommunityElementVo
 import com.kekulta.events.ui.elements.EventElement
 import com.kekulta.events.ui.elements.EventElementVo
+import com.kekulta.events.ui.theme.EventsTheme
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +40,7 @@ fun ShowcaseSecond(
             }
         }
 
-        var sliderPosition by remember { mutableFloatStateOf(16f) }
+        var sliderPosition by remember { mutableFloatStateOf(12f) }
         Slider(steps = 20,
             valueRange = 0f..20f,
             value = sliderPosition,
@@ -45,16 +49,32 @@ fun ShowcaseSecond(
             List((sliderPosition + 0.1f).toInt()) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
         AttendeesRow(modifier = Modifier.padding(24.dp), avatars = avatars)
         TempSpacer()
-        mockEventsVo(10).forEach { vo ->
-            EventElement(eventVo = vo,
+        mockEventsVo(10).forEachIndexed { index, vo ->
+            EventElement(modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+                eventVo = vo,
                 onClick = { showSnackbar("Meeting ${vo.name} clicked!") })
-            TempSpacer()
+            Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
+            if (index != 9) {
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+                    color = EventsTheme.colors.neutralLine,
+                )
+                Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
+            }
         }
         TempSpacer()
-        mockCommunitiesVo(10).forEach { vo ->
-            CommunityElement(communityVo = vo,
+        mockCommunitiesVo(10).forEachIndexed { index, vo ->
+            CommunityElement(modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+                communityVo = vo,
                 onClick = { showSnackbar("Community ${vo.name} clicked!") })
-            TempSpacer()
+            Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
+            if (index != 9) {
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+                    color = EventsTheme.colors.neutralLine,
+                )
+                Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
+            }
         }
     }
 }

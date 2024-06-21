@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.style.TextAlign
 import com.kekulta.events.ui.theme.EventsTheme
 
 data class CommunityElementVo(
@@ -35,18 +35,18 @@ fun CommunityElement(
             ), verticalAlignment = Alignment.Top
     ) {
         CommunitySquareAvatar(
-            modifier = Modifier.padding(start = 24.dp, end = 20.dp), url = communityVo.avatar
+            modifier = Modifier.padding(EventsTheme.sizes.sizeX2), url = communityVo.avatar
         )
-        Column {
+        Column(
+            modifier = Modifier.padding(start = EventsTheme.sizes.sizeX6)
+        ) {
             Text(
-                modifier = Modifier
-                    .padding(bottom = 8.dp),
+                textAlign = TextAlign.Center,
                 text = communityVo.name,
                 style = EventsTheme.typography.bodyText1
             )
 
             Text(
-                modifier = Modifier.padding(bottom = 8.dp),
                 text = communityVo.members,
                 style = EventsTheme.typography.metadata1,
                 color = EventsTheme.colors.neutralWeak

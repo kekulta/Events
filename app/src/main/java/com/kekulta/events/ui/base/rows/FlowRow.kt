@@ -2,6 +2,7 @@ package com.kekulta.events.ui.base.rows
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
@@ -12,11 +13,12 @@ import kotlin.math.roundToInt
 
 @Composable
 fun FlowRow(
+    modifier: Modifier = Modifier,
     horizontalGap: Dp = 0.dp,
     verticalGap: Dp = 0.dp,
     alignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable () -> Unit,
-) = Layout(content = content) { measurables, constraints ->
+) = Layout(modifier = modifier, content = content) { measurables, constraints ->
     val horizontalGapPx = horizontalGap.toPx().roundToInt()
     val verticalGapPx = verticalGap.toPx().roundToInt()
 
@@ -38,7 +40,7 @@ fun FlowRow(
     rows += Row(rowPlaceables, horizontalGapPx)
 
     val width = constraints.maxWidth
-    val height = (rows.sumBy { row -> row.height } + (rows.size - 1) * verticalGapPx).coerceAtMost(
+    val height = (rows.sumOf { row -> row.height } + (rows.size - 1) * verticalGapPx).coerceAtMost(
         constraints.maxHeight
     )
 
@@ -61,7 +63,7 @@ private class Row(
     val horizontalGapPx: Int,
 ) {
     val width by lazy(mode = LazyThreadSafetyMode.NONE) {
-        placeables.sumBy { it.width } + (placeables.size - 1) * horizontalGapPx
+        placeables.sumOf { it.width } + (placeables.size - 1) * horizontalGapPx
     }
 
     val height by lazy(mode = LazyThreadSafetyMode.NONE) {
