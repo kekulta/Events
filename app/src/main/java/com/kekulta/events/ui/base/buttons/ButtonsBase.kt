@@ -126,4 +126,3 @@ object EventsButtonDefaults {
 
     fun iconPadding() = PaddingValues(horizontal = 18.dp, vertical = 4.dp)
 }
-

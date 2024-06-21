@@ -24,8 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.kekulta.events.ui.base.ripple.PressOnlyRipple
+import com.kekulta.events.ui.base.ripple.ContentRipple
 import com.kekulta.events.ui.theme.EventsTheme
 
 
@@ -57,7 +58,7 @@ fun EventsButton(
     val borderColor = statedColor(
         color = colors.border, enabled = enabled, hovered = hovered.value, focused = focused.value
     )
-    PressOnlyRipple {
+    ContentRipple(contentColor = contentColor.value) {
         Box(
             modifier = modifier
                 .defaultMinSize(
@@ -72,6 +73,12 @@ fun EventsButton(
                 )
                 .padding(PaddingValues(8.dp))
                 .clip(ButtonDefaults.shape)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = rememberRipple(),
+                    onClick = onClick,
+                    enabled = enabled,
+                )
                 .background(containerColor.value)
                 .border(BorderStroke(1.5.dp, borderColor.value), ButtonDefaults.shape),
             propagateMinConstraints = true
@@ -80,12 +87,6 @@ fun EventsButton(
                 ProvideTextStyle(value = EventsTheme.typography.subheading2) {
                     Row(
                         Modifier
-                            .clickable(
-                                interactionSource = interactionSource,
-                                indication = rememberRipple(),
-                                onClick = onClick,
-                                enabled = enabled,
-                            )
                             .defaultMinSize(
                                 minHeight = 48.dp,
                             )

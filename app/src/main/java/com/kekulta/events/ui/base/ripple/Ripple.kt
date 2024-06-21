@@ -33,6 +33,19 @@ fun PressOnlyRipple(
     }
 }
 
+@Composable
+fun ContentRipple(
+    contentColor: Color,
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(
+        LocalRippleTheme provides ContentRipple,
+        LocalContentColor provides contentColor
+    ) {
+        content()
+    }
+}
+
 @Immutable
 object FullAlphaRipple : RippleTheme {
     @Composable
@@ -49,6 +62,15 @@ object PressOnlyRipple : RippleTheme {
 
     @Composable
     override fun rippleAlpha(): RippleAlpha = RippleAlpha(0f, 0f, 0f, 0.12f)
+}
+
+@Immutable
+object ContentRipple : RippleTheme {
+    @Composable
+    override fun defaultColor() = LocalContentColor.current
+
+    @Composable
+    override fun rippleAlpha(): RippleAlpha = RippleAlpha(0f, 0f, 0f, 0.4f)
 }
 
 fun Modifier.clickableWithRipple(color: Color, onClick: () -> Unit): Modifier = composed {
