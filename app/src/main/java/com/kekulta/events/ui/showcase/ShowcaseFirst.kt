@@ -236,16 +236,26 @@ fun TextButtonsGroup(
     enabled: Boolean,
 ) {
 
-    EventsTextButton(onClick = {}) {
+    EventsTextButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
+            .fillMaxWidth(),
+        onClick = {}) {
         Text(text = "Normal Button")
     }
     EventsTextButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
+            .fillMaxWidth(),
         onClick = {},
         interactionSource = hoveredSource,
     ) {
         Text(text = "Hovered Button")
     }
     EventsTextButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
+            .fillMaxWidth(),
         onClick = {},
         interactionSource = focusedSource,
     ) {
@@ -253,6 +263,9 @@ fun TextButtonsGroup(
     }
 
     EventsTextButton(
+        modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
+            .fillMaxWidth(),
         onClick = {},
         enabled = enabled,
     ) {
@@ -268,14 +281,14 @@ fun OutlinedButtonsGroup(
 ) {
     EventsOutlinedButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {}) {
         Text(text = "Normal Button")
     }
     EventsOutlinedButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {},
         interactionSource = hoveredSource,
@@ -284,7 +297,7 @@ fun OutlinedButtonsGroup(
     }
     EventsOutlinedButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {},
         interactionSource = focusedSource,
@@ -294,7 +307,7 @@ fun OutlinedButtonsGroup(
 
     EventsOutlinedButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {},
         enabled = enabled,
@@ -311,14 +324,14 @@ fun FilledButtonsGroup(
 ) {
     EventsFilledButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {}) {
         Text(text = "Normal Button")
     }
     EventsFilledButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {},
         interactionSource = hoveredSource,
@@ -327,7 +340,7 @@ fun FilledButtonsGroup(
     }
     EventsFilledButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {},
         interactionSource = focusedSource,
@@ -337,7 +350,7 @@ fun FilledButtonsGroup(
 
     EventsFilledButton(
         modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX12)
+            .padding(horizontal = EventsTheme.sizes.sizeX10)
             .fillMaxWidth(),
         onClick = {},
         enabled = enabled,

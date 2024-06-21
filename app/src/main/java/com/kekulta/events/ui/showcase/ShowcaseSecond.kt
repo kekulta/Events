@@ -47,7 +47,7 @@ fun ShowcaseSecond(
             onValueChange = { sliderPosition = it })
         val avatars =
             List((sliderPosition + 0.1f).toInt()) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
-        AttendeesRow(modifier = Modifier.padding(24.dp), avatars = avatars)
+        AttendeesRow(modifier = Modifier.padding(EventsTheme.sizes.sizeX12), avatars = avatars)
         TempSpacer()
         mockEventsVo(10).forEachIndexed { index, vo ->
             EventElement(modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),

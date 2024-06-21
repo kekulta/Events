@@ -134,5 +134,5 @@ object EventsButtonDefaults {
     @Composable
     fun iconPaddingDefaults() =
         /* TODO: Does noy comply with figma */
-        PaddingValues(horizontal = EventsTheme.sizes.sizeX10, vertical = EventsTheme.sizes.sizeX5)
+        PaddingValues(horizontal = EventsTheme.sizes.sizeX12, vertical = EventsTheme.sizes.sizeX5)
 }

@@ -16,6 +16,7 @@ import com.kekulta.events.ui.theme.EventsTheme
 fun AttendeesRow(avatars: List<String?>, modifier: Modifier = Modifier, showAvatarsNum: Int = 5) {
     Box(
         modifier = modifier
+            .padding(EventsTheme.sizes.sizeX2)
             .fillMaxWidth(),
         contentAlignment = Alignment.CenterStart,
     ) {
