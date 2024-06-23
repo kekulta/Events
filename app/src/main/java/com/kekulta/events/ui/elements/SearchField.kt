@@ -22,9 +22,9 @@ import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,9 +48,17 @@ fun SearchField(
 ) {
     val focusManager = LocalFocusManager.current
     val isFocused by interactionSource.collectIsFocusedAsState()
-    val shouldDrawBorder by rememberUpdatedState(isFocused && state.text.isEmpty())
-    val hintColor by rememberUpdatedState(if (state.text.isEmpty()) EventsTheme.colors.neutralDisabled else Color.Transparent)
-    val leadingIconTint by rememberUpdatedState(if (state.text.isEmpty()) EventsTheme.colors.neutralDisabled else EventsTheme.colors.neutralActive)
+
+    /* We do *not*  want to recompose on every symbol change. So using derived state. */
+    val shouldDrawBorder by remember {
+        derivedStateOf { isFocused && state.text.isEmpty() }
+    }
+    val isEmpty by remember {
+        derivedStateOf { state.text.isEmpty() }
+    }
+    val hintColor = if (isEmpty) EventsTheme.colors.neutralDisabled else Color.Transparent
+    val leadingIconTint =
+        if (isEmpty) EventsTheme.colors.neutralDisabled else EventsTheme.colors.neutralActive
 
     Row(
         modifier = modifier
@@ -67,8 +75,7 @@ fun SearchField(
             )
             .fillMaxWidth()
             .background(
-                EventsTheme.colors.neutralOffWhite,
-                RoundedCornerShape(EventsTheme.sizes.sizeX2)
+                EventsTheme.colors.neutralOffWhite, RoundedCornerShape(EventsTheme.sizes.sizeX2)
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {

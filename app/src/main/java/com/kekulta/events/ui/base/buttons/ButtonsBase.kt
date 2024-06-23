@@ -6,8 +6,7 @@ import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
@@ -22,8 +21,8 @@ fun Modifier.focusBorder(
     enabled: Boolean = true,
     interactionSource: InteractionSource,
 ): Modifier = composed {
-    val focus = interactionSource.collectIsFocusedAsState()
-    if (focus.value && enabled) {
+    val focus by interactionSource.collectIsFocusedAsState()
+    if (focus && enabled) {
         this.border(width, color, shape)
     } else {
         this
@@ -34,15 +33,13 @@ fun Modifier.focusBorder(
 @Composable
 fun statedColor(
     color: StatedColor, enabled: Boolean, hovered: Boolean, focused: Boolean
-): State<Color> {
-    return rememberUpdatedState(
-        when {
-            !enabled -> color.disabled
-            focused -> color.focused
-            hovered -> color.hovered
-            else -> color.normal
-        }
-    )
+): Color {
+    return when {
+        !enabled -> color.disabled
+        focused -> color.focused
+        hovered -> color.hovered
+        else -> color.normal
+    }
 }
 
 @Immutable

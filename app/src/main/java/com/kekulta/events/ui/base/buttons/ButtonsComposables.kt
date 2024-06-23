@@ -21,6 +21,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,24 +40,24 @@ fun EventsButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) {
-    val hovered = interactionSource.collectIsHoveredAsState()
-    val focused = interactionSource.collectIsFocusedAsState()
+    val hovered by interactionSource.collectIsHoveredAsState()
+    val focused by interactionSource.collectIsFocusedAsState()
 
     val containerColor = statedColor(
         color = colors.container,
         enabled = enabled,
-        hovered = hovered.value,
-        focused = focused.value
+        hovered = hovered,
+        focused = focused
     )
 
     val contentColor = statedColor(
-        color = colors.content, enabled = enabled, hovered = hovered.value, focused = focused.value
+        color = colors.content, enabled = enabled, hovered = hovered, focused = focused
     )
 
     val borderColor = statedColor(
-        color = colors.border, enabled = enabled, hovered = hovered.value, focused = focused.value
+        color = colors.border, enabled = enabled, hovered = hovered, focused = focused
     )
-    ContentRipple(contentColor = contentColor.value) {
+    ContentRipple(contentColor = contentColor) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = modifier
@@ -78,11 +79,14 @@ fun EventsButton(
                     onClick = onClick,
                     enabled = enabled,
                 )
-                .background(containerColor.value)
-                .border(BorderStroke(EventsTheme.sizes.sizeX1, borderColor.value), ButtonDefaults.shape),
+                .background(containerColor)
+                .border(
+                    BorderStroke(EventsTheme.sizes.sizeX1, borderColor),
+                    ButtonDefaults.shape
+                ),
             propagateMinConstraints = true
         ) {
-            CompositionLocalProvider(LocalContentColor provides contentColor.value) {
+            CompositionLocalProvider(LocalContentColor provides contentColor) {
                 ProvideTextStyle(value = EventsTheme.typography.subheading2) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,

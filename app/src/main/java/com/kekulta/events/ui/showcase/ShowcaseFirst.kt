@@ -1,3 +1,5 @@
+package com.kekulta.events.ui.showcase
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -26,7 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,10 +53,10 @@ import kotlinx.coroutines.launch
 fun ShowcaseFirst(
     snackbarHostState: SnackbarHostState,
 ) {
-    val isHighContrast = remember {
+    var isHighContrast by remember {
         mutableStateOf(false)
     }
-    val background by rememberUpdatedState(if (isHighContrast.value) Color.Black else Color.White)
+    val background = if (isHighContrast) Color.Black else Color.White
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -63,7 +65,7 @@ fun ShowcaseFirst(
         val focusedSource = remember { MutableInteractionSource() }
         val hoveredSource = remember { MutableInteractionSource() }
 
-        val isEnabled = remember {
+        var isEnabled by remember {
             mutableStateOf(false)
         }
 
@@ -89,9 +91,9 @@ fun ShowcaseFirst(
                     .padding(ButtonDefaults.ContentPadding)
                     .weight(1f, true)
             )
-            Switch(checked = isHighContrast.value,
+            Switch(checked = isHighContrast,
                 modifier = Modifier.padding(ButtonDefaults.ContentPadding),
-                onCheckedChange = { isHighContrast.value = !isHighContrast.value })
+                onCheckedChange = { isHighContrast = !isHighContrast })
         }
 
         TempSpacer()
@@ -104,23 +106,23 @@ fun ShowcaseFirst(
                     .padding(ButtonDefaults.ContentPadding)
                     .weight(1f, true)
             )
-            Switch(checked = isEnabled.value,
+            Switch(checked = isEnabled,
                 modifier = Modifier.padding(ButtonDefaults.ContentPadding),
-                onCheckedChange = { isEnabled.value = !isEnabled.value })
+                onCheckedChange = { isEnabled = !isEnabled })
         }
 
         InteractionSwitcher(focusedSource = focusedSource, hoveredSource = hoveredSource)
         TempSpacer()
         FilledButtonsGroup(
-            focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled.value
+            focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled
         )
         TempSpacer()
         OutlinedButtonsGroup(
-            focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled.value
+            focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled
         )
         TempSpacer()
         TextButtonsGroup(
-            focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled.value
+            focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled
         )
         TempSpacer()
         IconsButtonGroup(focusedSource = focusedSource, hoveredSource = hoveredSource)
@@ -169,8 +171,8 @@ fun InteractionSwitcher(
         HoverInteraction.Enter()
     }
 
-    val isFocus = remember { mutableStateOf(true) }
-    val isHover = remember { mutableStateOf(true) }
+    var isFocus by remember { mutableStateOf(true) }
+    var isHover by remember { mutableStateOf(true) }
 
     LaunchedEffect(focusedSource, hoveredSource) {
         scope.launch {
@@ -190,16 +192,16 @@ fun InteractionSwitcher(
                     .padding(ButtonDefaults.ContentPadding)
                     .weight(1f, true)
             )
-            Switch(checked = isFocus.value,
+            Switch(checked = isFocus,
                 modifier = Modifier.padding(ButtonDefaults.ContentPadding),
                 onCheckedChange = {
                     scope.launch {
-                        if (isFocus.value) {
+                        if (isFocus) {
                             focusedSource.emit(FocusInteraction.Unfocus(focusInteraction))
                         } else {
                             focusedSource.emit(focusInteraction)
                         }
-                        isFocus.value = !isFocus.value
+                        isFocus = !isFocus
                     }
                 })
         }
@@ -213,16 +215,16 @@ fun InteractionSwitcher(
                     .padding(ButtonDefaults.ContentPadding)
                     .weight(1f, true)
             )
-            Switch(checked = isHover.value,
+            Switch(checked = isHover,
                 modifier = Modifier.padding(ButtonDefaults.ContentPadding),
                 onCheckedChange = {
                     scope.launch {
-                        if (isHover.value) {
+                        if (isHover) {
                             hoveredSource.emit(HoverInteraction.Exit(hoverInteraction))
                         } else {
                             hoveredSource.emit(hoverInteraction)
                         }
-                        isHover.value = !isHover.value
+                        isHover = !isHover
                     }
                 })
         }

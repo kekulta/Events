@@ -1,3 +1,5 @@
+package com.kekulta.events.ui.showcase
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -13,7 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.kekulta.events.ui.elements.AttendeesRow
 import com.kekulta.events.ui.elements.CommunityElement
 import com.kekulta.events.ui.elements.CommunityElementVo

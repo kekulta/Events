@@ -1,7 +1,5 @@
 package com.kekulta.events
 
-import ShowcaseFirst
-import ShowcaseSecond
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import com.kekulta.events.ui.showcase.ShowcaseFirst
+import com.kekulta.events.ui.showcase.ShowcaseSecond
 import com.kekulta.events.ui.theme.EventsTheme
 import kotlinx.coroutines.launch
 
@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
                         Text(text = "Showcase 2:")
                         ShowcaseSecond(snackbarHostState = snackbarHostState)
                     }
-
                 }
             }
         }
