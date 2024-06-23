@@ -2,6 +2,7 @@ package com.kekulta.events.ui.showcase
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
@@ -51,7 +52,9 @@ fun ShowcaseSecond(
         AttendeesRow(modifier = Modifier.padding(EventsTheme.sizes.sizeX12), avatars = avatars)
         TempSpacer()
         mockEventsVo(10).forEachIndexed { index, vo ->
-            EventElement(modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            EventElement(modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .fillMaxWidth(),
                 eventVo = vo,
                 onClick = { showSnackbar("Meeting ${vo.name} clicked!") })
             Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
@@ -65,7 +68,9 @@ fun ShowcaseSecond(
         }
         TempSpacer()
         mockCommunitiesVo(10).forEachIndexed { index, vo ->
-            CommunityElement(modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            CommunityElement(modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .fillMaxWidth(),
                 communityVo = vo,
                 onClick = { showSnackbar("Community ${vo.name} clicked!") })
             Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))

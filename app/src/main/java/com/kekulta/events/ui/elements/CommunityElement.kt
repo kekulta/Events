@@ -27,7 +27,6 @@ fun CommunityElement(
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

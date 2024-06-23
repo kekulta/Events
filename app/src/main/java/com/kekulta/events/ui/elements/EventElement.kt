@@ -2,8 +2,12 @@ package com.kekulta.events.ui.elements
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.kekulta.events.ui.base.chips.RoundChip
-import com.kekulta.events.ui.base.rows.FlowRow
 import com.kekulta.events.ui.theme.EventsTheme
 
 data class EventElementVo(
@@ -27,6 +30,7 @@ data class EventElementVo(
     val tags: List<String>,
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     Row(
@@ -44,14 +48,13 @@ fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick
             modifier = Modifier
                 .padding(start = EventsTheme.sizes.sizeX6),
         ) {
-            Row {
+            FlowRow {
                 Text(
-                    modifier = Modifier
-                        .weight(1f),
                     text = eventVo.name,
                     style = EventsTheme.typography.bodyText1
                 )
                 if (eventVo.note != null) {
+                    Spacer(modifier = Modifier.weight(1f))
                     Text(
                         text = eventVo.note,
                         color = EventsTheme.colors.neutralWeak,
@@ -65,9 +68,9 @@ fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick
                 color = EventsTheme.colors.neutralWeak
             )
             FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(EventsTheme.sizes.sizeX2),
+                verticalArrangement = Arrangement.spacedBy(EventsTheme.sizes.sizeX2),
                 modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX2),
-                horizontalGap = EventsTheme.sizes.sizeX2,
-                verticalGap = EventsTheme.sizes.sizeX2,
             ) {
                 eventVo.tags.forEach { tag ->
                     RoundChip(text = tag)

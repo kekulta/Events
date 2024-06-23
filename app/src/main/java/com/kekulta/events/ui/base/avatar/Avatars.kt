@@ -38,6 +38,10 @@ fun BasicAvatar(
     borderStroke: BorderStroke = BorderStroke(0.dp, Color.Transparent),
     badge: @Composable (BoxScope.() -> Unit)? = null
 ) {
+
+    /* We shouldn't actually store state in composable due to possible configuration change and data
+    loss but here it seems to be ok, because we're actually gonna lost our progress on configuration
+    change. Yet I'm still not sure if it will behave correctly all the time. */
     var isLoaded by remember {
         mutableStateOf(false)
     }
@@ -47,6 +51,7 @@ fun BasicAvatar(
             .background(
                 EventsTheme.colors.neutralOffWhite, shape
             )
+            /* Default size value. Will be overridden by any earlier modifier if there are any */
             .size(EventsTheme.sizes.sizeX24), contentAlignment = Alignment.Center
     ) {
         Box(

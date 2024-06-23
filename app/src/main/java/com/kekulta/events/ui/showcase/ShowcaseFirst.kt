@@ -146,15 +146,16 @@ fun SearchGroup(
 ) {
     val scope = rememberCoroutineScope()
 
-    SearchField(state = rememberTextFieldState(),
-        enabled = true,
-        modifier = Modifier.padding(12.dp),
-        onSearch = {
-            scope.launch {
-                snackbarHostState.showSnackbar("Searching: ${it.text}")
-            }
-        })
-
+    Row {
+        SearchField(state = rememberTextFieldState(),
+            enabled = true,
+            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+            onSearch = {
+                scope.launch {
+                    snackbarHostState.showSnackbar("Searching: ${it.text}")
+                }
+            })
+    }
 }
 
 @Composable

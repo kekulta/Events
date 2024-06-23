@@ -73,7 +73,6 @@ fun SearchField(
                 enabled = shouldDrawBorder,
                 interactionSource = interactionSource
             )
-            .fillMaxWidth()
             .background(
                 EventsTheme.colors.neutralOffWhite, RoundedCornerShape(EventsTheme.sizes.sizeX2)
             ),
