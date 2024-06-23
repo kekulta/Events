@@ -3,7 +3,6 @@ package com.kekulta.events.ui.base.buttons
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -35,8 +34,9 @@ fun EventsButton(
     onClick: () -> Unit,
     colors: EventsButtonColorStateList,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     enabled: Boolean = true,
+    debounceTime: Long = EventsButtonDefaults.defaultDebounceTime(),
+    contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) {
@@ -44,10 +44,7 @@ fun EventsButton(
     val focused by interactionSource.collectIsFocusedAsState()
 
     val containerColor = statedColor(
-        color = colors.container,
-        enabled = enabled,
-        hovered = hovered,
-        focused = focused
+        color = colors.container, enabled = enabled, hovered = hovered, focused = focused
     )
 
     val contentColor = statedColor(
@@ -59,8 +56,7 @@ fun EventsButton(
     )
     ContentRipple(contentColor = contentColor) {
         Box(
-            contentAlignment = Alignment.Center,
-            modifier = modifier
+            contentAlignment = Alignment.Center, modifier = modifier
                 .defaultMinSize(
                     minHeight = ButtonDefaults.MinHeight,
                     minWidth = ButtonDefaults.MinWidth,
@@ -73,18 +69,17 @@ fun EventsButton(
                 )
                 .padding(PaddingValues(EventsTheme.sizes.sizeX4))
                 .clip(ButtonDefaults.shape)
-                .clickable(
+                .debouncedClickable(
                     interactionSource = interactionSource,
                     indication = rememberRipple(),
                     onClick = onClick,
+                    debounceTime = debounceTime,
                     enabled = enabled,
                 )
                 .background(containerColor)
                 .border(
-                    BorderStroke(EventsTheme.sizes.sizeX1, borderColor),
-                    ButtonDefaults.shape
-                ),
-            propagateMinConstraints = true
+                    BorderStroke(EventsTheme.sizes.sizeX1, borderColor), ButtonDefaults.shape
+                ), propagateMinConstraints = true
         ) {
             CompositionLocalProvider(LocalContentColor provides contentColor) {
                 ProvideTextStyle(value = EventsTheme.typography.subheading2) {
@@ -107,6 +102,7 @@ fun EventsFilledButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    debounceTime: Long = EventsButtonDefaults.defaultDebounceTime(),
     contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit,
@@ -116,6 +112,7 @@ fun EventsFilledButton(
         colors = EventsButtonDefaults.filledColorsDefaults(),
         modifier = modifier,
         enabled = enabled,
+        debounceTime = debounceTime,
         contentPadding = contentPadding,
         interactionSource = interactionSource,
         content = content,
@@ -127,6 +124,7 @@ fun EventsTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    debounceTime: Long = EventsButtonDefaults.defaultDebounceTime(),
     contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit,
@@ -136,6 +134,7 @@ fun EventsTextButton(
         colors = EventsButtonDefaults.textColorsDefaults(),
         modifier = modifier,
         enabled = enabled,
+        debounceTime = debounceTime,
         contentPadding = contentPadding,
         interactionSource = interactionSource,
         content = content,
@@ -147,6 +146,7 @@ fun EventsOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    debounceTime: Long = EventsButtonDefaults.defaultDebounceTime(),
     contentPadding: PaddingValues = EventsButtonDefaults.paddingDefaults(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit,
@@ -156,6 +156,7 @@ fun EventsOutlinedButton(
         colors = EventsButtonDefaults.outlinedColorsDefaults(),
         modifier = modifier,
         enabled = enabled,
+        debounceTime = debounceTime,
         contentPadding = contentPadding,
         interactionSource = interactionSource,
         content = content,

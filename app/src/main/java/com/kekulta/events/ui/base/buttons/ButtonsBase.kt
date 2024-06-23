@@ -1,12 +1,19 @@
 package com.kekulta.events.ui.base.buttons
 
+import android.os.SystemClock
+import androidx.compose.foundation.Indication
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
@@ -132,4 +139,38 @@ object EventsButtonDefaults {
     fun iconPaddingDefaults() =
         /* TODO: Does noy comply with figma */
         PaddingValues(horizontal = EventsTheme.sizes.sizeX12, vertical = EventsTheme.sizes.sizeX5)
+
+    fun defaultDebounceTime() = 150L
+}
+
+@Composable
+inline fun debounced(crossinline onClick: () -> Unit, debounceTime: Long = 1000L): () -> Unit {
+    var lastTimeClicked by remember { mutableLongStateOf(0L) }
+    val onClickLambda: () -> Unit = {
+        val now = SystemClock.uptimeMillis()
+        if (now - lastTimeClicked > debounceTime) {
+            onClick()
+        }
+        lastTimeClicked = now
+    }
+    return onClickLambda
+}
+
+ /* We do debounce action but we do nothing with indication. That is no good. */
+fun Modifier.debouncedClickable(
+    interactionSource: MutableInteractionSource,
+    indication: Indication?,
+    debounceTime: Long,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+): Modifier {
+    return this.composed {
+        val clickable = debounced(debounceTime = debounceTime, onClick = { onClick() })
+        this.clickable(
+            interactionSource = interactionSource,
+            indication = indication,
+            onClick = clickable,
+            enabled = enabled,
+        )
+    }
 }
