@@ -88,7 +88,13 @@ fun ShowcaseSecond(
 
 fun mockEventsVo(size: Int): List<EventElementVo> {
     val places = listOf("Moscow", "SPb", "Kazan", "Tbilisi")
-    val names = listOf("Developer Meeting", "Code'n'code", "Mobile Submarine", "Mobius")
+    val names = listOf(
+        "Developer Meeting",
+        "Code'n'code",
+        "Mobile Submarine",
+        "Mobius",
+        "Very long name of the software event Conf."
+    )
     val tags = listOf("Mobile", "Junior", "Middle", "Senior", "Kotlin", "Android", "Java", "LISP")
 
     return List(size) { index ->
