@@ -1,4 +1,4 @@
-package com.kekulta.events
+package com.kekulta.events.ui.base.modifiers
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.ui.Modifier

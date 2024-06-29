@@ -1,6 +1,5 @@
 package com.kekulta.events.ui.showcase
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,39 +7,31 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.kekulta.events.ui.base.snackbar.SnackbarScope
+import com.kekulta.events.ui.base.snackbar.showSnackbar
 import com.kekulta.events.ui.elements.AttendeesRow
 import com.kekulta.events.ui.elements.CommunityElement
 import com.kekulta.events.ui.elements.CommunityElementVo
 import com.kekulta.events.ui.elements.EventElement
 import com.kekulta.events.ui.elements.EventElementVo
 import com.kekulta.events.ui.theme.EventsTheme
-import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun ShowcaseSecond(
-    snackbarHostState: SnackbarHostState,
+    snackbarScope: SnackbarScope,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
-        val scope = rememberCoroutineScope()
-        fun showSnackbar(text: String) {
-            scope.launch {
-                snackbarHostState.showSnackbar(text)
-            }
-        }
 
         var sliderPosition by remember { mutableFloatStateOf(12f) }
         Slider(steps = 20,
@@ -56,7 +47,7 @@ fun ShowcaseSecond(
                 .padding(horizontal = EventsTheme.sizes.sizeX9)
                 .fillMaxWidth(),
                 eventVo = vo,
-                onClick = { showSnackbar("Meeting ${vo.name} clicked!") })
+                onClick = { snackbarScope.showSnackbar("Meeting ${vo.name} clicked!") })
             Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
             if (index != 9) {
                 HorizontalDivider(
@@ -72,7 +63,7 @@ fun ShowcaseSecond(
                 .padding(horizontal = EventsTheme.sizes.sizeX9)
                 .fillMaxWidth(),
                 communityVo = vo,
-                onClick = { showSnackbar("Community ${vo.name} clicked!") })
+                onClick = { snackbarScope.showSnackbar("Community ${vo.name} clicked!") })
             Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
             if (index != 9) {
                 HorizontalDivider(

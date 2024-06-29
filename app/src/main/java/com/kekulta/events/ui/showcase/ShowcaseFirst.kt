@@ -1,6 +1,5 @@
 package com.kekulta.events.ui.showcase
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.FocusInteraction
@@ -19,7 +18,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +39,7 @@ import com.kekulta.events.ui.base.buttons.EventsFilledButton
 import com.kekulta.events.ui.base.buttons.EventsOutlinedButton
 import com.kekulta.events.ui.base.buttons.EventsTextButton
 import com.kekulta.events.ui.base.chips.RoundChip
+import com.kekulta.events.ui.base.snackbar.SnackbarScope
 import com.kekulta.events.ui.elements.EventSquareAvatar
 import com.kekulta.events.ui.elements.SearchField
 import com.kekulta.events.ui.elements.UserCircleAddAvatar
@@ -51,7 +50,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ShowcaseFirst(
-    snackbarHostState: SnackbarHostState,
+    snackbarScope: SnackbarScope,
 ) {
     var isHighContrast by remember {
         mutableStateOf(false)
@@ -75,11 +74,11 @@ fun ShowcaseFirst(
         TempSpacer()
         ChipsGroup()
         TempSpacer()
-        SearchGroup(snackbarHostState = snackbarHostState)
+        SearchGroup(snackbarScope)
         TempSpacer()
-        MeetAvatarsGroup(snackbarHostState = snackbarHostState)
+        MeetAvatarsGroup(snackbarScope)
         TempSpacer()
-        AvatarsGroup(snackbarHostState = snackbarHostState)
+        AvatarsGroup(snackbarScope)
 
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -141,10 +140,8 @@ fun TempSpacer() {
 
 @Composable
 fun SearchGroup(
-    snackbarHostState: SnackbarHostState,
+    snackbarScope: SnackbarScope,
 ) {
-    val scope = rememberCoroutineScope()
-
     Row {
         SearchField(state = rememberTextFieldState(),
             enabled = true,
@@ -152,8 +149,8 @@ fun SearchGroup(
                 .padding(12.dp)
                 .fillMaxWidth(),
             onSearch = {
-                scope.launch {
-                    snackbarHostState.showSnackbar("Searching: ${it.text}")
+                snackbarScope {
+                    showSnackbar("Searching: ${it.text}")
                 }
             })
     }
@@ -381,9 +378,7 @@ fun IconsButtonGroup(
 }
 
 @Composable
-fun MeetAvatarsGroup(snackbarHostState: SnackbarHostState) {
-    val scope = rememberCoroutineScope()
-
+fun MeetAvatarsGroup(snackbarScope: SnackbarScope) {
     EventSquareAvatar(
         url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
     )
@@ -392,7 +387,7 @@ fun MeetAvatarsGroup(snackbarHostState: SnackbarHostState) {
 }
 
 @Composable
-fun AvatarsGroup(snackbarHostState: SnackbarHostState) {
+fun AvatarsGroup(snackbarScope: SnackbarScope) {
     val scope = rememberCoroutineScope()
 
     UserSquareAvatar(
@@ -411,11 +406,11 @@ fun AvatarsGroup(snackbarHostState: SnackbarHostState) {
     TempSpacer()
     UserCircleAddAvatar(
         url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
-        onBadgeClick = { scope.launch { snackbarHostState.showSnackbar("Change avatar") } }
+        onBadgeClick = { snackbarScope { showSnackbar("Change avatar") } }
     )
     TempSpacer()
     UserCircleAddAvatar(
-        onBadgeClick = { scope.launch { snackbarHostState.showSnackbar("Change avatar") } }
+        onBadgeClick = { snackbarScope { showSnackbar("Change avatar") } }
     )
 }
 
