@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.kekulta.events.ui.base.snackbar.rememberSnackbarScope
 import com.kekulta.events.ui.elements.EventsNavBar
 import com.kekulta.events.ui.elements.Tab
+import com.kekulta.events.ui.showcase.Showcase
 import com.kekulta.events.ui.theme.EventsTheme
 import kotlinx.serialization.Serializable
 
@@ -92,6 +93,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(innerPadding)) {
                         NavHost(navController, startDestination = Events) {
                             composable<Events> {
+                                Showcase(snackbarScope)
                             }
 
                             composable<Groups> { backStackEntry ->
