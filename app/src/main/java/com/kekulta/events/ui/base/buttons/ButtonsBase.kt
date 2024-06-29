@@ -156,7 +156,7 @@ inline fun debounced(crossinline onClick: () -> Unit, debounceTime: Long = 1000L
     return onClickLambda
 }
 
- /* We do debounce action but we do nothing with indication. That is no good. */
+/* We do debounce action but we do nothing with indication. That is no good. */
 fun Modifier.debouncedClickable(
     interactionSource: MutableInteractionSource,
     indication: Indication?,

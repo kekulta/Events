@@ -1,6 +1,5 @@
 package com.kekulta.events.ui.elements
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.hoverable
@@ -14,11 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text2.BasicTextField2
-import androidx.compose.foundation.text2.input.TextFieldLineLimits
-import androidx.compose.foundation.text2.input.TextFieldState
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +33,6 @@ import com.kekulta.events.R
 import com.kekulta.events.ui.base.buttons.focusBorder
 import com.kekulta.events.ui.theme.EventsTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SearchField(
     state: TextFieldState,
@@ -99,13 +96,13 @@ fun SearchField(
             )
 
 
-            BasicTextField2(
+            BasicTextField(
                 enabled = enabled,
                 modifier = Modifier.fillMaxWidth(),
-                keyboardActions = KeyboardActions(onSearch = {
+                onKeyboardAction = {
                     onSearch(state)
                     focusManager.clearFocus()
-                }),
+                },
                 interactionSource = interactionSource,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 lineLimits = TextFieldLineLimits.SingleLine,

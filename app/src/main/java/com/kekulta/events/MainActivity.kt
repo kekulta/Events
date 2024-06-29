@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -39,26 +40,33 @@ class MainActivity : ComponentActivity() {
                 }
 
                 val focusManager = LocalFocusManager.current
-                Scaffold(snackbarHost = {
-                    SnackbarHost(hostState = snackbarHostState)
-                }, modifier = Modifier
-                    .fillMaxSize()
-                    .clickable(
-                        interactionSource = remember {
-                            MutableInteractionSource()
-                        }, indication = null
-                    ) {
-                        focusManager.clearFocus()
-                    }) { innerPadding ->
+                Scaffold(
+                    containerColor = EventsTheme.colors.neutralWhite,
+                    bottomBar = {
+                        NavigationBar(
+                            containerColor = EventsTheme.colors.neutralWhite
+                        ) {}
+                    },
+                    snackbarHost = {
+                        SnackbarHost(hostState = snackbarHostState)
+                    }, modifier = Modifier
+                        .fillMaxSize()
+                        .clickable(
+                            interactionSource = remember {
+                                MutableInteractionSource()
+                            }, indication = null
+                        ) {
+                            focusManager.clearFocus()
+                        }) { innerPadding ->
                     Column(
-
                         modifier = Modifier
                             .padding(innerPadding)
                             .verticalScroll(rememberScrollState())
                     ) {
-                        Text(text = "Showcase 1:")
+                        Text(
+                            text = "text",
+                        )
                         ShowcaseFirst(snackbarHostState = snackbarHostState)
-                        Text(text = "Showcase 2:")
                         ShowcaseSecond(snackbarHostState = snackbarHostState)
                     }
                 }

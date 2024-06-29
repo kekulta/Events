@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text2.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHostState
@@ -139,7 +139,6 @@ fun TempSpacer() {
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SearchGroup(
     snackbarHostState: SnackbarHostState,
@@ -149,7 +148,9 @@ fun SearchGroup(
     Row {
         SearchField(state = rememberTextFieldState(),
             enabled = true,
-            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
             onSearch = {
                 scope.launch {
                     snackbarHostState.showSnackbar("Searching: ${it.text}")

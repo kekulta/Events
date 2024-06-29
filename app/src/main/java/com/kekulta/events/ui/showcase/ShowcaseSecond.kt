@@ -1,5 +1,6 @@
 package com.kekulta.events.ui.showcase
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,7 +33,6 @@ fun ShowcaseSecond(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
     ) {
 
         val scope = rememberCoroutineScope()
