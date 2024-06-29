@@ -1,7 +1,9 @@
 package com.kekulta.events
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
@@ -14,31 +16,44 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import com.kekulta.events.ui.base.snackbar.rememberSnackbarScope
 import com.kekulta.events.ui.elements.EventsNavBar
+import com.kekulta.events.ui.elements.Tab
 import com.kekulta.events.ui.showcase.ShowcaseFirst
 import com.kekulta.events.ui.showcase.ShowcaseSecond
 import com.kekulta.events.ui.theme.EventsTheme
+import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(
+                Color.TRANSPARENT,
+                Color.TRANSPARENT
+            )
+        )
+
         setContent {
             EventsTheme {
 
                 val snackbarHostState = remember { SnackbarHostState() }
                 val snackbarScope = rememberSnackbarScope(snackbarHostState = snackbarHostState)
-
                 val focusManager = LocalFocusManager.current
                 Scaffold(
                     containerColor = EventsTheme.colors.neutralWhite,
                     bottomBar = {
-                        EventsNavBar()
+                        var currTab by remember {
+                            mutableStateOf(Tab.NO_TAB)
+                        }
+
+                        EventsNavBar(currentTab = currTab, onClick = { tab -> currTab = tab })
                     },
                     snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState)
@@ -56,9 +71,6 @@ class MainActivity : ComponentActivity() {
                             .padding(innerPadding)
                             .verticalScroll(rememberScrollState())
                     ) {
-                        Text(
-                            text = "text",
-                        )
                         ShowcaseFirst(snackbarScope)
                         ShowcaseSecond(snackbarScope)
                     }
@@ -68,3 +80,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Define a home route that doesn't take any arguments
+@Serializable
+object Home
+
+// Define a profile route that takes an ID
+@Serializable
+data class Profile(val id: String)
