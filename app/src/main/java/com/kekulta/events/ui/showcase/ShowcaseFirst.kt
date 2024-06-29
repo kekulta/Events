@@ -1,6 +1,5 @@
 package com.kekulta.events.ui.showcase
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.HoverInteraction
@@ -8,12 +7,12 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ButtonDefaults
@@ -29,7 +28,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -48,81 +46,59 @@ import com.kekulta.events.ui.elements.UserSquareAvatar
 import com.kekulta.events.ui.theme.EventsTheme
 import kotlinx.coroutines.launch
 
-@Composable
-fun ShowcaseFirst(
+fun LazyListScope.showcaseFirst(
     snackbarScope: SnackbarScope,
+    focusedSource: MutableInteractionSource,
+    hoveredSource: MutableInteractionSource,
+    isEnabled: Boolean,
 ) {
-    var isHighContrast by remember {
-        mutableStateOf(false)
-    }
-    val background = if (isHighContrast) Color.Black else Color.White
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .background(background)
-    ) {
-        val focusedSource = remember { MutableInteractionSource() }
-        val hoveredSource = remember { MutableInteractionSource() }
-
-        var isEnabled by remember {
-            mutableStateOf(false)
-        }
-
-
+    item {
         TempSpacer()
         TextGroup()
+    }
+    item {
         TempSpacer()
         ChipsGroup()
+    }
+    item {
         TempSpacer()
         SearchGroup(snackbarScope)
+    }
+    item {
         TempSpacer()
         MeetAvatarsGroup(snackbarScope)
+    }
+    item {
         TempSpacer()
         AvatarsGroup(snackbarScope)
+    }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Enable contrast background",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(ButtonDefaults.ContentPadding)
-                    .weight(1f, true)
-            )
-            Switch(checked = isHighContrast,
-                modifier = Modifier.padding(ButtonDefaults.ContentPadding),
-                onCheckedChange = { isHighContrast = !isHighContrast })
-        }
-
+    item {
         TempSpacer()
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Change enabled value",
-                modifier = Modifier
-                    .padding(ButtonDefaults.ContentPadding)
-                    .weight(1f, true)
-            )
-            Switch(checked = isEnabled,
-                modifier = Modifier.padding(ButtonDefaults.ContentPadding),
-                onCheckedChange = { isEnabled = !isEnabled })
-        }
-
         InteractionSwitcher(focusedSource = focusedSource, hoveredSource = hoveredSource)
+    }
+
+    item {
         TempSpacer()
         FilledButtonsGroup(
             focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled
         )
+    }
+
+    item {
         TempSpacer()
         OutlinedButtonsGroup(
             focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled
         )
+    }
+
+    item {
         TempSpacer()
         TextButtonsGroup(
             focusedSource = focusedSource, hoveredSource = hoveredSource, enabled = isEnabled
         )
+    }
+    item {
         TempSpacer()
         IconsButtonGroup(focusedSource = focusedSource, hoveredSource = hoveredSource)
     }

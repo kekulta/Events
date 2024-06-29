@@ -8,25 +8,26 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.kekulta.events.ui.base.snackbar.rememberSnackbarScope
 import com.kekulta.events.ui.elements.EventsNavBar
 import com.kekulta.events.ui.elements.Tab
-import com.kekulta.events.ui.showcase.ShowcaseFirst
-import com.kekulta.events.ui.showcase.ShowcaseSecond
 import com.kekulta.events.ui.theme.EventsTheme
 import kotlinx.serialization.Serializable
 
@@ -35,8 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(
-                Color.TRANSPARENT,
-                Color.TRANSPARENT
+                Color.TRANSPARENT, Color.TRANSPARENT
             )
         )
 
@@ -46,18 +46,40 @@ class MainActivity : ComponentActivity() {
                 val snackbarHostState = remember { SnackbarHostState() }
                 val snackbarScope = rememberSnackbarScope(snackbarHostState = snackbarHostState)
                 val focusManager = LocalFocusManager.current
+                val navController = rememberNavController()
+                var currTab by remember {
+                    mutableStateOf(Tab.EVENTS)
+                }
+
                 Scaffold(
                     containerColor = EventsTheme.colors.neutralWhite,
                     bottomBar = {
-                        var currTab by remember {
-                            mutableStateOf(Tab.NO_TAB)
-                        }
+                        EventsNavBar(currentTab = currTab, onClick = { tab ->
+                            currTab = tab
+                            val screen =
+                                when (tab) {
+                                    Tab.EVENTS -> Events
+                                    Tab.GROUPS -> Groups
+                                    Tab.MORE -> More
+                                    else -> null
+                                }
 
-                        EventsNavBar(currentTab = currTab, onClick = { tab -> currTab = tab })
+                            screen?.let {
+                                navController.navigate(it) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+
+                        })
                     },
                     snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState)
-                    }, modifier = Modifier
+                    },
+                    modifier = Modifier
                         .fillMaxSize()
                         .clickable(
                             interactionSource = remember {
@@ -65,14 +87,21 @@ class MainActivity : ComponentActivity() {
                             }, indication = null
                         ) {
                             focusManager.clearFocus()
-                        }) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        ShowcaseFirst(snackbarScope)
-                        ShowcaseSecond(snackbarScope)
+                        },
+                ) { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        NavHost(navController, startDestination = Events) {
+                            composable<Events> {
+                            }
+
+                            composable<Groups> { backStackEntry ->
+                                Text(text = "Groups")
+                            }
+
+                            composable<More> { backStackEntry ->
+                                Text(text = "More")
+                            }
+                        }
                     }
                 }
             }
@@ -80,10 +109,21 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// Define a home route that doesn't take any arguments
-@Serializable
-object Home
+interface Screen {
+    val tab: Tab
+}
 
-// Define a profile route that takes an ID
 @Serializable
-data class Profile(val id: String)
+data object Events : Screen {
+    override val tab: Tab = Tab.GROUPS
+}
+
+@Serializable
+data object Groups : Screen {
+    override val tab: Tab = Tab.GROUPS
+}
+
+@Serializable
+data object More : Screen {
+    override val tab: Tab = Tab.GROUPS
+}

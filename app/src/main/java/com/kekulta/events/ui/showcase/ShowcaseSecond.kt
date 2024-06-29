@@ -1,18 +1,17 @@
 package com.kekulta.events.ui.showcase
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Slider
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.kekulta.events.ui.base.snackbar.SnackbarScope
 import com.kekulta.events.ui.base.snackbar.showSnackbar
@@ -25,14 +24,10 @@ import com.kekulta.events.ui.theme.EventsTheme
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Composable
-fun ShowcaseSecond(
+fun LazyListScope.showcaseSecond(
     snackbarScope: SnackbarScope,
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-
+    item {
         var sliderPosition by remember { mutableFloatStateOf(12f) }
         Slider(steps = 20,
             valueRange = 0f..20f,
@@ -42,36 +37,39 @@ fun ShowcaseSecond(
             List((sliderPosition + 0.1f).toInt()) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
         AttendeesRow(modifier = Modifier.padding(EventsTheme.sizes.sizeX12), avatars = avatars)
         TempSpacer()
-        mockEventsVo(10).forEachIndexed { index, vo ->
-            EventElement(modifier = Modifier
-                .padding(horizontal = EventsTheme.sizes.sizeX9)
-                .fillMaxWidth(),
-                eventVo = vo,
-                onClick = { snackbarScope.showSnackbar("Meeting ${vo.name} clicked!") })
+    }
+
+    itemsIndexed(mockEventsVo(10)) { index, vo ->
+        EventElement(modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX9)
+            .fillMaxWidth(),
+            eventVo = vo,
+            onClick = { snackbarScope.showSnackbar("Meeting ${vo.name} clicked!") })
+        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
+        if (index != 9) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+                color = EventsTheme.colors.neutralLine,
+            )
             Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-            if (index != 9) {
-                HorizontalDivider(
-                    modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-                    color = EventsTheme.colors.neutralLine,
-                )
-                Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-            }
+        } else{
+            TempSpacer()
         }
-        TempSpacer()
-        mockCommunitiesVo(10).forEachIndexed { index, vo ->
-            CommunityElement(modifier = Modifier
-                .padding(horizontal = EventsTheme.sizes.sizeX9)
-                .fillMaxWidth(),
-                communityVo = vo,
-                onClick = { snackbarScope.showSnackbar("Community ${vo.name} clicked!") })
+    }
+
+    itemsIndexed(mockCommunitiesVo(10)) { index, vo ->
+        CommunityElement(modifier = Modifier
+            .padding(horizontal = EventsTheme.sizes.sizeX9)
+            .fillMaxWidth(),
+            communityVo = vo,
+            onClick = { snackbarScope.showSnackbar("Community ${vo.name} clicked!") })
+        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
+        if (index != 9) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+                color = EventsTheme.colors.neutralLine,
+            )
             Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-            if (index != 9) {
-                HorizontalDivider(
-                    modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-                    color = EventsTheme.colors.neutralLine,
-                )
-                Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-            }
         }
     }
 }
