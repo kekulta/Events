@@ -90,7 +90,7 @@ fun mockEventsVo(size: Int): List<EventElementVo> {
         EventElementVo(name = names[index % names.size],
             avatar = if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null,
             date = LocalDateTime.now().plusDays(index.toLong())
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
             note = if (index % 2 == 0) "Event is over" else null,
             place = places[index % places.size],
             tags = List(index % tags.size) { tagIndex -> tags[(index + tagIndex) % tags.size] })

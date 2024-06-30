@@ -50,6 +50,7 @@ import com.kekulta.events.ui.base.snackbar.showSnackbar
 import com.kekulta.events.ui.elements.EventsNavBar
 import com.kekulta.events.ui.elements.EventsScreen
 import com.kekulta.events.ui.elements.MoreScreen
+import com.kekulta.events.ui.elements.MyEventsScreen
 import com.kekulta.events.ui.elements.ProfileScreen
 import com.kekulta.events.ui.elements.Tab
 import com.kekulta.events.ui.showcase.ShowcaseScreen
@@ -184,6 +185,9 @@ class MainActivity : ComponentActivity() {
                         NavHost(navController, startDestination = Events,
                             enterTransition = { EnterTransition.None },
                             exitTransition = { ExitTransition.None }) {
+                            /*
+                                Looks like we can wrap composable into custom inline function
+                             */
                             composable<Events> { backStackEntry ->
                                 currScreen = backStackEntry.toRoute<Events>()
                                 currAction = {
@@ -220,6 +224,12 @@ class MainActivity : ComponentActivity() {
                                 currAction = null
                                 ShowcaseScreen(snackbarScope)
                             }
+
+                            composable<MyEvents> { backStackEntry ->
+                                currScreen = backStackEntry.toRoute<MyEvents>()
+                                currAction = null
+                                MyEventsScreen()
+                            }
                         }
                     }
                 }
@@ -227,6 +237,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 @Composable
 fun ProfileAction(onClick: () -> Unit) {
@@ -280,6 +291,13 @@ data object Events : Screen {
     override val tab: Tab = Tab.EVENTS
     override val name: String = "Events"
     override val isRoot: Boolean = true
+}
+
+@Serializable
+data object MyEvents : Screen {
+    override val tab: Tab = Tab.MORE
+    override val name: String = "My Events"
+    override val isRoot: Boolean = false
 }
 
 @Serializable

@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import com.kekulta.events.MyEvents
 import com.kekulta.events.Profile
 import com.kekulta.events.R
 import com.kekulta.events.Showcase
@@ -34,7 +35,7 @@ fun MoreScreen(
                 icon = painterResource(id = R.drawable.icon_events),
                 name = "My events",
                 onClick = {
-
+                    navigate(MyEvents)
                 })
         }
         item {

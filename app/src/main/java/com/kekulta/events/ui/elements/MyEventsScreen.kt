@@ -10,19 +10,17 @@ import com.kekulta.events.ui.base.mockTabVo
 import com.kekulta.events.ui.theme.EventsTheme
 
 @Composable
-fun EventsScreen() {
+fun MyEventsScreen() {
     Column {
         SearchField(
-            modifier = Modifier
-                /*
-                    Edge padding should be unified in the whole app. It now can be X9 or X8 depending on
-                    screen.
-                */
-                .padding(horizontal = EventsTheme.sizes.sizeX8), state = rememberTextFieldState()
+            modifier = Modifier/*
+                Edge padding should be unified in the whole app. It now can be X9 or X8 depending on
+                screen.
+            */.padding(horizontal = EventsTheme.sizes.sizeX8), state = rememberTextFieldState()
         ) {
             /* TODO */
         }
 
-        EventsTabs(tabs = listOf(mockTabVo("All Events"), mockTabVo("Active Events")))
+        EventsTabs(tabs = listOf(mockTabVo("Planned Events"), mockTabVo("Past Events")))
     }
 }

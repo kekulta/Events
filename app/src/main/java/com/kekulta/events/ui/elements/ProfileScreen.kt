@@ -45,7 +45,7 @@ fun ProfileScreen(
         Text(
             text = profileVO.phone,
             style = EventsTheme.typography.bodyText2,
-            color = EventsTheme.colors.neutralDisabled,
+            color = EventsTheme.colors.neutralWeak,
         )
         Row(
             modifier = Modifier

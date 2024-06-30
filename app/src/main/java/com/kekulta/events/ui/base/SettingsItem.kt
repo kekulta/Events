@@ -48,7 +48,7 @@ fun ProfileItem(
             Text(
                 text = profileVo.phone,
                 style = EventsTheme.typography.metadata1,
-                color = EventsTheme.colors.neutralDisabled,
+                color = EventsTheme.colors.neutralWeak,
             )
         }
         Icon(
