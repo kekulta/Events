@@ -137,8 +137,8 @@ object EventsButtonDefaults {
 
     @Composable
     fun iconPaddingDefaults() =
-        /* TODO: Does noy comply with figma */
-        PaddingValues(horizontal = EventsTheme.sizes.sizeX12, vertical = EventsTheme.sizes.sizeX5)
+        /* TODO: Does not comply with figma */
+        PaddingValues(horizontal = EventsTheme.sizes.sizeX10, vertical = EventsTheme.sizes.sizeX5)
 
     fun defaultDebounceTime() = 150L
 }
@@ -160,7 +160,7 @@ inline fun debounced(crossinline onClick: () -> Unit, debounceTime: Long = 1000L
 fun Modifier.debouncedClickable(
     interactionSource: MutableInteractionSource,
     indication: Indication?,
-    debounceTime: Long,
+    debounceTime: Long = 700L,
     enabled: Boolean = true,
     onClick: () -> Unit
 ): Modifier {

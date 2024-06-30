@@ -52,7 +52,7 @@ fun LazyListScope.showcaseSecond(
                 color = EventsTheme.colors.neutralLine,
             )
             Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-        } else{
+        } else {
             TempSpacer()
         }
     }

@@ -56,7 +56,8 @@ fun UserCircleAddAvatar(
     url: String? = null,
     onBadgeClick: () -> Unit = {},
 ) {
-    BasicAvatar(badgeSize = 0.33f,
+    BasicAvatar(
+        badgeSize = 0.33f,
         modifier = modifier.size(EventsTheme.sizes.sizeX50),
         placeholder = {
             Icon(
@@ -83,7 +84,7 @@ fun UserCircleAvatar(
     BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX50), placeholder = {
         Icon(
             modifier = Modifier
-                .fillMaxSize(0.66f)
+                .fillMaxSize(0.33f)
                 .aspectRatio(1f),
             painter = painterResource(id = R.drawable.icon_avatar),
             contentDescription = "Default avatar"

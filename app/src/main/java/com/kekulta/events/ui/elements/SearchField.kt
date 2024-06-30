@@ -41,12 +41,18 @@ fun SearchField(
     interactionSource: MutableInteractionSource = remember {
         MutableInteractionSource()
     },
+    /*
+        Actually last argument shouldn't be a function parameter when it is not intended to  be
+        used as trailing lambda a.k.a. a composable content. Should be fixed!
+    */
     onSearch: (state: TextFieldState) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val isFocused by interactionSource.collectIsFocusedAsState()
 
-    /* We do *not*  want to recompose on every symbol change. So using derived state. */
+    /*
+        We do *not*  want to recompose on every symbol change. So using derived state.
+    */
     val shouldDrawBorder by remember {
         derivedStateOf { isFocused && state.text.isEmpty() }
     }
@@ -62,7 +68,6 @@ fun SearchField(
             .focusable(interactionSource = interactionSource)
             .hoverable(interactionSource = interactionSource)
             .height(EventsTheme.sizes.sizeX18)
-            .padding(EventsTheme.sizes.sizeX1)
             .focusBorder(
                 width = EventsTheme.sizes.sizeX1,
                 color = EventsTheme.colors.neutralLine,

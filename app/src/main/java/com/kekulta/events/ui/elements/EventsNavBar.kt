@@ -9,7 +9,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,8 +26,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
+import com.kekulta.events.Screen
+import com.kekulta.events.ui.base.buttons.debouncedClickable
 import com.kekulta.events.ui.base.modifiers.advancedShadow
 import com.kekulta.events.ui.theme.EventsTheme
+
+typealias Navigate = (dest: Screen) -> Unit
 
 @Composable
 fun EventsNavBar(
@@ -96,7 +99,7 @@ fun RowScope.EventsNavigationItem(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(interactionSource = remember {
+                .debouncedClickable(interactionSource = remember {
                     MutableInteractionSource()
                 }, onClick = onClick, indication = null),
             contentAlignment = Alignment.Center,
@@ -109,7 +112,7 @@ fun RowScope.EventsNavigationItem(
                         text = stringResource(id = name), style = EventsTheme.typography.bodyText1
                     )
                     Icon(
-                        painterResource(id = R.drawable.dot), contentDescription = null,
+                        painterResource(id = R.drawable.icon_dot), contentDescription = null,
                         tint = EventsTheme.colors.neutralActive,
                     )
                 }
