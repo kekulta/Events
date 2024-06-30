@@ -7,6 +7,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -32,14 +33,17 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -73,22 +77,28 @@ class MainActivity : ComponentActivity() {
                 val focusManager = LocalFocusManager.current
                 val navController = rememberNavController()
 
-                /*
-                    Maybe we can win a few frames if we do something with immutability and
-                    rememberUpdatedState here, not sure
-                */
-                var currScreen: Screen by remember {
-                    mutableStateOf(Events)
+                val navState = remember {
+                    mutableStateOf(
+                        NavigationState(
+                            screen = Events,
+                            action = null
+                        )
+                    )
                 }
-                var currAction: (@Composable () -> Unit)? by remember {
-                    mutableStateOf(null)
-                }
+
+                val isRootScreen by remember { derivedStateOf { navState.value.screen.isRoot } }
+                val currScreenTab by remember { derivedStateOf { navState.value.screen.tab } }
+                val currScreenName by remember { derivedStateOf { navState.value.screen.name } }
+                val currScreenAction by remember { derivedStateOf { navState.value.action } }
 
                 fun navigate(dest: Screen) {
                     navController.navigate(dest) {
                         /*
                             Backstack is really messed up. We basically store every action user
                             ever did in here. Needs some fix.
+
+                            There are some flickering if you navigate to the destination you are
+                            currently in. launchSingleTop does not help.
                         */
                         launchSingleTop = true
                         restoreState = true
@@ -108,7 +118,7 @@ class MainActivity : ComponentActivity() {
                                 .padding(vertical = EventsTheme.sizes.sizeX6)
                         ) {
                             AnimatedVisibility(
-                                visible = !currScreen.isRoot,
+                                visible = !isRootScreen,
                                 enter = fadeIn() + expandHorizontally(),
                                 exit = shrinkHorizontally() + fadeOut(),
                             ) {
@@ -116,10 +126,9 @@ class MainActivity : ComponentActivity() {
                                     modifier = Modifier
                                         .padding(start = EventsTheme.sizes.sizeX8)
                                         .size(EventsTheme.sizes.sizeX12)
-                                        .debouncedClickable(
-                                            interactionSource = remember {
-                                                MutableInteractionSource()
-                                            },
+                                        .debouncedClickable(interactionSource = remember {
+                                            MutableInteractionSource()
+                                        },
                                             indication = null,
                                             onClick = { navController.popBackStack() }),
                                     painter = painterResource(id = R.drawable.icon_arr_left),
@@ -128,9 +137,8 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
-                            val namePadding by
-                            animateDpAsState(
-                                targetValue = if (currScreen.isRoot) EventsTheme.sizes.sizeX12 else EventsTheme.sizes.sizeX4,
+                            val namePadding by animateDpAsState(
+                                targetValue = if (isRootScreen) EventsTheme.sizes.sizeX12 else EventsTheme.sizes.sizeX4,
                                 label = "Name padding"
                             )
 
@@ -138,11 +146,11 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier
                                     .padding(start = namePadding)
                                     .weight(1f),
-                                text = currScreen.name,
+                                text = currScreenName,
                                 style = EventsTheme.typography.subheading1
                             )
 
-                            AnimatedContent(targetState = currAction, transitionSpec = {
+                            AnimatedContent(targetState = currScreenAction, transitionSpec = {
                                 slideInHorizontally { width -> width } + fadeIn() togetherWith slideOutHorizontally { width -> width } + fadeOut()
                             }, label = "Top Bar Action") { newAction ->
                                 if (newAction != null) {
@@ -154,7 +162,7 @@ class MainActivity : ComponentActivity() {
                         }
                     },
                     bottomBar = {
-                        EventsNavBar(currentTab = currScreen.tab, onClick = { tab ->
+                        EventsNavBar(currentTab = currScreenTab, onClick = { tab ->
                             val screen = when (tab) {
                                 Tab.EVENTS -> Events
                                 Tab.GROUPS -> Groups
@@ -182,52 +190,41 @@ class MainActivity : ComponentActivity() {
                         },
                 ) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        NavHost(navController, startDestination = Events,
+                        NavHost(navController,
+                            startDestination = Events,
                             enterTransition = { EnterTransition.None },
                             exitTransition = { ExitTransition.None }) {
-                            /*
-                                Looks like we can wrap composable into custom inline function
-                             */
-                            composable<Events> { backStackEntry ->
-                                currScreen = backStackEntry.toRoute<Events>()
-                                currAction = {
-                                    EventsAction {
-                                        snackbarScope.showSnackbar("Events action!")
-                                    }
+
+                            screen<Events>(state = navState, screenAction = {
+                                EventsAction {
+                                    snackbarScope.showSnackbar("Events action!")
                                 }
+                            }) {
                                 EventsScreen()
                             }
 
-                            composable<Groups> { backStackEntry ->
-                                currScreen = backStackEntry.toRoute<Groups>()
-                                currAction = null
+                            screen<Groups>(state = navState) {
                                 Text(text = "Groups")
                             }
 
-                            composable<More> { backStackEntry ->
-                                currScreen = backStackEntry.toRoute<More>()
-                                currAction = null
+                            screen<More>(state = navState) {
                                 MoreScreen(::navigate)
                             }
-                            composable<Profile> { backStackEntry ->
-                                currScreen = backStackEntry.toRoute<Profile>()
-                                currAction = {
+
+                            screen<Profile>(state = navState,
+                                screenAction = {
                                     ProfileAction {
                                         snackbarScope.showSnackbar("Profile action!")
                                     }
                                 }
+                            ) {
                                 ProfileScreen()
                             }
 
-                            composable<Showcase> { backStackEntry ->
-                                currScreen = backStackEntry.toRoute<Showcase>()
-                                currAction = null
+                            screen<Showcase>(state = navState) {
                                 ShowcaseScreen(snackbarScope)
                             }
-
-                            composable<MyEvents> { backStackEntry ->
-                                currScreen = backStackEntry.toRoute<MyEvents>()
-                                currAction = null
+                            screen<MyEvents>(state = navState) {
                                 MyEventsScreen()
                             }
                         }
@@ -235,6 +232,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+inline fun <reified T : Screen> NavGraphBuilder.screen(
+    state: MutableState<NavigationState>,
+    noinline screenAction: @Composable (() -> Unit)? = null,
+    noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
+) {
+    composable<T> { navBackStackEntry ->
+        state.value = state.value.copy(
+            screen = navBackStackEntry.toRoute<T>(),
+            action = screenAction,
+        )
+        content(navBackStackEntry)
     }
 }
 
@@ -247,9 +258,7 @@ fun ProfileAction(onClick: () -> Unit) {
             .debouncedClickable(
                 interactionSource = remember {
                     MutableInteractionSource()
-                },
-                indication = null,
-                onClick = onClick
+                }, indication = null, onClick = onClick
             ),
         painter = painterResource(id = R.drawable.icon_pencil),
         tint = EventsTheme.colors.neutralActive,
@@ -265,9 +274,7 @@ fun EventsAction(onClick: () -> Unit) {
             .debouncedClickable(
                 interactionSource = remember {
                     MutableInteractionSource()
-                },
-                indication = null,
-                onClick = onClick
+                }, indication = null, onClick = onClick
             ),
         painter = painterResource(id = R.drawable.icon_plus),
         tint = EventsTheme.colors.neutralActive,
@@ -327,3 +334,8 @@ data object Showcase : Screen {
     override val name: String = "Showcase"
     override val isRoot: Boolean = false
 }
+
+data class NavigationState(
+    val screen: Screen,
+    val action: @Composable (() -> Unit)?,
+)
