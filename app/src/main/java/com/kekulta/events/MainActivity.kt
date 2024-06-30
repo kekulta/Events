@@ -6,27 +6,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -38,7 +26,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -53,6 +40,7 @@ import com.kekulta.events.ui.base.snackbar.rememberSnackbarScope
 import com.kekulta.events.ui.base.snackbar.showSnackbar
 import com.kekulta.events.ui.elements.EventsNavBar
 import com.kekulta.events.ui.elements.EventsScreen
+import com.kekulta.events.ui.elements.EventsTopBar
 import com.kekulta.events.ui.elements.MoreScreen
 import com.kekulta.events.ui.elements.MyEventsScreen
 import com.kekulta.events.ui.elements.ProfileScreen
@@ -105,76 +93,18 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                /*
-                    Paddings are mess. Will fix that later.
-                 */
                 Scaffold(
                     containerColor = EventsTheme.colors.neutralWhite,
                     topBar = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .statusBarsPadding()
-                                .padding(vertical = EventsTheme.sizes.sizeX6)
-                        ) {
-                            AnimatedVisibility(
-                                visible = !isRootScreen,
-                                enter = fadeIn() + expandHorizontally(),
-                                exit = shrinkHorizontally() + fadeOut(),
-                            ) {
-                                Icon(
-                                    modifier = Modifier
-                                        .padding(start = EventsTheme.sizes.sizeX8)
-                                        .size(EventsTheme.sizes.sizeX12)
-                                        .debouncedClickable(interactionSource = remember {
-                                            MutableInteractionSource()
-                                        },
-                                            indication = null,
-                                            onClick = { navController.popBackStack() }),
-                                    painter = painterResource(id = R.drawable.icon_arr_left),
-                                    tint = EventsTheme.colors.neutralActive,
-                                    contentDescription = null
-                                )
-                            }
-
-                            val namePadding by animateDpAsState(
-                                targetValue = if (isRootScreen) EventsTheme.sizes.sizeX12 else EventsTheme.sizes.sizeX4,
-                                label = "Name padding"
-                            )
-
-                            Text(
-                                modifier = Modifier
-                                    .padding(start = namePadding)
-                                    .weight(1f),
-                                text = currScreenName,
-                                style = EventsTheme.typography.subheading1
-                            )
-
-                            AnimatedContent(targetState = currScreenAction, transitionSpec = {
-                                slideInHorizontally { width -> width } + fadeIn() togetherWith slideOutHorizontally { width -> width } + fadeOut()
-                            }, label = "Top Bar Action") { newAction ->
-                                if (newAction != null) {
-                                    Box(modifier = Modifier.padding(end = EventsTheme.sizes.sizeX12)) {
-                                        newAction.invoke()
-                                    }
-                                }
-                            }
-                        }
+                        EventsTopBar(
+                            showBackButton = !isRootScreen,
+                            onBackPressed = { navController.popBackStack() },
+                            currScreenName = currScreenName,
+                            currScreenAction = currScreenAction,
+                        )
                     },
                     bottomBar = {
-                        EventsNavBar(currentTab = currScreenTab, onClick = { tab ->
-                            val screen = when (tab) {
-                                Tab.EVENTS -> Events
-                                Tab.GROUPS -> Groups
-                                Tab.MORE -> More
-                                else -> null
-                            }
-
-                            screen?.let {
-                                navigate(it)
-                            }
-
-                        })
+                        EventsNavBar(currentTab = currScreenTab, navigate = ::navigate)
                     },
                     snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState)

@@ -25,6 +25,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kekulta.events.Events
+import com.kekulta.events.Groups
+import com.kekulta.events.More
 import com.kekulta.events.R
 import com.kekulta.events.Screen
 import com.kekulta.events.ui.base.buttons.debouncedClickable
@@ -36,7 +39,7 @@ typealias Navigate = (dest: Screen) -> Unit
 @Composable
 fun EventsNavBar(
     currentTab: Tab,
-    onClick: (tab: Tab) -> Unit,
+    navigate: Navigate,
 ) {
 
     if (currentTab != Tab.NO_BAR) {
@@ -51,21 +54,21 @@ fun EventsNavBar(
         ) {
             EventsNavigationItem(
                 selected = currentTab == Tab.EVENTS,
-                onClick = { onClick(Tab.EVENTS) },
+                onClick = { navigate(Events) },
                 icon = R.drawable.icon_events,
                 name = R.string.tab_events,
             )
 
             EventsNavigationItem(
                 selected = currentTab == Tab.GROUPS,
-                onClick = { onClick(Tab.GROUPS) },
+                onClick = { navigate(Groups) },
                 icon = R.drawable.icon_groups,
                 name = R.string.tab_groups,
             )
 
             EventsNavigationItem(
                 selected = currentTab == Tab.MORE,
-                onClick = { onClick(Tab.MORE) },
+                onClick = { navigate(More) },
                 icon = R.drawable.icon_more,
                 name = R.string.tab_more,
             )
