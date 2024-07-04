@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Events</string>
+    <string name="tab_more">More</string>
+    <string name="tab_events">Events</string>
+    <string name="tab_groups">Groups</string>
+</resources>
