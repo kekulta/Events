@@ -35,7 +35,7 @@ val LightColorScheme = EventsColorScheme(
     neutralOffWhite = Color(0xFFF7F7FC),
 )
 
-val LocalColorScheme = staticCompositionLocalOf {
-    LightColorScheme
+val LocalColorScheme = staticCompositionLocalOf<EventsColorScheme> {
+    error("No color scheme provided!")
 }
 

@@ -53,4 +53,6 @@ val EventsLocalSizeSystem = EventsSizeSystem(
     sizeX100 = scaleFactor * unit * 100.dp,
 )
 
-val LocalSizeSystem = staticCompositionLocalOf { EventsLocalSizeSystem }
+val LocalSizeSystem = staticCompositionLocalOf<EventsSizeSystem> {
+    error("No size system provided!")
+ }
