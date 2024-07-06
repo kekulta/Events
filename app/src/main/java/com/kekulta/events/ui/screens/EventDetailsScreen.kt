@@ -1,8 +1,18 @@
 package com.kekulta.events.ui.screens
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -10,6 +20,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -21,15 +37,37 @@ import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.AttendeesRow
 import com.kekulta.events.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.ui.widgets.base.chips.RoundChip
+import com.kekulta.events.ui.widgets.base.modifiers.blur
+import com.kekulta.events.ui.widgets.base.modifiers.noIndicationClickable
+import me.saket.telephoto.zoomable.rememberZoomableState
+import me.saket.telephoto.zoomable.zoomable
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun EventDetailsScreen(id: String) {/*
+fun EventDetailsScreen(id: String) {
+
+    /*
         Temporary solution. There will be separate vos for list and for details.
+        Both will be extracted from ViewModel, not from args.
      */
     val vo = mockEventsVo(4)[3]
 
+    var isSelected by remember {
+        mutableStateOf(false)
+    }
+
+    var scale by remember { mutableFloatStateOf(1f) }
+
+    if (!isSelected) {
+        scale = 1f
+    }
+
+    BackHandler(enabled = isSelected) {
+        isSelected = false
+    }
+
     LazyColumn(
+        modifier = Modifier.blur(radius = EventsTheme.sizes.sizeX8, enabled = isSelected)
     ) {
         item {
             Text(
@@ -66,6 +104,7 @@ fun EventDetailsScreen(id: String) {/*
                     .padding(top = EventsTheme.sizes.sizeX6)
                     .height(EventsTheme.sizes.sizeX100)
                     .fillMaxWidth()
+                    .noIndicationClickable { isSelected = true }
                     .clip(RoundedCornerShape(EventsTheme.sizes.sizeX12)),
                 model = "https://i.ibb.co/Lphf2PK/map.jpg",
                 contentDescription = "Avatar",
@@ -87,13 +126,13 @@ fun EventDetailsScreen(id: String) {/*
             AttendeesRow(
                 modifier = Modifier
                     .padding(horizontal = EventsTheme.sizes.sizeX9)
-                    .padding(top = EventsTheme.sizes.sizeX10),
-                avatars = mockAvatars(15)
+                    .padding(top = EventsTheme.sizes.sizeX10), avatars = mockAvatars(15)
             )
         }
 
         item {
             EventsFilledButton(modifier = Modifier
+
                 /*
                     Paddings are *mess*
                  */
@@ -101,6 +140,35 @@ fun EventDetailsScreen(id: String) {/*
                 .fillMaxWidth(),
                 onClick = { /*TODO*/ }) {
                 Text(text = "I'll go!")
+            }
+        }
+    }
+    AnimatedContent(
+        isSelected, label = "basic_transition",
+        transitionSpec = {
+            if (isSelected) {
+                slideInVertically { height -> height } + fadeIn() togetherWith slideOutVertically { height -> -height } + fadeOut()
+            } else {
+                slideInVertically { height -> -height } + fadeIn() togetherWith slideOutVertically { height -> height } + fadeOut()
+            }.using(
+                SizeTransform(clip = false)
+            )
+        },
+    ) { showOverlay ->
+        if (showOverlay) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.TopCenter,
+            ) {
+                AsyncImage(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .noIndicationClickable { isSelected = false }
+                        .zoomable(state = rememberZoomableState()),
+                    contentScale = ContentScale.Fit,
+                    model = "https://i.ibb.co/Lphf2PK/map.jpg",
+                    contentDescription = "Avatar",
+                )
             }
         }
     }
