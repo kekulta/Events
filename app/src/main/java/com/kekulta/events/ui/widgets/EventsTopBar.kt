@@ -25,8 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
-import com.kekulta.events.ui.widgets.base.buttons.debouncedClickable
 import com.kekulta.events.ui.theme.EventsTheme
+import com.kekulta.events.ui.widgets.base.buttons.debouncedClickable
 
 /*
     Paddings are mess. Will fix that later.

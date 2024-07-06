@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
+            val backDispatcher = checkNotNull(LocalOnBackPressedDispatcherOwner.current) {
+                "No OnBackPressedDispatcherOwner was provided via LocalOnBackPressedDispatcherOwner"
+            }.onBackPressedDispatcher
+
 
             ProvideNavigator(navController = navController) {
                 EventsTheme {
@@ -56,7 +61,9 @@ class MainActivity : ComponentActivity() {
                         topBar = {
                             EventsTopBar(
                                 showBackButton = !isRootScreen,
-                                onBackPressed = { navController.popBackStack() },
+                                onBackPressed = {
+                                    backDispatcher.onBackPressed()
+                                },
                                 currScreenName = currScreenName,
                                 currScreenAction = currScreenAction,
                             )
