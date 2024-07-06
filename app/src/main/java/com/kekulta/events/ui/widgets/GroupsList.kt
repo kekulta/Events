@@ -8,17 +8,18 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.ui.Modifier
+import com.kekulta.events.ui.models.GroupElementVo
 import com.kekulta.events.ui.theme.EventsTheme
 
 fun LazyListScope.groupsList(
-    groups: List<GroupElementVo>, onClick: ((GroupId) -> Unit)? = null
+    groups: List<GroupElementVo>, onClick: ((GroupElementVo) -> Unit)? = null
 ) {
     itemsIndexed(groups) { index, vo ->
         GroupElement(modifier = Modifier
             .padding(horizontal = EventsTheme.sizes.sizeX9)
             .fillMaxWidth(),
             groupVo = vo,
-            onClick = { onClick?.invoke(vo.id) })
+            onClick = { onClick?.invoke(vo) })
         Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
         if (index != 9) {
             HorizontalDivider(

@@ -7,8 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.kekulta.events.ui.screens.EventDetailsScreen
 import com.kekulta.events.ui.screens.EventsAction
 import com.kekulta.events.ui.screens.EventsScreen
+import com.kekulta.events.ui.screens.GroupDetailsScreen
 import com.kekulta.events.ui.screens.GroupsScreen
 import com.kekulta.events.ui.screens.MoreScreen
 import com.kekulta.events.ui.screens.MyEventsScreen
@@ -26,7 +28,7 @@ fun EventsNavGraph(
 ) {
     NavHost(
         navController,
-        startDestination = Events,
+        startDestination = Events(),
         enterTransition = {
             fadeIn(animationSpec = tween(200))
         },
@@ -50,13 +52,11 @@ fun EventsNavGraph(
             MoreScreen()
         }
 
-        screen<Profile>(state = navState,
-            screenAction = {
-                ProfileAction {
-                    snackbarScope.showSnackbar("Profile action!")
-                }
+        screen<Profile>(state = navState, screenAction = {
+            ProfileAction {
+                snackbarScope.showSnackbar("Profile action!")
             }
-        ) {
+        }) {
             ProfileScreen()
         }
 
@@ -66,7 +66,13 @@ fun EventsNavGraph(
         screen<MyEvents>(state = navState) {
             MyEventsScreen()
         }
+
+        screen<GroupDetails>(state = navState) { (_, dest) ->
+            GroupDetailsScreen(id = dest.id)
+        }
+
+        screen<EventDetails>(state = navState) { (_, dest) ->
+            EventDetailsScreen(id = dest.id)
+        }
     }
 }
-
-

@@ -13,21 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.kekulta.events.ui.widgets.base.chips.RoundChip
+import com.kekulta.events.ui.models.EventElementVo
 import com.kekulta.events.ui.theme.EventsTheme
-
-data class EventElementVo(
-    val name: String,
-    val avatar: String?,
-    /* TODO: This is VO representation. This data shouldn't be stored like that,
-         it should be stored in appropriate classes with regards to locale(i.e. timezone and
-          language). As well as we shouldn't pass these classes to the View layer. All formatting
-          must be done in ViewModel via specialised formatters */
-    val date: String,
-    val note: String?,
-    val place: String,
-    val tags: List<String>,
-)
+import com.kekulta.events.ui.widgets.base.chips.RoundChip
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

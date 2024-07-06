@@ -10,7 +10,7 @@ typealias SnackbarScope = (suspend SnackbarHostState.() -> Unit) -> Unit
 
 @Composable
 fun rememberSnackbarScope(
-    snackbarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ): SnackbarScope {
     return { snackbarScope ->

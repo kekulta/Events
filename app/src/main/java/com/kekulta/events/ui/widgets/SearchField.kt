@@ -30,8 +30,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import com.kekulta.events.R
-import com.kekulta.events.ui.widgets.base.buttons.focusBorder
 import com.kekulta.events.ui.theme.EventsTheme
+import com.kekulta.events.ui.widgets.base.buttons.focusBorder
 
 @Composable
 fun SearchField(
