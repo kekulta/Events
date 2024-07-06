@@ -126,7 +126,7 @@ val EventsTypographyValue = EventsTypography(
     ),
 )
 
-val LocalTypography = staticCompositionLocalOf {
-    EventsTypographyValue
+val LocalTypography = staticCompositionLocalOf<EventsTypography> {
+    error("No typography provided!")
 }
 

@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.kekulta.events.ui.base.snackbar.SnackbarScope
+import com.kekulta.events.ui.widgets.base.snackbar.SnackbarScope
 
 @Composable
 fun ShowcaseScreen(snackbarScope: SnackbarScope) {
@@ -17,6 +17,9 @@ fun ShowcaseScreen(snackbarScope: SnackbarScope) {
     val focusedSource = remember { MutableInteractionSource() }
     val hoveredSource = remember { MutableInteractionSource() }
 
+    /*
+        It was once changeable and maybe will bw again one day
+     */
     var isEnabled by remember {
         mutableStateOf(false)
     }

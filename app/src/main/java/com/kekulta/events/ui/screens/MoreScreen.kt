@@ -1,0 +1,53 @@
+package com.kekulta.events.ui.screens
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import com.kekulta.events.R
+import com.kekulta.events.ui.navigation.MyEvents
+import com.kekulta.events.ui.navigation.Profile
+import com.kekulta.events.ui.navigation.Showcase
+import com.kekulta.events.ui.navigation.findNavigator
+import com.kekulta.events.ui.widgets.ProfileItem
+import com.kekulta.events.ui.widgets.SettingsItem
+import com.kekulta.events.ui.theme.EventsTheme
+
+@Composable
+fun MoreScreen(
+) {
+    val navigator = findNavigator()
+
+    LazyColumn(
+        modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX8),
+    ) {
+        item {
+            ProfileItem(
+                modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                profileVo = ProfileVO(
+                    name = "Ruslan Russkikh",
+                    phone = "+7 995 917-72-42",
+                    avatar = null
+                ), onClick = { navigator.navTo(Profile) })
+        }
+        item {
+            SettingsItem(
+                modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_events),
+                name = "My events",
+                onClick = {
+                    navigator.navTo(MyEvents)
+                })
+        }
+        item {
+            SettingsItem(
+                modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_search),
+                name = "Showcase",
+                onClick = {
+                    navigator.navTo(Showcase)
+                })
+        }
+    }
+}
