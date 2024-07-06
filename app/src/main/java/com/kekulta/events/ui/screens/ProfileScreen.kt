@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
+import com.kekulta.events.ui.models.ProfileVo
 import com.kekulta.events.ui.widgets.base.buttons.EventsButtonDefaults
 import com.kekulta.events.ui.widgets.base.buttons.EventsOutlinedButton
 import com.kekulta.events.ui.widgets.base.buttons.debouncedClickable
@@ -24,7 +25,7 @@ import com.kekulta.events.ui.theme.EventsTheme
 @Composable
 fun ProfileScreen(
 ) {
-    val profileVO = ProfileVO(
+    val profileVO = ProfileVo(
         name = "Ruslan Russkikh",
         phone = "+7 995 917-72-42",
         avatar = null
@@ -121,12 +122,3 @@ fun ProfileAction(onClick: () -> Unit) {
         contentDescription = null
     )
 }
-
-data class ProfileVO(val avatar: String?, val name: String, val phone: String)
-
-data class Socials(
-    val twitter: String?,
-    val instagram: String?,
-    val linkedin: String?,
-    val facebook: String?,
-)

@@ -17,6 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.kekulta.events.ui.models.EventsElementsTabVo
+import com.kekulta.events.ui.navigation.EventDetails
+import com.kekulta.events.ui.navigation.findNavigator
 import com.kekulta.events.ui.showcase.mockEventsVo
 import com.kekulta.events.ui.theme.EventsTheme
 import kotlinx.coroutines.launch
@@ -27,8 +30,8 @@ fun EventsTabs(tabs: List<EventsElementsTabVo>, modifier: Modifier = Modifier) {
     val pagerState = rememberPagerState {
         tabs.size
     }
-
     val scope = rememberCoroutineScope()
+    val navigator = findNavigator()
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -79,15 +82,22 @@ fun EventsTabs(tabs: List<EventsElementsTabVo>, modifier: Modifier = Modifier) {
                 item {
                     Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX8))
                 }
-                eventsList(events = tabs[index].events)
+                eventsList(
+                    events = tabs[index].events,
+                    onClick = { vo ->
+                        navigator.navTo(
+                            EventDetails(
+                                id = vo.id,
+                                name = vo.name,
+                                tab = navigator.currTab()
+                            )
+                        )
+                    }
+                )
             }
         }
     }
 }
-
-data class EventsElementsTabVo(
-    val title: String, val events: List<EventElementVo>
-)
 
 fun mockTabVo(name: String): EventsElementsTabVo {
     return EventsElementsTabVo(title = name, mockEventsVo(20))

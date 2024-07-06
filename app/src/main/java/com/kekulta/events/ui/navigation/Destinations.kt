@@ -2,48 +2,67 @@ package com.kekulta.events.ui.navigation
 
 import kotlinx.serialization.Serializable
 
-enum class Tab {
-    EVENTS, GROUPS, MORE, NO_TAB, NO_BAR, ANY,
+/*
+    All destinations *must* be data classes and not data objects!
+    Otherwise they will throw error we try to read them from backstack by interface.
+ */
+
+@Serializable
+data class Events(
+    override val tab: Tab = Tab.EVENTS,
+    override val name: String = "Events",
+    override val isRoot: Boolean = true,
+) : Screen
+
+@Serializable
+data class MyEvents(
+    override val tab: Tab = Tab.MORE,
+    override val name: String = "My Events",
+    override val isRoot: Boolean = false,
+) : Screen
+
+@Serializable
+data class Groups(
+    override val tab: Tab = Tab.GROUPS,
+    override val name: String = "Groups",
+    override val isRoot: Boolean = true,
+) : Screen
+
+@Serializable
+data class More(
+    override val tab: Tab = Tab.MORE,
+    override val name: String = "More",
+    override val isRoot: Boolean = true,
+) : Screen
+
+@Serializable
+data class Profile(
+    override val tab: Tab = Tab.MORE,
+    override val name: String = "Profile",
+    override val isRoot: Boolean = false,
+) : Screen
+
+@Serializable
+data class Showcase(
+    override val tab: Tab = Tab.MORE,
+    override val name: String = "Showcase",
+    override val isRoot: Boolean = false,
+) : Screen
+
+@Serializable
+data class GroupDetails(
+    val id: String,
+    override val name: String,
+    override val tab: Tab,
+) : Screen {
+    override val isRoot = false
 }
 
 @Serializable
-data object Events : Screen {
-    override val tab: Tab = Tab.EVENTS
-    override val name: String = "Events"
-    override val isRoot: Boolean = true
-}
-
-@Serializable
-data object MyEvents : Screen {
-    override val tab: Tab = Tab.MORE
-    override val name: String = "My Events"
-    override val isRoot: Boolean = false
-}
-
-@Serializable
-data object Groups : Screen {
-    override val tab: Tab = Tab.GROUPS
-    override val name: String = "Groups"
-    override val isRoot: Boolean = true
-}
-
-@Serializable
-data object More : Screen {
-    override val tab: Tab = Tab.MORE
-    override val name: String = "More"
-    override val isRoot: Boolean = true
-}
-
-@Serializable
-data object Profile : Screen {
-    override val tab: Tab = Tab.MORE
-    override val name: String = "Profile"
-    override val isRoot: Boolean = false
-}
-
-@Serializable
-data object Showcase : Screen {
-    override val tab: Tab = Tab.MORE
-    override val name: String = "Showcase"
-    override val isRoot: Boolean = false
+data class EventDetails(
+    val id: String,
+    override val name: String,
+    override val tab: Tab,
+) : Screen {
+    override val isRoot = false
 }

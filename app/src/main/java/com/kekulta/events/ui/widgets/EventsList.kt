@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.ui.Modifier
+import com.kekulta.events.ui.models.EventElementVo
 import com.kekulta.events.ui.theme.EventsTheme
 
 fun LazyListScope.eventsList(

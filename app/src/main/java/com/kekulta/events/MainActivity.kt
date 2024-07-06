@@ -14,20 +14,18 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.navigation.compose.rememberNavController
-import com.kekulta.events.ui.widgets.base.modifiers.noIndicationClickable
-import com.kekulta.events.ui.widgets.base.snackbar.rememberSnackbarScope
+import com.kekulta.events.ui.navigation.EventsNavGraph
+import com.kekulta.events.ui.navigation.ProvideNavigator
+import com.kekulta.events.ui.navigation.rememberNavState
+import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.EventsNavBar
 import com.kekulta.events.ui.widgets.EventsTopBar
-import com.kekulta.events.ui.navigation.Events
-import com.kekulta.events.ui.navigation.EventsNavGraph
-import com.kekulta.events.ui.navigation.NavigationState
-import com.kekulta.events.ui.navigation.ProvideNavigator
-import com.kekulta.events.ui.theme.EventsTheme
+import com.kekulta.events.ui.widgets.base.modifiers.noIndicationClickable
+import com.kekulta.events.ui.widgets.base.snackbar.rememberSnackbarScope
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,15 +44,7 @@ class MainActivity : ComponentActivity() {
                     val snackbarHostState = remember { SnackbarHostState() }
                     val snackbarScope = rememberSnackbarScope(snackbarHostState = snackbarHostState)
                     val focusManager = LocalFocusManager.current
-
-                    val navState = remember {
-                        mutableStateOf(
-                            NavigationState(
-                                screen = Events,
-                                action = null
-                            )
-                        )
-                    }
+                    val navState = rememberNavState()
 
                     val isRootScreen by remember { derivedStateOf { navState.value.screen.isRoot } }
                     val currScreenTab by remember { derivedStateOf { navState.value.screen.tab } }

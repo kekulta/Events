@@ -13,17 +13,19 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.kekulta.events.ui.models.EventElementVo
+import com.kekulta.events.ui.models.GroupElementVo
 import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.AttendeesRow
 import com.kekulta.events.ui.widgets.EventElement
-import com.kekulta.events.ui.widgets.EventElementVo
 import com.kekulta.events.ui.widgets.GroupElement
-import com.kekulta.events.ui.widgets.GroupElementVo
-import com.kekulta.events.ui.widgets.GroupId
 import com.kekulta.events.ui.widgets.base.snackbar.SnackbarScope
 import com.kekulta.events.ui.widgets.base.snackbar.showSnackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+fun mockAvatars(count: Int) =
+    List(count) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
 
 fun LazyListScope.showcaseSecond(
     snackbarScope: SnackbarScope,
@@ -34,8 +36,7 @@ fun LazyListScope.showcaseSecond(
             valueRange = 0f..20f,
             value = sliderPosition,
             onValueChange = { sliderPosition = it })
-        val avatars =
-            List((sliderPosition + 0.1f).toInt()) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
+        val avatars = mockAvatars((sliderPosition + 0.1f).toInt())
         AttendeesRow(modifier = Modifier.padding(EventsTheme.sizes.sizeX12), avatars = avatars)
         TempSpacer()
     }
@@ -89,6 +90,7 @@ fun mockEventsVo(size: Int): List<EventElementVo> {
 
     return List(size) { index ->
         EventElementVo(name = names[index % names.size],
+            id = System.currentTimeMillis().toString(),
             avatar = if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null,
             date = LocalDateTime.now().plusDays(index.toLong())
                 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
@@ -104,7 +106,7 @@ fun mockGroupsVo(size: Int): List<GroupElementVo> {
 
     return List(size) { index ->
         GroupElementVo(
-            id = GroupId(System.currentTimeMillis().toString()),
+            id = System.currentTimeMillis().toString(),
             name = names[index % names.size],
             avatar = if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null,
             members = "$index members",

@@ -11,15 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.kekulta.events.ui.models.GroupElementVo
 import com.kekulta.events.ui.theme.EventsTheme
-
-data class GroupElementVo(
-    val id: GroupId,
-    val name: String,
-    val avatar: String?,
-    /* TODO: Add plurals */
-    val members: String,
-)
 
 @Composable
 fun GroupElement(
@@ -53,6 +46,3 @@ fun GroupElement(
         }
     }
 }
-
-@JvmInline
-value class GroupId(val id: String)

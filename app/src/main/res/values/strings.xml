@@ -3,4 +3,5 @@
     <string name="tab_more">More</string>
     <string name="tab_events">Events</string>
     <string name="tab_groups">Groups</string>
+    <string name="groups_events">Group\'s Events</string>
 </resources>
