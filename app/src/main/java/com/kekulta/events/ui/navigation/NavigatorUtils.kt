@@ -3,6 +3,7 @@ package com.kekulta.events.ui.navigation
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -20,6 +21,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.reflect.typeOf
 
+@Composable
+fun getOnBackPressedDispatcher() = checkNotNull(LocalOnBackPressedDispatcherOwner.current) {
+    "No OnBackPressedDispatcherOwner was provided via LocalOnBackPressedDispatcherOwner"
+}.onBackPressedDispatcher
 
 val LocalNavigator = staticCompositionLocalOf<Navigator> {
     error("No navigator provided!")

@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.Events" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Events.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/null_icon</item>
+        <item name="android:windowSplashScreenBackground">@color/brandBackground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Events</item>
+    </style>
 </resources>
