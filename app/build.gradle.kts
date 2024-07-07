@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.kekulta.events"
-        minSdk = 29
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -55,6 +55,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.lottie.compose)
     implementation(libs.coil.compose)
     implementation(libs.telephoto.zoomable)
     implementation(libs.androidx.core.ktx)
