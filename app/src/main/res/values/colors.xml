@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="brandDefault">#FF9A41FE</color>
+    <color name="brandDark">#FF660EC8</color>
+    <color name="brandBackground">#FFF5ECFF</color>
+    <color name="brandLight">#FF9A41FE</color>
+    <color name="neutralActive">#FF29183B</color>
+    <color name="neutralBody">#FF1D0835</color>
+    <color name="neutralWeak">#FFA4A4A4</color>
+    <color name="neutralDisabled">#FFD4DBE7</color>
+    <color name="neutralLine">#FFEDEDED</color>
+    <color name="neutralWhite">#FFFFFFFF</color>
+    <color name="neutralOffWhite">#FFF7F7FC</color>
 </resources>
