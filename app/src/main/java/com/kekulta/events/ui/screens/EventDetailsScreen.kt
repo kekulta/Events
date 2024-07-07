@@ -10,11 +10,12 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -66,81 +67,86 @@ fun EventDetailsScreen(id: String) {
         isSelected = false
     }
 
-    LazyColumn(
-        modifier = Modifier.blur(radius = EventsTheme.sizes.sizeX8, enabled = isSelected)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .blur(radius = EventsTheme.sizes.sizeX8, enabled = isSelected)
     ) {
-        item {
-            Text(
-                modifier = Modifier.padding(
-                    horizontal = EventsTheme.sizes.sizeX9
-                ),
-                text = "${vo.date} — ${vo.place}",
-                style = EventsTheme.typography.bodyText1,
-                color = EventsTheme.colors.neutralWeak,
-            )
-        }
 
-        item {
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(EventsTheme.sizes.sizeX2),
-                verticalArrangement = Arrangement.spacedBy(EventsTheme.sizes.sizeX2),
-                modifier = Modifier
-                    .padding(
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+        ) {
+            item {
+                Text(
+                    modifier = Modifier.padding(
                         horizontal = EventsTheme.sizes.sizeX9
-                    )
-                    .padding(top = EventsTheme.sizes.sizeX2),
-            ) {
-                vo.tags.forEach { tag ->
-                    RoundChip(text = tag)
+                    ),
+                    text = "${vo.date} — ${vo.place}",
+                    style = EventsTheme.typography.bodyText1,
+                    color = EventsTheme.colors.neutralWeak,
+                )
+            }
+
+            item {
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(EventsTheme.sizes.sizeX2),
+                    verticalArrangement = Arrangement.spacedBy(EventsTheme.sizes.sizeX2),
+                    modifier = Modifier
+                        .padding(
+                            horizontal = EventsTheme.sizes.sizeX9
+                        )
+                        .padding(top = EventsTheme.sizes.sizeX2),
+                ) {
+                    vo.tags.forEach { tag ->
+                        RoundChip(text = tag)
+                    }
                 }
             }
-        }
 
-        item {
-            AsyncImage(
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .padding(horizontal = EventsTheme.sizes.sizeX9)
-                    .padding(top = EventsTheme.sizes.sizeX6)
-                    .height(EventsTheme.sizes.sizeX100)
-                    .fillMaxWidth()
-                    .noIndicationClickable { isSelected = true }
-                    .clip(RoundedCornerShape(EventsTheme.sizes.sizeX12)),
-                model = "https://i.ibb.co/Lphf2PK/map.jpg",
-                contentDescription = "Avatar",
-            )
-        }
-
-        item {
-            Text(
-                loremIpsum(),
-                modifier = Modifier
-                    .padding(horizontal = EventsTheme.sizes.sizeX9)
-                    .padding(top = EventsTheme.sizes.sizeX10),
-                style = EventsTheme.typography.metadata1,
-                color = EventsTheme.colors.neutralWeak,
-            )
-        }
-
-        item {
-            AttendeesRow(
-                modifier = Modifier
-                    .padding(horizontal = EventsTheme.sizes.sizeX9)
-                    .padding(top = EventsTheme.sizes.sizeX10), avatars = mockAvatars(15)
-            )
-        }
-
-        item {
-            EventsFilledButton(modifier = Modifier
-
-                /*
-                    Paddings are *mess*
-                 */
-                .padding(horizontal = EventsTheme.sizes.sizeX5)
-                .fillMaxWidth(),
-                onClick = { /*TODO*/ }) {
-                Text(text = "I'll go!")
+            item {
+                AsyncImage(
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .padding(horizontal = EventsTheme.sizes.sizeX9)
+                        .padding(top = EventsTheme.sizes.sizeX6)
+                        .fillMaxWidth()
+                        .aspectRatio(1.86f)
+                        .noIndicationClickable { isSelected = true }
+                        .clip(RoundedCornerShape(EventsTheme.sizes.sizeX12)),
+                    model = "https://i.ibb.co/Lphf2PK/map.jpg",
+                    contentDescription = "Avatar",
+                )
             }
+
+            item {
+                Text(
+                    loremIpsum(1000),
+                    modifier = Modifier
+                        .padding(horizontal = EventsTheme.sizes.sizeX9)
+                        .padding(vertical = EventsTheme.sizes.sizeX10),
+                    style = EventsTheme.typography.metadata1,
+                    color = EventsTheme.colors.neutralWeak,
+                )
+            }
+
+        }
+
+
+        AttendeesRow(
+            modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9), avatars = mockAvatars(15)
+        )
+
+        EventsFilledButton(modifier = Modifier
+
+            /*
+                 Paddings are *mess*
+            */
+            .padding(horizontal = EventsTheme.sizes.sizeX5)
+            .fillMaxWidth(),
+            onClick = { /*TODO*/ }) {
+            Text(text = "I'll go!")
         }
     }
     AnimatedContent(
