@@ -13,16 +13,19 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.kekulta.events.ui.base.snackbar.SnackbarScope
-import com.kekulta.events.ui.base.snackbar.showSnackbar
-import com.kekulta.events.ui.elements.AttendeesRow
-import com.kekulta.events.ui.elements.CommunityElement
-import com.kekulta.events.ui.elements.CommunityElementVo
-import com.kekulta.events.ui.elements.EventElement
-import com.kekulta.events.ui.elements.EventElementVo
+import com.kekulta.events.ui.models.EventElementVo
+import com.kekulta.events.ui.models.GroupElementVo
 import com.kekulta.events.ui.theme.EventsTheme
+import com.kekulta.events.ui.widgets.AttendeesRow
+import com.kekulta.events.ui.widgets.EventElement
+import com.kekulta.events.ui.widgets.GroupElement
+import com.kekulta.events.ui.widgets.base.snackbar.SnackbarScope
+import com.kekulta.events.ui.widgets.base.snackbar.showSnackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+fun mockAvatars(count: Int) =
+    List(count) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
 
 fun LazyListScope.showcaseSecond(
     snackbarScope: SnackbarScope,
@@ -33,8 +36,7 @@ fun LazyListScope.showcaseSecond(
             valueRange = 0f..20f,
             value = sliderPosition,
             onValueChange = { sliderPosition = it })
-        val avatars =
-            List((sliderPosition + 0.1f).toInt()) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
+        val avatars = mockAvatars((sliderPosition + 0.1f).toInt())
         AttendeesRow(modifier = Modifier.padding(EventsTheme.sizes.sizeX12), avatars = avatars)
         TempSpacer()
     }
@@ -57,11 +59,11 @@ fun LazyListScope.showcaseSecond(
         }
     }
 
-    itemsIndexed(mockCommunitiesVo(10)) { index, vo ->
-        CommunityElement(modifier = Modifier
+    itemsIndexed(mockGroupsVo(10)) { index, vo ->
+        GroupElement(modifier = Modifier
             .padding(horizontal = EventsTheme.sizes.sizeX9)
             .fillMaxWidth(),
-            communityVo = vo,
+            groupVo = vo,
             onClick = { snackbarScope.showSnackbar("Community ${vo.name} clicked!") })
         Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
         if (index != 9) {
@@ -88,6 +90,7 @@ fun mockEventsVo(size: Int): List<EventElementVo> {
 
     return List(size) { index ->
         EventElementVo(name = names[index % names.size],
+            id = System.currentTimeMillis().toString(),
             avatar = if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null,
             date = LocalDateTime.now().plusDays(index.toLong())
                 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
@@ -98,11 +101,12 @@ fun mockEventsVo(size: Int): List<EventElementVo> {
 }
 
 
-fun mockCommunitiesVo(size: Int): List<CommunityElementVo> {
+fun mockGroupsVo(size: Int): List<GroupElementVo> {
     val names = listOf("Developer Meeting", "Code'n'code", "Mobile Submarine", "Mobius")
 
     return List(size) { index ->
-        CommunityElementVo(
+        GroupElementVo(
+            id = System.currentTimeMillis().toString(),
             name = names[index % names.size],
             avatar = if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null,
             members = "$index members",
