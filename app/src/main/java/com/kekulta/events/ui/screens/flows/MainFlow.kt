@@ -24,7 +24,9 @@ import com.kekulta.events.ui.widgets.base.modifiers.noIndicationClickable
 import com.kekulta.events.ui.widgets.base.snackbar.rememberSnackbarScope
 
 @Composable
-fun MainFlow() {
+fun MainFlow(
+    navToLogin: () -> Unit,
+) {
     val backDispatcher = getOnBackPressedDispatcher()
     val navController = rememberNavController()
 
@@ -67,7 +69,8 @@ fun MainFlow() {
                 EventsNavGraph(
                     navController = navController,
                     snackbarScope = snackbarScope,
-                    navState = navState
+                    navState = navState,
+                    navToLogin = navToLogin,
                 )
             }
         }
