@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.screens
+package com.kekulta.events.ui.screens.main
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent

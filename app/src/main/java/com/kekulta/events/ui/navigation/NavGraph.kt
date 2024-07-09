@@ -7,15 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.kekulta.events.ui.screens.EventDetailsScreen
-import com.kekulta.events.ui.screens.EventsAction
-import com.kekulta.events.ui.screens.EventsScreen
-import com.kekulta.events.ui.screens.GroupDetailsScreen
-import com.kekulta.events.ui.screens.GroupsScreen
-import com.kekulta.events.ui.screens.MoreScreen
-import com.kekulta.events.ui.screens.MyEventsScreen
-import com.kekulta.events.ui.screens.ProfileAction
-import com.kekulta.events.ui.screens.ProfileScreen
+import com.kekulta.events.ui.screens.main.EventDetailsScreen
+import com.kekulta.events.ui.screens.main.EventsAction
+import com.kekulta.events.ui.screens.main.EventsScreen
+import com.kekulta.events.ui.screens.main.GroupDetailsScreen
+import com.kekulta.events.ui.screens.main.GroupsScreen
+import com.kekulta.events.ui.screens.main.MoreScreen
+import com.kekulta.events.ui.screens.main.MyEventsScreen
+import com.kekulta.events.ui.screens.main.ProfileAction
+import com.kekulta.events.ui.screens.main.ProfileScreen
 import com.kekulta.events.ui.showcase.ShowcaseScreen
 import com.kekulta.events.ui.widgets.base.snackbar.SnackbarScope
 import com.kekulta.events.ui.widgets.base.snackbar.showSnackbar
@@ -25,6 +25,7 @@ fun EventsNavGraph(
     navController: NavHostController,
     snackbarScope: SnackbarScope,
     navState: MutableState<NavigationState>,
+    navToLogin: () -> Unit,
 ) {
     NavHost(
         navController,
@@ -49,7 +50,7 @@ fun EventsNavGraph(
         }
 
         screen<More>(state = navState) {
-            MoreScreen()
+            MoreScreen(navToLogin)
         }
 
         screen<Profile>(state = navState, screenAction = {

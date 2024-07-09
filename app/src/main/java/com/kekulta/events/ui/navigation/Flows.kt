@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
     in-app destinations.
     This maybe not the best solution ever, but it is the best solution I can think of
     right now.
+    The distinct feature of the flow is its own scaffold and its own internal navigation.
  */
 
 interface AppFlow
@@ -18,3 +19,6 @@ data object SplashFlow : AppFlow
 
 @Serializable
 data object MainFlow : AppFlow
+
+@Serializable
+data object LoginFlow : AppFlow

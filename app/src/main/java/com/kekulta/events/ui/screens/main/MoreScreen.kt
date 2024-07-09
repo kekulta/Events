@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.screens
+package com.kekulta.events.ui.screens.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +17,10 @@ import com.kekulta.events.ui.widgets.SettingsItem
 
 @Composable
 fun MoreScreen(
+    /*
+        I'm in hurry, namings and logic are mess. But I'll fix that, I promise!
+     */
+    navToLogin: () -> Unit,
 ) {
     val navigator = findNavigator()
 
@@ -44,6 +48,14 @@ fun MoreScreen(
                 name = "Showcase",
                 onClick = {
                     navigator.navTo(Showcase())
+                })
+        }
+        item {
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_pencil),
+                name = "Login Flow",
+                onClick = {
+                    navToLogin()
                 })
         }
     }

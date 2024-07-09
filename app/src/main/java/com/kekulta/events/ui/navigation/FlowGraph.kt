@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kekulta.events.ui.screens.flows.LoginFlow
 import com.kekulta.events.ui.screens.flows.MainFlow
 import com.kekulta.events.ui.screens.flows.SplashFlow
 
@@ -23,7 +24,23 @@ fun FlowGraph() {
         }
 
         composable<MainFlow> {
-            MainFlow()
+            MainFlow {
+                navController.navigate(LoginFlow) {
+                    popUpTo(MainFlow) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
+
+        composable<LoginFlow> {
+            LoginFlow() {
+                navController.navigate(MainFlow) {
+                    popUpTo(LoginFlow) {
+                        inclusive = true
+                    }
+                }
+            }
         }
     }
 }

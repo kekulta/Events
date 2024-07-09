@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.screens
+package com.kekulta.events.ui.screens.main
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
