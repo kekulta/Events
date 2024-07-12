@@ -28,6 +28,7 @@ data class EventsSizeSystem(
     val sizeX25: Dp,
     val sizeX26: Dp,
     val sizeX50: Dp,
+    val sizeX90: Dp,
     val sizeX100: Dp,
 )
 
@@ -50,7 +51,10 @@ val EventsLocalSizeSystem = EventsSizeSystem(
     sizeX25 = scaleFactor * unit * 25.dp,
     sizeX26 = scaleFactor * unit * 26.dp,
     sizeX50 = scaleFactor * unit * 50.dp,
+    sizeX90 = scaleFactor * unit * 90.dp,
     sizeX100 = scaleFactor * unit * 100.dp,
 )
 
-val LocalSizeSystem = staticCompositionLocalOf { EventsLocalSizeSystem }
+val LocalSizeSystem = staticCompositionLocalOf<EventsSizeSystem> {
+    error("No size system provided!")
+ }
