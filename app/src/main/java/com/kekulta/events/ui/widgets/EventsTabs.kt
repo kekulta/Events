@@ -88,7 +88,6 @@ fun EventsTabs(tabs: List<EventsElementsTabVo>, modifier: Modifier = Modifier) {
                         navigator.navTo(
                             EventDetails(
                                 id = vo.id,
-                                name = vo.name,
                                 tab = navigator.currTab()
                             )
                         )

@@ -8,11 +8,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.kekulta.events.R
+import com.kekulta.events.ui.navigation.Events
+import com.kekulta.events.ui.navigation.findNavigator
 import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.base.animation.LottieAnimation
 
 @Composable
-fun SplashScreen(onSplashEnd: () -> Unit) {
+fun SplashScreen() {
+    val navigator = findNavigator()
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LottieAnimation(
@@ -20,7 +23,7 @@ fun SplashScreen(onSplashEnd: () -> Unit) {
             LottieCompositionSpec.RawRes(
                 R.raw.splash_coffee
             ),
-            onEnd = onSplashEnd,
+            onEnd = { navigator.setRoot(Events()) },
         )
     }
 }

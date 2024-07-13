@@ -36,6 +36,8 @@ import com.kekulta.events.ui.showcase.mockAvatars
 import com.kekulta.events.ui.showcase.mockEventsVo
 import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.AttendeesRow
+import com.kekulta.events.ui.widgets.EventsTopBarState
+import com.kekulta.events.ui.widgets.SetTopBar
 import com.kekulta.events.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.ui.widgets.base.chips.RoundChip
 import com.kekulta.events.ui.widgets.base.modifiers.blur
@@ -65,6 +67,16 @@ fun EventDetailsScreen(id: String) {
 
     BackHandler(enabled = isSelected) {
         isSelected = false
+    }
+
+    SetTopBar {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = true,
+            currScreenAction = null,
+            /* Will be loaded from viewModel */
+            currScreenName = "Event's Name"
+        )
     }
 
     Column(
