@@ -2,6 +2,7 @@ package com.kekulta.events.ui.screens.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -43,12 +44,66 @@ fun MoreScreen(
                 onClick = { navigator.navTo(Profile()) })
         }
         item {
-            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX6),
                 icon = painterResource(id = R.drawable.icon_events),
                 name = "My events",
                 onClick = {
                     navigator.navTo(MyEvents())
                 })
+        }
+        item {
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_theme),
+                name = "Theme",
+                onClick = {
+                    navigator.navTo(MyEvents())
+                })
+        }
+        item {
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_notification),
+                name = "Notifications",
+                onClick = {
+                    navigator.navTo(MyEvents())
+                })
+        }
+        item {
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_safety),
+                name = "Safety",
+                onClick = {
+                    navigator.navTo(MyEvents())
+                })
+        }
+        item {
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_res),
+                name = "Resources",
+                onClick = {
+                    navigator.navTo(MyEvents())
+                })
+        }
+        item {
+            HorizontalDivider(color = EventsTheme.colors.neutralLine)
+        }
+        item {
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_help),
+                name = "Help",
+                onClick = {
+                    navigator.navTo(MyEvents())
+                })
+        }
+        item {
+            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                icon = painterResource(id = R.drawable.icon_mail),
+                name = "Invite friends",
+                onClick = {
+                    navigator.navTo(MyEvents())
+                })
+        }
+        item {
+            HorizontalDivider(color = EventsTheme.colors.neutralLine)
         }
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
