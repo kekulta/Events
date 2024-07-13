@@ -29,7 +29,7 @@ fun EventsNavGraph(
 ) {
     NavHost(
         navController,
-        startDestination = EnterProfile(),
+        startDestination = Splash(),
         enterTransition = {
             fadeIn(animationSpec = tween(200))
         },
