@@ -12,11 +12,23 @@ import com.kekulta.events.ui.navigation.EventDetails
 import com.kekulta.events.ui.navigation.findNavigator
 import com.kekulta.events.ui.showcase.mockEventsVo
 import com.kekulta.events.ui.theme.EventsTheme
+import com.kekulta.events.ui.widgets.EventsTopBarState
+import com.kekulta.events.ui.widgets.SetTopBar
 import com.kekulta.events.ui.widgets.eventsList
 
 @Composable
 fun GroupDetailsScreen(id: String) {
     val navigator = findNavigator()
+
+    SetTopBar {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = true,
+            currScreenAction = null,
+            /* Will be loaded from viewModel */
+            currScreenName = "Group's Name"
+        )
+    }
 
     LazyColumn {
 
@@ -51,7 +63,6 @@ fun GroupDetailsScreen(id: String) {
                 navigator.navTo(
                     EventDetails(
                         id = vo.id,
-                        name = vo.name,
                         tab = navigator.currTab()
                     )
                 )

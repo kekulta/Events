@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -31,8 +35,8 @@ val LocalNavigator = staticCompositionLocalOf<Navigator> {
 }
 
 @Composable
-fun rememberNavState(): MutableState<NavigationState> =
-    remember { mutableStateOf(NavigationState(Events(), null)) }
+fun rememberNavState(): MutableState<EventsNavBarState> =
+    remember { mutableStateOf(EventsNavBarState(Tab.EVENTS)) }
 
 @Composable
 fun findNavigator(): Navigator = LocalNavigator.current
@@ -45,18 +49,38 @@ fun ProvideNavigator(navController: NavController, content: @Composable () -> Un
 }
 
 inline fun <reified T : Screen> NavGraphBuilder.screen(
-    state: MutableState<NavigationState>,
-    noinline screenAction: @Composable (() -> Unit)? = null,
+    state: MutableState<EventsNavBarState>,
+    slide: Boolean = false,
     noinline content: @Composable AnimatedContentScope.(Pair<NavBackStackEntry, T>) -> Unit
 ) {
     composable<T>(
-        typeMap = mapOf(typeOf<Tab>() to parcelableType<Tab>())
+        typeMap = mapOf(typeOf<Tab>() to parcelableType<Tab>()),
+        enterTransition = if (slide) {
+            { slideInHorizontally { height -> height } + fadeIn() }
+        } else {
+            null
+        },
+        exitTransition = if (slide) {
+            { slideOutHorizontally { height -> -height } + fadeOut() }
+        } else {
+            null
+        },
+        popEnterTransition = if (slide) {
+            { slideInHorizontally { height -> -height } + fadeIn() }
+        } else {
+            null
+        },
+        popExitTransition = if (slide) {
+            { slideOutHorizontally { height -> height } + fadeOut() }
+        } else {
+            null
+        },
     ) { navBackStackEntry ->
 
         val screen = navBackStackEntry.toRoute<T>()
 
         state.value = state.value.copy(
-            screen = screen, action = screenAction,
+            tab = screen.tab,
         )
         content(Pair(navBackStackEntry, screen))
     }

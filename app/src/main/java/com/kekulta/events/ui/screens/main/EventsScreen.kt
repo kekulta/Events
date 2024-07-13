@@ -14,11 +14,26 @@ import com.kekulta.events.R
 import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.EventsTabs
 import com.kekulta.events.ui.widgets.EventsSearchField
+import com.kekulta.events.ui.widgets.EventsTopBarState
+import com.kekulta.events.ui.widgets.SetTopBar
 import com.kekulta.events.ui.widgets.base.buttons.debouncedClickable
 import com.kekulta.events.ui.widgets.mockTabVo
 
 @Composable
 fun EventsScreen() {
+    SetTopBar {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = false,
+            currScreenAction = {
+                EventsAction {
+                    /* TODO */
+                }
+            },
+            currScreenName = "Events"
+        )
+    }
+
     Column {
         EventsSearchField(
             modifier = Modifier
