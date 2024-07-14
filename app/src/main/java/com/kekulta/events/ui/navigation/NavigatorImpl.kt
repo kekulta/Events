@@ -1,12 +1,21 @@
 package com.kekulta.events.ui.navigation
 
-import android.util.Log
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
-class NavComponentNavigator(private val navController: NavController) : Navigator {
+
+class NavComponentNavigator(private val navController: NavController, val onExit: () -> Unit) : Navigator {
+    override fun setRoot(dest: Screen) {
+        navToInternal(dest, true)
+    }
+
     override fun navTo(dest: Screen) {
+        navToInternal(dest, false)
+    }
+
+    private fun navToInternal(dest: Screen, setRoot: Boolean) {
         val screen = currScreen()
 
         /*
@@ -17,26 +26,32 @@ class NavComponentNavigator(private val navController: NavController) : Navigato
         if (screen.tab == dest.tab && dest.isRoot && screen.isRoot) return
 
         navController.navigate(dest) {
-            /*
-                 Backstack is really messed up. We basically store every action user
-                 ever did in here. Needs some fix.
+            when {
+                setRoot -> {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
+                    }
+                    navController.graph.setStartDestination(dest)
+                }
 
-                 Probably will cause some problems with nested navigation.
-            */
+                dest.isRoot -> {
+                    popUpTo(navController.graph.findStartDestination().id)
+                }
+            }
             launchSingleTop = true
-            restoreState = true
         }
     }
 
     override fun popBack() {
-        navController.popBackStack()
+        if(!navController.navigateUp()) {
+            onExit()
+        }
     }
 
     override fun currTab(): Tab = currScreen().tab
 
     private fun currScreen(): Screen {
-
-        return requireNotNull(navController.currentBackStackEntry?.toRoute<AnyScreen>())
+        return requireNotNull(navController.currentBackStackEntry?.toRoute<AnyScreen>()) { "Empty backstack!" }
     }
 
     /*
@@ -48,8 +63,6 @@ class NavComponentNavigator(private val navController: NavController) : Navigato
     @Serializable
     private data class AnyScreen(
         override val tab: Tab = Tab.EVENTS,
-        override val name: String = "Events",
         override val isRoot: Boolean = true,
     ) : Screen
 }
-

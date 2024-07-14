@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.screens
+package com.kekulta.events.ui.screens.main
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -13,23 +13,36 @@ import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
 import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.EventsTabs
-import com.kekulta.events.ui.widgets.SearchField
+import com.kekulta.events.ui.widgets.EventsSearchField
+import com.kekulta.events.ui.widgets.EventsTopBarState
+import com.kekulta.events.ui.widgets.SetTopBar
 import com.kekulta.events.ui.widgets.base.buttons.debouncedClickable
 import com.kekulta.events.ui.widgets.mockTabVo
 
 @Composable
 fun EventsScreen() {
+    SetTopBar {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = false,
+            currScreenAction = {
+                EventsAction {
+                    /* TODO */
+                }
+            },
+            currScreenName = "Events"
+        )
+    }
+
     Column {
-        SearchField(
+        EventsSearchField(
             modifier = Modifier
                 /*
                     Edge padding should be unified in the whole app. It now can be X9 or X8 depending on
                     screen.
                 */
                 .padding(horizontal = EventsTheme.sizes.sizeX8), state = rememberTextFieldState()
-        ) {
-            /* TODO */
-        }
+        )
 
         EventsTabs(
             modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8),

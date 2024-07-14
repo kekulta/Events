@@ -1,4 +1,4 @@
-package com.kekulta.events.ui.screens
+package com.kekulta.events.ui.screens.main
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -16,15 +16,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
 import com.kekulta.events.ui.models.ProfileVo
+import com.kekulta.events.ui.theme.EventsTheme
+import com.kekulta.events.ui.widgets.EventsTopBarState
+import com.kekulta.events.ui.widgets.SetTopBar
+import com.kekulta.events.ui.widgets.UserCircleAvatar
 import com.kekulta.events.ui.widgets.base.buttons.EventsButtonDefaults
 import com.kekulta.events.ui.widgets.base.buttons.EventsOutlinedButton
 import com.kekulta.events.ui.widgets.base.buttons.debouncedClickable
-import com.kekulta.events.ui.widgets.UserCircleAvatar
-import com.kekulta.events.ui.theme.EventsTheme
 
 @Composable
 fun ProfileScreen(
 ) {
+
+    SetTopBar {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = true,
+            currScreenAction = {
+                ProfileAction {
+                    /* TODO */
+                }
+            },
+            currScreenName = "Profile"
+        )
+    }
+
     val profileVO = ProfileVo(
         name = "Ruslan Russkikh",
         phone = "+7 995 917-72-42",

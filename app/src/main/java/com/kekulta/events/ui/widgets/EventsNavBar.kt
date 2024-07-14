@@ -2,11 +2,13 @@ package com.kekulta.events.ui.widgets
 
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
 import com.kekulta.events.ui.navigation.Events
+import com.kekulta.events.ui.navigation.EventsNavBarState
 import com.kekulta.events.ui.navigation.Groups
 import com.kekulta.events.ui.navigation.More
 import com.kekulta.events.ui.navigation.Tab
@@ -16,9 +18,10 @@ import com.kekulta.events.ui.widgets.base.modifiers.advancedShadow
 
 @Composable
 fun EventsNavBar(
-    currentTab: Tab,
+    state: State<EventsNavBarState>
 ) {
     val navigator = findNavigator()
+    val currentTab = state.value.tab
 
     if (currentTab != Tab.NO_BAR) {
         NavigationBar(

@@ -7,28 +7,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.kekulta.events.ui.screens.EventDetailsScreen
-import com.kekulta.events.ui.screens.EventsAction
-import com.kekulta.events.ui.screens.EventsScreen
-import com.kekulta.events.ui.screens.GroupDetailsScreen
-import com.kekulta.events.ui.screens.GroupsScreen
-import com.kekulta.events.ui.screens.MoreScreen
-import com.kekulta.events.ui.screens.MyEventsScreen
-import com.kekulta.events.ui.screens.ProfileAction
-import com.kekulta.events.ui.screens.ProfileScreen
+import com.kekulta.events.ui.screens.login.EnterCodeScreen
+import com.kekulta.events.ui.screens.login.EnterPhoneScreen
+import com.kekulta.events.ui.screens.login.EnterProfileScreen
+import com.kekulta.events.ui.screens.main.EventDetailsScreen
+import com.kekulta.events.ui.screens.main.EventsScreen
+import com.kekulta.events.ui.screens.main.GroupDetailsScreen
+import com.kekulta.events.ui.screens.main.GroupsScreen
+import com.kekulta.events.ui.screens.main.MoreScreen
+import com.kekulta.events.ui.screens.main.MyEventsScreen
+import com.kekulta.events.ui.screens.main.ProfileScreen
+import com.kekulta.events.ui.screens.splash.SplashScreen
 import com.kekulta.events.ui.showcase.ShowcaseScreen
 import com.kekulta.events.ui.widgets.base.snackbar.SnackbarScope
-import com.kekulta.events.ui.widgets.base.snackbar.showSnackbar
 
 @Composable
 fun EventsNavGraph(
     navController: NavHostController,
     snackbarScope: SnackbarScope,
-    navState: MutableState<NavigationState>,
+    navState: MutableState<EventsNavBarState>,
 ) {
     NavHost(
         navController,
-        startDestination = Events(),
+        startDestination = Splash(),
         enterTransition = {
             fadeIn(animationSpec = tween(200))
         },
@@ -36,11 +37,7 @@ fun EventsNavGraph(
             fadeOut(animationSpec = tween(200))
         },
     ) {
-        screen<Events>(state = navState, screenAction = {
-            EventsAction {
-                snackbarScope.showSnackbar("Events action!")
-            }
-        }) {
+        screen<Events>(state = navState) {
             EventsScreen()
         }
 
@@ -52,17 +49,14 @@ fun EventsNavGraph(
             MoreScreen()
         }
 
-        screen<Profile>(state = navState, screenAction = {
-            ProfileAction {
-                snackbarScope.showSnackbar("Profile action!")
-            }
-        }) {
+        screen<Profile>(state = navState) {
             ProfileScreen()
         }
 
         screen<Showcase>(state = navState) {
             ShowcaseScreen(snackbarScope)
         }
+
         screen<MyEvents>(state = navState) {
             MyEventsScreen()
         }
@@ -73,6 +67,22 @@ fun EventsNavGraph(
 
         screen<EventDetails>(state = navState) { (_, dest) ->
             EventDetailsScreen(id = dest.id)
+        }
+
+        screen<Splash>(state = navState) {
+            SplashScreen()
+        }
+
+        screen<EnterPhone>(state = navState, slide = true) {
+            EnterPhoneScreen()
+        }
+
+        screen<EnterCode>(state = navState, slide = true) { (_, dest) ->
+            EnterCodeScreen(dest.phone)
+        }
+
+        screen<EnterProfile>(state = navState, slide = true) {
+            EnterProfileScreen()
         }
     }
 }
