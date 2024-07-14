@@ -42,9 +42,9 @@ fun rememberNavState(): MutableState<EventsNavBarState> =
 fun findNavigator(): Navigator = LocalNavigator.current
 
 @Composable
-fun ProvideNavigator(navController: NavController, content: @Composable () -> Unit) {
+fun ProvideNavigator(navController: NavController, onExit: () -> Unit, content: @Composable () -> Unit) {
     CompositionLocalProvider(
-        LocalNavigator provides NavComponentNavigator(navController), content = content
+        LocalNavigator provides NavComponentNavigator(navController, onExit), content = content
     )
 }
 

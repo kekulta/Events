@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             EventsTheme {
                 val navController = rememberNavController()
-                ProvideNavigator(navController = navController) {
+                ProvideNavigator(navController = navController, onExit = { finish() }) {
                     val navigator = findNavigator()
 
                     val snackbarHostState = remember { SnackbarHostState() }
@@ -94,9 +95,9 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-//                    BackHandler {
-//                        navigator.popBack()
-//                    }
+                    BackHandler {
+                        navigator.popBack()
+                    }
                 }
             }
         }

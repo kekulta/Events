@@ -6,7 +6,7 @@ import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
 
-class NavComponentNavigator(private val navController: NavController) : Navigator {
+class NavComponentNavigator(private val navController: NavController, val onExit: () -> Unit) : Navigator {
     override fun setRoot(dest: Screen) {
         navToInternal(dest, true)
     }
@@ -43,6 +43,9 @@ class NavComponentNavigator(private val navController: NavController) : Navigato
     }
 
     override fun popBack() {
+        if(!navController.navigateUp()) {
+            onExit()
+        }
     }
 
     override fun currTab(): Tab = currScreen().tab

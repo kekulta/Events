@@ -56,7 +56,7 @@ fun MoreScreen(
                 icon = painterResource(id = R.drawable.icon_theme),
                 name = "Theme",
                 onClick = {
-                    navigator.navTo(MyEvents())
+                    /* TODO */
                 })
         }
         item {
@@ -64,7 +64,7 @@ fun MoreScreen(
                 icon = painterResource(id = R.drawable.icon_notification),
                 name = "Notifications",
                 onClick = {
-                    navigator.navTo(MyEvents())
+                    /* TODO */
                 })
         }
         item {
@@ -72,7 +72,7 @@ fun MoreScreen(
                 icon = painterResource(id = R.drawable.icon_safety),
                 name = "Safety",
                 onClick = {
-                    navigator.navTo(MyEvents())
+                    /* TODO */
                 })
         }
         item {
@@ -80,7 +80,7 @@ fun MoreScreen(
                 icon = painterResource(id = R.drawable.icon_res),
                 name = "Resources",
                 onClick = {
-                    navigator.navTo(MyEvents())
+                    /* TODO */
                 })
         }
         item {
@@ -91,7 +91,7 @@ fun MoreScreen(
                 icon = painterResource(id = R.drawable.icon_help),
                 name = "Help",
                 onClick = {
-                    navigator.navTo(MyEvents())
+                    /* TODO */
                 })
         }
         item {
@@ -99,7 +99,7 @@ fun MoreScreen(
                 icon = painterResource(id = R.drawable.icon_mail),
                 name = "Invite friends",
                 onClick = {
-                    navigator.navTo(MyEvents())
+                    /* TODO */
                 })
         }
         item {
