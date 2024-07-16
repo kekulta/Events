@@ -8,10 +8,23 @@ import androidx.compose.ui.Modifier
 import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.EventsTabs
 import com.kekulta.events.ui.widgets.EventsSearchField
+import com.kekulta.events.ui.widgets.EventsTopBarState
+import com.kekulta.events.ui.widgets.SetTopBar
 import com.kekulta.events.ui.widgets.mockTabVo
 
 @Composable
 fun MyEventsScreen() {
+
+    rememberTextFieldState()
+    SetTopBar {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = true,
+            currScreenAction = null,
+            currScreenName = "My Events Screen"
+        )
+    }
+
     Column {
         EventsSearchField(
             modifier = Modifier

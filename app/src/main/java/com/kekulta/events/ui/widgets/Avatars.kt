@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
+import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.base.avatar.AddBadge
 import com.kekulta.events.ui.widgets.base.avatar.BasicAvatar
-import com.kekulta.events.ui.theme.EventsTheme
 
 @Composable
 fun EventSquareAvatar(
@@ -62,7 +62,7 @@ fun UserCircleAddAvatar(
         placeholder = {
             Icon(
                 modifier = Modifier
-                    .fillMaxSize(0.66f)
+                    .fillMaxSize(0.5f)
                     .aspectRatio(1f),
                 painter = painterResource(id = R.drawable.icon_avatar),
                 contentDescription = "Default avatar"
@@ -84,7 +84,7 @@ fun UserCircleAvatar(
     BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX50), placeholder = {
         Icon(
             modifier = Modifier
-                .fillMaxSize(0.33f)
+                .fillMaxSize(0.5f)
                 .aspectRatio(1f),
             painter = painterResource(id = R.drawable.icon_avatar),
             contentDescription = "Default avatar"

@@ -11,27 +11,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.kekulta.events.ui.navigation.EnterProfile
+import com.kekulta.events.ui.navigation.findNavigator
 import com.kekulta.events.ui.theme.EventsTheme
 import com.kekulta.events.ui.widgets.CODE_LENGTH
 import com.kekulta.events.ui.widgets.CodeField
+import com.kekulta.events.ui.widgets.EventsTopBarState
+import com.kekulta.events.ui.widgets.SetTopBar
 import com.kekulta.events.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.ui.widgets.base.buttons.EventsTextButton
 
 
 @Composable
 fun EnterCodeScreen(
-    /*
-        Temporary solution. Actual data transfer will be trough viewmodel.
-     */
     number: String,
-    code: String,
-    onResult: () -> Unit,
 ) {
+    val navigator = findNavigator()
+
+    SetTopBar {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = true,
+            currScreenAction = null,
+            currScreenName = ""
+        )
+    }
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = EventsTheme.sizes.sizeX90),
+            .padding(top = EventsTheme.sizes.sizeX50)
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val codeState = rememberTextFieldState()
@@ -65,7 +74,7 @@ fun EnterCodeScreen(
                     .padding(horizontal = EventsTheme.sizes.sizeX5)
                     .fillMaxWidth(),
                 onClick = {
-                    onResult()
+                    navigator.navTo(EnterProfile())
                 }) {
                 Text("Continue")
             }
