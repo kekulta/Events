@@ -17,6 +17,7 @@ lottieCompose = "6.4.1"
 kotlinx-coroutines = "1.9.0-RC"
 koin-bom = "3.5.6"
 kotlinxDateTime = "0.6.0"
+logcat = "0.1"
 
 [libraries]
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
@@ -48,6 +49,8 @@ telephoto-zoomable = { group = "me.saket.telephoto", name = "zoomable", version.
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDateTime" }
+# It does look abandoned but it's just a small logging lib, it should be ok
+logcat = { module = "com.squareup.logcat:logcat", version.ref = "logcat" }
 
 kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
