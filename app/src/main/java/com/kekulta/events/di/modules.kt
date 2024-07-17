@@ -3,6 +3,7 @@ package com.kekulta.events.di
 import com.kekulta.events.presentation.viewmodel.EventDetailViewModel
 import com.kekulta.events.presentation.viewmodel.EventDetailsFormatter
 import com.kekulta.events.presentation.viewmodel.EventDetailsUseCase
+import com.kekulta.events.presentation.viewmodel.EventRegistrationUseCase
 import com.kekulta.events.presentation.viewmodel.EventsRepository
 import com.kekulta.events.presentation.viewmodel.EventsRepositoryMock
 import com.kekulta.events.presentation.viewmodel.ProfileRepository
@@ -23,4 +24,5 @@ val viewModelsModule = module {
     singleOf(::UsersRepositoryMock) { bind<UsersRepository>() }
     factoryOf(::EventDetailsUseCase)
     factoryOf(::EventDetailsFormatter)
+    factoryOf(::EventRegistrationUseCase)
 }

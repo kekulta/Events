@@ -74,7 +74,7 @@ fun EventDetailsScreen(id: EventId, viewModel: EventDetailViewModel = koinViewMo
         }
 
         is ScreenState.Success -> {
-            SuccessScreen(vo = s.state)
+            SuccessScreen(vo = s.state, viewModel)
         }
     }
 
@@ -82,7 +82,7 @@ fun EventDetailsScreen(id: EventId, viewModel: EventDetailViewModel = koinViewMo
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun SuccessScreen(vo: EventDetailsVo) {
+private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailViewModel) {
     var isSelected by rememberSaveable {
         mutableStateOf(false)
     }
@@ -187,7 +187,7 @@ private fun SuccessScreen(vo: EventDetailsVo) {
             EventsOutlinedButton(modifier = Modifier
                 .padding(horizontal = EventsTheme.sizes.sizeX5)
                 .fillMaxWidth(),
-                onClick = { /*TODO*/ }) {
+                onClick = { viewModel.cancelRegistration() }) {
                 Text(text = "Maybe another time")
             }
         } else {
@@ -195,7 +195,7 @@ private fun SuccessScreen(vo: EventDetailsVo) {
                 // Paddings are *mess*
                 .padding(horizontal = EventsTheme.sizes.sizeX5)
                 .fillMaxWidth(),
-                onClick = { /*TODO*/ }) {
+                onClick = { viewModel.registerOnEvent() }) {
                 Text(text = "I'll go!")
             }
         }

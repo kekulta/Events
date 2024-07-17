@@ -1,9 +1,9 @@
 package com.kekulta.events.presentation.viewmodel
 
 import android.os.Parcelable
-import android.util.Log
 import com.kekulta.events.presentation.ui.loremIpsum
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDateTime
@@ -29,6 +30,7 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+import logcat.logcat
 
 fun <T, M> StateFlow<T>.map(
     coroutineScope: CoroutineScope, mapper: (value: T) -> M
@@ -117,12 +119,28 @@ class EventsRepositoryMock : EventsRepository {
         return events.map { events -> events.firstOrNull { event -> event.id == id } }
     }
 
-    override suspend fun registerForEvent(id: EventId): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun registerForEvent(id: EventId, userId: UserId): Boolean {
+        val event = eventsMap[id] ?: return false
+        val isRegistered = event.attendees.contains(userId)
+        if (isRegistered) {
+            return false
+        }
+        eventsMap[id] = event.copy(attendees = event.attendees + userId)
+        events.update { eventsMap.values.toSet() }
+
+        return true
     }
 
-    override suspend fun cancelRegistration(id: EventId): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun cancelRegistration(id: EventId, userId: UserId): Boolean {
+        val event = eventsMap[id] ?: return false
+        val attendees = event.attendees.filterNot { user -> user.id == userId.id }
+        if (attendees.size == event.attendees.size) {
+            return false
+        }
+        eventsMap[id] = event.copy(attendees = attendees)
+        events.update { eventsMap.values.toSet() }
+
+        return true
     }
 }
 
@@ -142,8 +160,8 @@ class UsersRepositoryMock : UsersRepository {
 
 interface EventsRepository {
     fun observeEventDetails(id: EventId): Flow<EventModel?>
-    suspend fun registerForEvent(id: EventId): Boolean
-    suspend fun cancelRegistration(id: EventId): Boolean
+    suspend fun registerForEvent(id: EventId, userId: UserId): Boolean
+    suspend fun cancelRegistration(id: EventId, userId: UserId): Boolean
 }
 
 interface ProfileRepository {
@@ -180,6 +198,25 @@ class EventDetailsUseCase(
                 flow<EventDetailsVo?> { emit(null) }
             }
         }.flattenLatest()
+    }
+}
+
+class EventRegistrationUseCase(
+    private val profileRepository: ProfileRepository,
+    private val eventsRepository: EventsRepository,
+) {
+    suspend fun register(id: EventId): Boolean {
+        return withContext(Dispatchers.IO) {
+            val userId = profileRepository.getCurrentProfile()?.id
+            return@withContext userId?.let { eventsRepository.registerForEvent(id, it) } ?: false
+        }
+    }
+
+    suspend fun cancel(id: EventId): Boolean {
+        return withContext(Dispatchers.IO) {
+            val userId = profileRepository.getCurrentProfile()?.id
+            return@withContext userId?.let { eventsRepository.cancelRegistration(id, it) } ?: false
+        }
     }
 }
 
@@ -227,6 +264,7 @@ inline fun <reified T> Flow<Flow<T>>.flattenLatest(): Flow<T> = flatMapLatest { 
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventDetailViewModel(
     private val eventDetailsUseCase: EventDetailsUseCase,
+    private val eventRegistrationUseCase: EventRegistrationUseCase,
 ) : AbstractCoroutineViewModel() {
     private val currId = MutableStateFlow<EventId?>(null)
 
@@ -245,9 +283,23 @@ class EventDetailViewModel(
         currId.update { eventId }
     }
 
+    fun registerOnEvent() {
+        val id = currId.value ?: return
+        launchScope {
+            eventRegistrationUseCase.register(id)
+        }
+    }
+
+    fun cancelRegistration() {
+        val id = currId.value ?: return
+        launchScope {
+            eventRegistrationUseCase.cancel(id)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
-        Log.d(TAG, "")
+        logcat { "On cleared!" }
     }
 }
 
