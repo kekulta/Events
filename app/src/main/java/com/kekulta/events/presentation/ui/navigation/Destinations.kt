@@ -1,5 +1,6 @@
 package com.kekulta.events.presentation.ui.navigation
 
+import com.kekulta.events.presentation.viewmodel.EventId
 import kotlinx.serialization.Serializable
 
 /*
@@ -80,7 +81,7 @@ data class GroupDetails(
 
 @Serializable
 data class EventDetails(
-    val id: String,
+    val id: EventId,
     override val tab: Tab,
     override val isRoot: Boolean = false,
 ) : Screen
