@@ -22,7 +22,7 @@ import com.kekulta.events.presentation.ui.navigation.EventDetails
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.showcase.mockEventsVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
-import com.kekulta.events.presentation.viewmodel.EventId
+import com.kekulta.events.domain.models.EventId
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

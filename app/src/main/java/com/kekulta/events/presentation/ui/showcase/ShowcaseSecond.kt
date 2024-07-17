@@ -13,6 +13,9 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.kekulta.events.domain.models.Avatar
+import com.kekulta.events.domain.models.UserId
+import com.kekulta.events.presentation.ui.models.AttendeeVo
 import com.kekulta.events.presentation.ui.models.EventElementVo
 import com.kekulta.events.presentation.ui.models.GroupElementVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
@@ -24,8 +27,13 @@ import com.kekulta.events.presentation.ui.widgets.base.snackbar.showSnackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-fun mockAvatars(count: Int) =
-    List(count) { index -> if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null }
+fun mockAttendees(count: Int) =
+    List(count) { index ->
+        AttendeeVo(
+            id = UserId(index.toString()),
+            avatar = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4".takeIf { index % 2 == 0 })
+        )
+    }
 
 fun LazyListScope.showcaseSecond(
     snackbarScope: SnackbarScope,
@@ -36,8 +44,11 @@ fun LazyListScope.showcaseSecond(
             valueRange = 0f..20f,
             value = sliderPosition,
             onValueChange = { sliderPosition = it })
-        val avatars = mockAvatars((sliderPosition + 0.1f).toInt())
-        AttendeesRow(modifier = Modifier.padding(EventsTheme.sizes.sizeX12), avatars = avatars)
+        val attendees = mockAttendees((sliderPosition + 0.1f).toInt())
+        AttendeesRow(
+            modifier = Modifier.padding(EventsTheme.sizes.sizeX12),
+            attendees = attendees,
+        )
         TempSpacer()
     }
 

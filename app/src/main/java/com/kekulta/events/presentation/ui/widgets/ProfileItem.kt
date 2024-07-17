@@ -35,7 +35,7 @@ fun ProfileItem(
     ) {
         UserCircleAvatar(
             modifier = Modifier.size(EventsTheme.sizes.sizeX25),
-            url = profileVo.avatar,
+            avatar = profileVo.avatar,
         )
         Column(
             modifier = Modifier

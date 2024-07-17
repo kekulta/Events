@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
+import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.models.ProfileVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
@@ -44,7 +45,7 @@ fun ProfileScreen(
     val profileVO = ProfileVo(
         name = "Ruslan Russkikh",
         phone = "+7 995 917-72-42",
-        avatar = null
+        avatar = Avatar(null)
     )
 
     Column(
@@ -55,7 +56,7 @@ fun ProfileScreen(
             modifier = Modifier
                 .padding(top = EventsTheme.sizes.sizeX16)
                 .size(EventsTheme.sizes.sizeX100),
-            url = profileVO.avatar,
+            avatar = profileVO.avatar,
         )
         Text(
             modifier =

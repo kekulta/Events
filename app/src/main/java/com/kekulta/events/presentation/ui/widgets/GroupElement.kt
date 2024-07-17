@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.models.GroupElementVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 
@@ -27,7 +28,7 @@ fun GroupElement(
             ), verticalAlignment = Alignment.Top
     ) {
         GroupSquareAvatar(
-            modifier = Modifier.padding(EventsTheme.sizes.sizeX2), url = groupVo.avatar
+            modifier = Modifier.padding(EventsTheme.sizes.sizeX2), avatar = Avatar(groupVo.avatar)
         )
         Column(
             modifier = Modifier.padding(start = EventsTheme.sizes.sizeX6)

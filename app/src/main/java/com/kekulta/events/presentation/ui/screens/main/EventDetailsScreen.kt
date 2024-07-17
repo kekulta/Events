@@ -37,6 +37,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.kekulta.events.R
+import com.kekulta.events.domain.models.EventId
+import com.kekulta.events.presentation.ui.models.EventDetailsVo
+import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.AttendeesRow
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
@@ -48,9 +51,7 @@ import com.kekulta.events.presentation.ui.widgets.base.chips.RoundChip
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.blur
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.noIndicationClickable
 import com.kekulta.events.presentation.viewmodel.EventDetailViewModel
-import com.kekulta.events.presentation.viewmodel.EventDetailsVo
-import com.kekulta.events.presentation.viewmodel.EventId
-import com.kekulta.events.presentation.viewmodel.ScreenState
+import logcat.logcat
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 import org.koin.androidx.compose.koinViewModel
@@ -180,8 +181,11 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailViewModel) {
         }
 
 
-        AttendeesRow(modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-            avatars = vo.attendees.map { attendee -> attendee.url })
+        logcat { vo.attendees.joinToString() }
+        AttendeesRow(
+            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            attendees = vo.attendees,
+        )
 
         if (vo.isAttending) {
             EventsOutlinedButton(modifier = Modifier

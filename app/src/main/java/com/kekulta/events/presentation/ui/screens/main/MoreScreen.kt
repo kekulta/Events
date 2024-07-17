@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
+import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.models.ProfileVo
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.MyEvents
@@ -39,7 +40,7 @@ fun MoreScreen(
         item {
             ProfileItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 profileVo = ProfileVo(
-                    name = "Ruslan Russkikh", phone = "+7 995 917-72-42", avatar = null
+                    name = "Ruslan Russkikh", phone = "+7 995 917-72-42", avatar = Avatar(null)
                 ),
                 onClick = { navigator.navTo(Profile()) })
         }

@@ -13,10 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.kekulta.events.R
+import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 
 @Composable
@@ -33,18 +30,11 @@ fun BasicAvatar(
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit),
     shape: Shape,
-    url: String? = null,
+    avatar: Avatar = Avatar(null),
     badgeSize: Float = 0.20f,
     borderStroke: BorderStroke = BorderStroke(0.dp, Color.Transparent),
     badge: @Composable (BoxScope.() -> Unit)? = null
 ) {
-
-    /* We shouldn't actually store state in composable due to possible configuration change and data
-    loss but here it seems to be ok, because we're actually gonna lost our progress on configuration
-    change. Yet I'm still not sure if it will behave correctly all the time. */
-    var isLoaded by remember {
-        mutableStateOf(false)
-    }
 
     Box(
         modifier = modifier
@@ -61,18 +51,20 @@ fun BasicAvatar(
                 .padding(borderStroke.width)
                 .fillMaxSize()
         ) {
-            if (!isLoaded) {
-                placeholder()
-            }
 
-            if (url != null) {
+            /*
+                Always show placeholder. Otherwise it may not be showing in layouts when data changed.
+                This could be linked to some kind of holders reuse or idk.
+             */
+            placeholder()
+
+            if (avatar.url != null) {
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxSize()
                         .aspectRatio(1f)
                         .clip(shape),
-                    model = url,
-                    onSuccess = { isLoaded = true },
+                    model = avatar.url,
                     contentDescription = "Avatar",
                 )
             }

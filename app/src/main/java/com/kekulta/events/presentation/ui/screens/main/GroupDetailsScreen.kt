@@ -15,7 +15,7 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.eventsList
-import com.kekulta.events.presentation.viewmodel.EventId
+import com.kekulta.events.domain.models.EventId
 
 @Composable
 fun GroupDetailsScreen(id: String) {

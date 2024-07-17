@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
+import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventSquareAvatar
 import com.kekulta.events.presentation.ui.widgets.EventsSearchField
@@ -356,7 +357,7 @@ fun IconsButtonGroup(
 @Composable
 fun MeetAvatarsGroup(snackbarScope: SnackbarScope) {
     EventSquareAvatar(
-        url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
+        avatar = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4"),
     )
     TempSpacer()
     EventSquareAvatar()
@@ -367,7 +368,7 @@ fun AvatarsGroup(snackbarScope: SnackbarScope) {
     val scope = rememberCoroutineScope()
 
     UserSquareAvatar(
-        url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
+        avatar = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4"),
         drawBorder = true,
     )
     TempSpacer()
@@ -375,13 +376,13 @@ fun AvatarsGroup(snackbarScope: SnackbarScope) {
     )
     TempSpacer()
     UserCircleAvatar(
-        url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
+        avatar = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4"),
     )
     TempSpacer()
     UserCircleAvatar()
     TempSpacer()
     UserCircleAddAvatar(
-        url = "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4",
+        avatar = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4"),
         onBadgeClick = { snackbarScope { showSnackbar("Change avatar") } }
     )
     TempSpacer()
