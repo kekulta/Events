@@ -25,6 +25,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.kekulta.events.presentation.ui.update
+import com.kekulta.events.presentation.viewmodel.EventId
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.reflect.typeOf
@@ -72,7 +73,10 @@ inline fun <reified T : Screen> NavGraphBuilder.screen(
         { slideOutHorizontally { height -> -height } + fadeOut() }
 
     composable<T>(
-        typeMap = mapOf(typeOf<Tab>() to parcelableType<Tab>()),
+        typeMap = mapOf(
+            typeOf<Tab>() to parcelableType<Tab>(),
+            typeOf<EventId>() to parcelableType<EventId>()
+        ),
         enterTransition = slideInRight.takeIf { slide },
         exitTransition = slideOutLeft.takeIf { slide },
         popEnterTransition = slideInLeft.takeIf { slide },

@@ -22,6 +22,7 @@ import com.kekulta.events.presentation.ui.navigation.EventDetails
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.showcase.mockEventsVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
+import com.kekulta.events.presentation.viewmodel.EventId
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,7 +88,7 @@ fun EventsTabs(tabs: List<EventsElementsTabVo>, modifier: Modifier = Modifier) {
                     onClick = { vo ->
                         navigator.navTo(
                             EventDetails(
-                                id = vo.id,
+                                id = EventId(vo.id),
                                 tab = navigator.currTab()
                             )
                         )

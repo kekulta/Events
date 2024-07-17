@@ -90,7 +90,7 @@ fun mockEventsVo(size: Int): List<EventElementVo> {
 
     return List(size) { index ->
         EventElementVo(name = names[index % names.size],
-            id = System.currentTimeMillis().toString(),
+            id = index.toString(),
             avatar = if (index % 2 == 0) "https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4" else null,
             date = LocalDateTime.now().plusDays(index.toLong())
                 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),

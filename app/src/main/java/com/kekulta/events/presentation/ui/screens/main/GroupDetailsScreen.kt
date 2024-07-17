@@ -15,6 +15,7 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.eventsList
+import com.kekulta.events.presentation.viewmodel.EventId
 
 @Composable
 fun GroupDetailsScreen(id: String) {
@@ -62,7 +63,7 @@ fun GroupDetailsScreen(id: String) {
             onClick = { vo ->
                 navigator.navTo(
                     EventDetails(
-                        id = vo.id,
+                        id = EventId(vo.id),
                         tab = navigator.currTab()
                     )
                 )
