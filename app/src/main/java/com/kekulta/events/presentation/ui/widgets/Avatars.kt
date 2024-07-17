@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
+import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.avatar.AddBadge
 import com.kekulta.events.presentation.ui.widgets.base.avatar.BasicAvatar
@@ -21,7 +22,7 @@ import com.kekulta.events.presentation.ui.widgets.base.avatar.BasicAvatar
 @Composable
 fun EventSquareAvatar(
     modifier: Modifier = Modifier,
-    url: String? = null,
+    avatar: Avatar = Avatar(null),
 ) {
     BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX24), placeholder = {
         Image(
@@ -31,13 +32,13 @@ fun EventSquareAvatar(
             painter = painterResource(id = R.drawable.icon_event_avatar),
             contentDescription = "Default avatar"
         )
-    }, shape = RoundedCornerShape(33), url = url)
+    }, shape = RoundedCornerShape(33), avatar = avatar)
 }
 
 @Composable
 fun GroupSquareAvatar(
     modifier: Modifier = Modifier,
-    url: String? = null,
+    avatar: Avatar = Avatar(null),
 ) {
     BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX24), placeholder = {
         Image(
@@ -47,13 +48,13 @@ fun GroupSquareAvatar(
             painter = painterResource(id = R.drawable.icon_community_avatar),
             contentDescription = "Default avatar"
         )
-    }, shape = RoundedCornerShape(33), url = url)
+    }, shape = RoundedCornerShape(33), avatar = avatar)
 }
 
 @Composable
 fun UserCircleAddAvatar(
     modifier: Modifier = Modifier,
-    url: String? = null,
+    avatar: Avatar = Avatar(null),
     onBadgeClick: () -> Unit = {},
 ) {
     BasicAvatar(
@@ -72,14 +73,14 @@ fun UserCircleAddAvatar(
         badge = {
             AddBadge(onClick = onBadgeClick)
         },
-        url = url
+        avatar = avatar
     )
 }
 
 @Composable
 fun UserCircleAvatar(
     modifier: Modifier = Modifier,
-    url: String? = null,
+    avatar: Avatar = Avatar(null),
 ) {
     BasicAvatar(modifier = modifier.size(EventsTheme.sizes.sizeX50), placeholder = {
         Icon(
@@ -89,7 +90,7 @@ fun UserCircleAvatar(
             painter = painterResource(id = R.drawable.icon_avatar),
             contentDescription = "Default avatar"
         )
-    }, shape = CircleShape, url = url)
+    }, shape = CircleShape, avatar = avatar)
 }
 
 
@@ -97,7 +98,7 @@ fun UserCircleAvatar(
 fun UserSquareAvatar(
     modifier: Modifier = Modifier,
     drawBorder: Boolean = false,
-    url: String? = null,
+    avatar: Avatar = Avatar(null),
 ) {
     BasicAvatar(
         modifier = modifier.size(EventsTheme.sizes.sizeX24), placeholder = {
@@ -110,6 +111,6 @@ fun UserSquareAvatar(
             )
         }, borderStroke = if (drawBorder) BorderStroke(
             EventsTheme.sizes.sizeX1, EventsTheme.colors.brandBackground
-        ) else BorderStroke(0.dp, Color.Transparent), shape = RoundedCornerShape(33), url = url
+        ) else BorderStroke(0.dp, Color.Transparent), shape = RoundedCornerShape(33), avatar = avatar
     )
 }

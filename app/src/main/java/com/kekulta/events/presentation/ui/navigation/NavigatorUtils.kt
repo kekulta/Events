@@ -25,7 +25,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.kekulta.events.presentation.ui.update
-import com.kekulta.events.presentation.viewmodel.EventId
+import com.kekulta.events.domain.models.EventId
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.reflect.typeOf

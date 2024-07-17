@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.models.EventElementVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.chips.RoundChip
@@ -29,7 +30,7 @@ fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick
     ) {
         EventSquareAvatar(
             modifier = Modifier.padding(EventsTheme.sizes.sizeX2),
-            url = eventVo.avatar
+            avatar = Avatar(eventVo.avatar)
         )
         Column(
             modifier = Modifier

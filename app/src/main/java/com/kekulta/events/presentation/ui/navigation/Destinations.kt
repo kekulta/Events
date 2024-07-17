@@ -1,6 +1,6 @@
 package com.kekulta.events.presentation.ui.navigation
 
-import com.kekulta.events.presentation.viewmodel.EventId
+import com.kekulta.events.domain.models.EventId
 import kotlinx.serialization.Serializable
 
 /*
