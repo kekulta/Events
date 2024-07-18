@@ -30,19 +30,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
-
-    val navigator = findNavigator()
     val plannedEventsState by viewModel.observePlannedEvents().collectAsStateWithLifecycle()
     val pastEventsState by viewModel.observePastEvents().collectAsStateWithLifecycle()
 
-    val topBarState = remember {
-        EventsTopBarState(
-            enabled = true,
-            showBackButton = true,
-            currScreenAction = null,
-            currScreenName = "My Events Screen"
-        )
-    }
+    val navigator = findNavigator()
 
     fun navToDetails(id: EventId) {
         navigator.navTo(
@@ -53,7 +44,14 @@ fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
     }
 
     SetTopBar {
-        topBarState
+        remember {
+            EventsTopBarState(
+                enabled = true,
+                showBackButton = true,
+                currScreenAction = null,
+                currScreenName = "My Events Screen"
+            )
+        }
     }
 
     Column {

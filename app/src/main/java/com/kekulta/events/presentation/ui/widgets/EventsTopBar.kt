@@ -59,11 +59,15 @@ fun ProvideEventsTopBarState(
     }
 }
 
+/*
+    State must be remembered to avoid infinite recompositions.
+    Maybe it could be remembered in here, but I'm not sure.
+ */
 @Composable
-fun SetTopBar(builder: (EventsTopBarState) -> EventsTopBarState) {
+fun SetTopBar(builder: @Composable () -> EventsTopBarState) {
     val topBarState = LocalEventsTopBarState.current
-    if (topBarState != null && topBarState.value != builder(topBarState.value)) {
-        topBarState.value = builder(topBarState.value)
+    if (topBarState != null) {
+        topBarState.value = builder()
     }
 }
 

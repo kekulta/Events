@@ -27,17 +27,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GroupsScreen(viewModel: GroupsScreenViewModel = koinViewModel()) {
-    val navigator = findNavigator()
-    val groupsState by viewModel.observeAllGroups().collectAsStateWithLifecycle()
+    val state by viewModel.observeAllGroups().collectAsStateWithLifecycle()
 
-    val topBarState = remember {
-        EventsTopBarState(
-            enabled = true,
-            showBackButton = false,
-            currScreenAction = null,
-            currScreenName = "Groups"
-        )
-    }
+    val navigator = findNavigator()
 
     fun navToDetails(id: GroupId) {
         navigator.navTo(
@@ -49,7 +41,14 @@ fun GroupsScreen(viewModel: GroupsScreenViewModel = koinViewModel()) {
     }
 
     SetTopBar {
-        topBarState
+        remember {
+            EventsTopBarState(
+                enabled = true,
+                showBackButton = false,
+                currScreenAction = null,
+                currScreenName = "Groups"
+            )
+        }
     }
 
     Column {
@@ -60,14 +59,14 @@ fun GroupsScreen(viewModel: GroupsScreenViewModel = koinViewModel()) {
                 .padding(horizontal = EventsTheme.sizes.sizeX8), state = rememberTextFieldState()
         )
 
-        when (val state = groupsState) {
+        when (val s = state) {
             is ScreenState.Error -> Text(text = "Something went wrong!")
             is ScreenState.Loading -> Text(text = "Loading...")
             is ScreenState.Success -> {
                 LazyColumn(
                     modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8)
                 ) {
-                    val groups = state.state
+                    val groups = s.state
 
                     items(groups) { vo ->
                         GroupItem(

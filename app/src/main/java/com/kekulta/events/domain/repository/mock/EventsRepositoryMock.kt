@@ -50,6 +50,12 @@ class EventsRepositoryMock : EventsRepository {
         return eventsFlow.map { events -> events.firstOrNull { event -> event.id == id } }
     }
 
+    override fun observeEvents(ids: List<EventId>): Flow<List<EventModel>> {
+        val idsSet = ids.toSet()
+
+        return eventsFlow.map { events -> events.filter { event -> idsSet.contains(event.id) } }
+    }
+
     override suspend fun registerForEvent(id: EventId, userId: UserId): Boolean {
         val event = eventsMap[id] ?: return false
         val isRegistered = event.attendees.contains(userId)

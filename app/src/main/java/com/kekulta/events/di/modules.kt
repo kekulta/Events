@@ -13,6 +13,7 @@ import com.kekulta.events.domain.repository.mock.GroupsRepositoryMock
 import com.kekulta.events.domain.repository.mock.ProfileRepositoryMock
 import com.kekulta.events.domain.repository.mock.UsersRepositoryMock
 import com.kekulta.events.domain.usecase.ActiveEventsUseCase
+import com.kekulta.events.domain.usecase.GroupDetailsUseCase
 import com.kekulta.events.domain.usecase.AllGroupsUseCase
 import com.kekulta.events.domain.usecase.AllEventsUseCase
 import com.kekulta.events.domain.usecase.EventDetailsUseCase
@@ -23,6 +24,7 @@ import com.kekulta.events.presentation.viewmodel.EventDetailsViewModel
 import com.kekulta.events.presentation.viewmodel.EventsScreenViewModel
 import com.kekulta.events.presentation.viewmodel.GroupsScreenViewModel
 import com.kekulta.events.presentation.viewmodel.MyEventsScreenViewModel
+import com.kekulta.events.presentation.viewmodel.GroupDetailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
@@ -35,6 +37,7 @@ val viewModelsModule = module {
     viewModelOf(::GroupsScreenViewModel)
     viewModelOf(::EventsScreenViewModel)
     viewModelOf(::MyEventsScreenViewModel)
+    viewModelOf(::GroupDetailsViewModel)
     singleOf(::ProfileRepositoryMock) { bind<ProfileRepository>() }
     singleOf(::GroupsRepositoryMock) { bind<GroupsRepository>() }
     singleOf(::EventsRepositoryMock) { bind<EventsRepository>() }
@@ -50,4 +53,5 @@ val viewModelsModule = module {
     factoryOf(::MyPlannedEventsUseCase)
     factoryOf(::GroupItemVoFormatter)
     factoryOf(::AllGroupsUseCase)
+    factoryOf(::GroupDetailsUseCase)
 }

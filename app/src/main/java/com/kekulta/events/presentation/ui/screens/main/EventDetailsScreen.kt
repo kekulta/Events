@@ -61,7 +61,6 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun EventDetailsScreen(id: EventId, viewModel: EventDetailsViewModel = koinViewModel()) {
     viewModel.setId(id)
-
     val state by viewModel.observeState().collectAsStateWithLifecycle()
 
     /*
@@ -69,18 +68,35 @@ fun EventDetailsScreen(id: EventId, viewModel: EventDetailsViewModel = koinViewM
      */
     when (val s = state) {
         is ScreenState.Loading -> {
-            Text("Loading")
+            SetTopBar {
+                remember {
+                    EventsTopBarState(
+                        enabled = true,
+                        showBackButton = true,
+                        currScreenAction = null,
+                        currScreenName = "Loading.."
+                    )
+                }
+            }
         }
 
         is ScreenState.Error -> {
-            Text("Error")
+            SetTopBar {
+                remember {
+                    EventsTopBarState(
+                        enabled = true,
+                        showBackButton = true,
+                        currScreenAction = null,
+                        currScreenName = "Error.."
+                    )
+                }
+            }
         }
 
         is ScreenState.Success -> {
             SuccessScreen(vo = s.state, viewModel)
         }
     }
-
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -91,24 +107,22 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsViewModel) 
         mutableStateOf(false)
     }
 
-    val topBarState = remember(vo) {
-        EventsTopBarState(
-            enabled = true, showBackButton = true, currScreenAction = {
-                if (vo.isAttending) {
-                    EventDetailsAction {
-                        snackbarScope?.showSnackbar("${vo.name} action: ${Clock.System.now().epochSeconds % 60}")
-                    }
-                }
-            }, currScreenName = vo.name
-        )
-    }
-
     BackHandler(enabled = isSelected) {
         isSelected = false
     }
 
     SetTopBar {
-        topBarState
+        remember(vo) {
+            EventsTopBarState(
+                enabled = true, showBackButton = true, currScreenAction = {
+                    if (vo.isAttending) {
+                        EventDetailsAction {
+                            snackbarScope?.showSnackbar("${vo.name} action: ${Clock.System.now().epochSeconds % 60}")
+                        }
+                    }
+                }, currScreenName = vo.name
+            )
+        }
     }
 
     Column(
