@@ -4,4 +4,9 @@
     <string name="tab_events">Events</string>
     <string name="tab_groups">Groups</string>
     <string name="groups_events">Group\'s Events</string>
+
+    <plurals name="members_count">
+        <item quantity="one">%d member</item>
+        <item quantity="other">%d members</item>
+    </plurals>
 </resources>

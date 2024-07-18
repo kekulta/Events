@@ -24,7 +24,7 @@ class EventDetailsUseCase(
         id: EventId,
     ): Flow<EventDetailsVo?> {
         return combine(
-            profileRepository.observeCurrentProfile(), eventsRepository.observeEventDetails(id)
+            profileRepository.observeCurrentProfile(), eventsRepository.observeEvent(id)
         ) { profile, event ->
             if (event != null) {
                 usersRepository.observeUsers(event.attendees).mapLatest { users ->

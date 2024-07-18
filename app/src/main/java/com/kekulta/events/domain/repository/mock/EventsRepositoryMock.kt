@@ -46,7 +46,7 @@ class EventsRepositoryMock : EventsRepository {
         }
     }
 
-    override fun observeEventDetails(id: EventId): Flow<EventModel?> {
+    override fun observeEvent(id: EventId): Flow<EventModel?> {
         return eventsFlow.map { events -> events.firstOrNull { event -> event.id == id } }
     }
 
