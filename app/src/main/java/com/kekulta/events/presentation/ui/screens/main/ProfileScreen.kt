@@ -2,9 +2,9 @@ package com.kekulta.events.presentation.ui.screens.main
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
+import com.kekulta.events.presentation.ui.models.ProfileVo
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
@@ -28,10 +29,9 @@ import com.kekulta.events.presentation.ui.widgets.UserCircleAvatar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsButtonDefaults
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsOutlinedButton
+import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsTextButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickable
-import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
 import com.kekulta.events.presentation.viewmodel.ProfileScreenViewModel
-import com.kekulta.events.presentation.ui.models.ProfileVo
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -40,8 +40,6 @@ fun ProfileScreen(
 ) {
     val state by viewModel.observeProfileState().collectAsStateWithLifecycle()
 
-    val snackbarScope = findSnackbarScope()
-
     SetTopBar {
         remember {
             EventsTopBarState(
@@ -49,7 +47,7 @@ fun ProfileScreen(
                 showBackButton = true,
                 currScreenAction = {
                     ProfileAction {
-                        viewModel.logOut()
+                        /* TODO */
                     }
                 },
                 currScreenName = "Profile"
@@ -62,7 +60,7 @@ fun ProfileScreen(
      */
     when (val s = state) {
         null -> LoggedOutProfile()
-        else -> LoggedInProfile(vo = s)
+        else -> LoggedInProfile(vo = s, viewModel::logOut)
     }
 }
 
@@ -70,19 +68,24 @@ fun ProfileScreen(
 private fun LoggedOutProfile() {
     val navigator = findNavigator()
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Continue with your account.", style = EventsTheme.typography.subheading2)
         EventsFilledButton(modifier = Modifier
             // Paddings are *mess*
             .padding(horizontal = EventsTheme.sizes.sizeX5)
             .fillMaxWidth(),
             onClick = { navigator.setRoot(EnterPhone()) }) {
-            Text(text = "Login!")
+            Text(text = "Login")
         }
     }
 }
 
 @Composable
-private fun LoggedInProfile(vo: ProfileVo) {
+private fun LoggedInProfile(vo: ProfileVo, logOut: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -155,6 +158,11 @@ private fun LoggedInProfile(vo: ProfileVo) {
                     tint = EventsTheme.colors.brandDefault
                 )
             }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+
+        EventsTextButton(onClick = { logOut() }) {
+            Text(text = "Log out", style = EventsTheme.typography.subheading2)
         }
     }
 }
