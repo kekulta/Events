@@ -1,9 +1,7 @@
 package com.kekulta.events.presentation.ui.screens.login
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
@@ -71,25 +69,25 @@ private fun EnterPhoneContent(sendCode: (number: PhoneNumber) -> Unit) {
             text = "Enter phone number",
             style = EventsTheme.typography.heading2
         )
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX4))
         Text(
-            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .padding(top = EventsTheme.sizes.sizeX4),
             textAlign = TextAlign.Center,
             text = "We will send verification code\non this number",
             style = EventsTheme.typography.bodyText2
         )
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX20))
         PhoneField(
             numberState = numberState,
             countryState = countryState,
-            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .padding(top = EventsTheme.sizes.sizeX20),
         )
-
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX25))
-
         EventsFilledButton(enabled = numberState.text.length == PHONE_NUMBER_LENGTH,
             modifier = Modifier
                 .padding(horizontal = EventsTheme.sizes.sizeX5)
+                .padding(top = EventsTheme.sizes.sizeX25)
                 .fillMaxWidth(),
             onClick = {
                 sendCode(

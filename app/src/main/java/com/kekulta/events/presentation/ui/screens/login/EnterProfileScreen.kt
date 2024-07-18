@@ -2,10 +2,8 @@ package com.kekulta.events.presentation.ui.screens.login
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
@@ -68,24 +66,25 @@ private fun EnterProfileContent(registerProfile: (info: PersonalInfo) -> Unit) {
         val nameState = rememberTextFieldState()
         val surnameState = rememberTextFieldState()
 
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX26))
-        UserCircleAddAvatar()
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX12))
+        UserCircleAddAvatar(modifier = Modifier.padding(top = EventsTheme.sizes.sizeX26))
         EventsInputField(
             state = nameState,
             hint = "Name (required)",
-            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .padding(top = EventsTheme.sizes.sizeX12),
         )
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX4))
         EventsInputField(
             state = surnameState,
             hint = "Surname (optional)",
-            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .padding(top = EventsTheme.sizes.sizeX4),
         )
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX16))
         EventsFilledButton(enabled = nameState.text.isNotBlank(),
             modifier = Modifier
                 .padding(horizontal = EventsTheme.sizes.sizeX5)
+                .padding(top = EventsTheme.sizes.sizeX16)
                 .fillMaxWidth(),
             onClick = {
                 registerProfile(
