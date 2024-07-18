@@ -2,40 +2,44 @@ package com.kekulta.events.presentation.ui.screens.main
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.presentation.ui.models.ProfileVo
+import com.kekulta.events.presentation.ui.navigation.EnterPhone
+import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.UserCircleAvatar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsButtonDefaults
+import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsOutlinedButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickable
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
-import com.kekulta.events.presentation.ui.widgets.base.snackbar.showSnackbar
-import kotlinx.datetime.Clock
+import com.kekulta.events.presentation.viewmodel.ProfileScreenViewModel
+import com.kekulta.events.presentation.viewmodel.ProfileVo
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
+    viewModel: ProfileScreenViewModel = koinViewModel()
 ) {
-    val profileVO = ProfileVo(
-        name = "Ruslan Russkikh",
-        phone = "+7 995 917-72-42",
-        avatar = Avatar(null)
-    )
+    val state by viewModel.observeProfileState().collectAsStateWithLifecycle()
+
     val snackbarScope = findSnackbarScope()
 
     SetTopBar {
@@ -45,7 +49,7 @@ fun ProfileScreen(
                 showBackButton = true,
                 currScreenAction = {
                     ProfileAction {
-                        snackbarScope?.showSnackbar("Profile action: ${Clock.System.now().epochSeconds % 60}")
+                        viewModel.logOut()
                     }
                 },
                 currScreenName = "Profile"
@@ -53,6 +57,32 @@ fun ProfileScreen(
         }
     }
 
+    /*
+        `when` used for smartcast
+     */
+    when (val s = state) {
+        null -> LoggedOutProfile()
+        else -> LoggedInProfile(vo = s)
+    }
+}
+
+@Composable
+private fun LoggedOutProfile() {
+    val navigator = findNavigator()
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        EventsFilledButton(modifier = Modifier
+            // Paddings are *mess*
+            .padding(horizontal = EventsTheme.sizes.sizeX5)
+            .fillMaxWidth(),
+            onClick = { navigator.setRoot(EnterPhone()) }) {
+            Text(text = "Login!")
+        }
+    }
+}
+
+@Composable
+private fun LoggedInProfile(vo: ProfileVo) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -61,16 +91,16 @@ fun ProfileScreen(
             modifier = Modifier
                 .padding(top = EventsTheme.sizes.sizeX16)
                 .size(EventsTheme.sizes.sizeX100),
-            avatar = profileVO.avatar,
+            avatar = vo.avatar,
         )
         Text(
             modifier =
             Modifier.padding(top = EventsTheme.sizes.sizeX8),
-            text = profileVO.name,
+            text = vo.name,
             style = EventsTheme.typography.heading2
         )
         Text(
-            text = profileVO.phone,
+            text = vo.number,
             style = EventsTheme.typography.bodyText2,
             color = EventsTheme.colors.neutralWeak,
         )

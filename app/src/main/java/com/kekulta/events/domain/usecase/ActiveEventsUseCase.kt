@@ -14,6 +14,11 @@ class ActiveEventsUseCase(
     private val eventsRepository: EventsRepository,
     private val activeEventItemVoFormatter: ActiveEventItemVoFormatter
 ) {
+    /*
+        I do not use `operator fun invoke()` on purpose. I prefer explicit function over implicit
+        one. Operator overloading may cause confusion and should used very carefully.
+        I don't think that usecases are tha place to use them.
+     */
     fun execute(): Flow<List<ActiveEventItemVo>> {
         return eventsRepository.observeEventsForQuery(Query)
             .mapLatest { events -> activeEventItemVoFormatter.format(events) }

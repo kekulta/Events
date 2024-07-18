@@ -29,12 +29,14 @@ fun EnterPhoneScreen() {
     val navigator = findNavigator()
 
     SetTopBar {
-        EventsTopBarState(
-            enabled = true,
-            showBackButton = false,
-            currScreenAction = null,
-            currScreenName = ""
-        )
+        remember {
+            EventsTopBarState(
+                enabled = true,
+                showBackButton = false,
+                currScreenAction = null,
+                currScreenName = ""
+            )
+        }
     }
 
     Column(

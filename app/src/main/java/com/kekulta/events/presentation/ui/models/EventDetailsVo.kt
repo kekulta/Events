@@ -9,4 +9,5 @@ data class EventDetailsVo(
     val mapUrl: String,
     val attendees: List<AttendeeVo>,
     val isAttending: Boolean,
+    val isAbleToRegister: Boolean,
 )

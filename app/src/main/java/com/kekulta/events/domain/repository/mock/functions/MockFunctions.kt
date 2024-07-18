@@ -5,6 +5,9 @@ import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.domain.models.EventModel
 import com.kekulta.events.domain.models.GroupId
 import com.kekulta.events.domain.models.GroupModel
+import com.kekulta.events.domain.models.PersonalInfo
+import com.kekulta.events.domain.models.PhoneNumber
+import com.kekulta.events.domain.models.ProfileModel
 import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.domain.models.UserModel
 import com.kekulta.events.presentation.ui.loremIpsum
@@ -60,6 +63,18 @@ fun mockEventModels(size: Int): List<EventModel> {
     return mocks
 }
 
+fun mockProfileModels(size: Int): List<ProfileModel> {
+    return mockUsers(size).mapIndexed { index, user ->
+        ProfileModel(
+            id = user.id, number = PhoneNumber("+7", (9170000000 + index).toString()),
+            info = PersonalInfo(
+                avatar = user.avatar,
+                name = user.name,
+                surname = user.surname
+            )
+        )
+    }
+}
 
 fun mockGroupModels(size: Int): List<GroupModel> {
     val names = listOf("Developer Meeting", "Code'n'code", "Mobile Submarine", "Mobius")

@@ -6,10 +6,21 @@ import androidx.compose.foundation.text.input.insert
 import androidx.compose.runtime.Stable
 
 @Stable
-data object PhoneNumberOutputTransformation : OutputTransformation {
+data class MaskOutputTransformation(
+    val mask: String,
+    val replaceCharacter: Char = '#',
+) : OutputTransformation {
     override fun TextFieldBuffer.transformOutput() {
-        if (length > 3) insert(3, " ")
-        if (length > 7) insert(7, "-")
-        if (length > 10) insert(10, "-")
+        var index = 0
+
+        /*
+            length changes as we insert characters, so use while
+         */
+        while (index < length) {
+            if ((mask.getOrNull(index) ?: replaceCharacter) != replaceCharacter) {
+                insert(index, mask[index].toString())
+            }
+            index++
+        }
     }
 }

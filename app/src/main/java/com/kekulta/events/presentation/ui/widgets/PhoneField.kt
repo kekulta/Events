@@ -40,7 +40,7 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.buttons.focusBorder
 import com.kekulta.events.presentation.ui.widgets.base.data.Countries
 import com.kekulta.events.presentation.ui.widgets.base.data.Country
-import com.kekulta.events.presentation.ui.widgets.base.modifiers.PhoneNumberOutputTransformation
+import com.kekulta.events.presentation.ui.widgets.base.modifiers.MaskOutputTransformation
 import com.kekulta.events.presentation.ui.widgets.base.text.EventsInputField
 
 const val PHONE_NUMBER_LENGTH = 10
@@ -136,13 +136,14 @@ fun PhoneField(
                 }
             }
         }
+
         Spacer(modifier = Modifier.width(EventsTheme.sizes.sizeX4))
         EventsInputField(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             state = numberState,
             shouldDrawBorder = shouldDrawBorder,
             inputTransformation = InputTransformation.maxLength(PHONE_NUMBER_LENGTH),
-            outputTransformation = PhoneNumberOutputTransformation,
+            outputTransformation = MaskOutputTransformation("(###) ###-##-##"),
             hint = "000 000-00-00",
             onDone = {
                 focusManager.clearFocus()
