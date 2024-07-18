@@ -42,7 +42,7 @@ fun MoreScreen(
         item {
             ProfileItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 profileVo = ProfileVo(
-                    name = "Ruslan Russkikh", phone = "+7 995 917-72-42", avatar = Avatar(null)
+                    name = "Ruslan Russkikh", number = "+7 995 917-72-42", avatar = Avatar(null)
                 ),
                 onClick = { navigator.navTo(Profile()) })
         }

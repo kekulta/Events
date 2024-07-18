@@ -39,13 +39,6 @@ fun EnterPhoneScreen(
 
     val navigator = findNavigator()
 
-    when (state) {
-        is AuthStatus.CodeSent -> navigator.navTo(EnterCode())
-        is AuthStatus.Unauthorized -> Unit // NO-OP
-        is AuthStatus.Authorized -> navigator.setRoot(Events())
-        is AuthStatus.NeedsRegistration -> navigator.navTo(EnterProfile())
-    }
-
     SetTopBar {
         remember {
             EventsTopBarState(
@@ -54,6 +47,16 @@ fun EnterPhoneScreen(
         }
     }
 
+    when (state) {
+        is AuthStatus.CodeSent -> navigator.navTo(EnterCode())
+        is AuthStatus.Unauthorized -> EnterPhoneContent(sendCode = viewModel::sendCode)
+        is AuthStatus.Authorized -> navigator.setRoot(Events())
+        is AuthStatus.NeedsRegistration -> navigator.navTo(EnterProfile())
+    }
+}
+
+@Composable
+private fun EnterPhoneContent(sendCode: (number: PhoneNumber) -> Unit) {
     Column(
         modifier = Modifier
             .padding(top = EventsTheme.sizes.sizeX50)
@@ -89,7 +92,7 @@ fun EnterPhoneScreen(
                 .padding(horizontal = EventsTheme.sizes.sizeX5)
                 .fillMaxWidth(),
             onClick = {
-                viewModel.sendCode(
+                sendCode(
                     PhoneNumber(
                         code = countryState.value.countryCode, number = numberState.text.toString()
                     )
