@@ -30,7 +30,8 @@ class EventDetailsFormatter {
         return EventDetailsVo(
             name = event.name,
             description = event.description,
-            dateLocation = "${event.date.format(format)} — ${event.location}",
+            date = event.date.format(format),
+            location = event.location,
             tags = event.tags,
             mapUrl = event.mapUrl,
             attendees = attendees,

@@ -18,7 +18,6 @@ import com.kekulta.events.presentation.ui.screens.main.MoreScreen
 import com.kekulta.events.presentation.ui.screens.main.MyEventsScreen
 import com.kekulta.events.presentation.ui.screens.main.ProfileScreen
 import com.kekulta.events.presentation.ui.screens.splash.SplashScreen
-import com.kekulta.events.presentation.ui.showcase.ShowcaseScreen
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.SnackbarScope
 
 @Composable
@@ -51,10 +50,6 @@ fun EventsNavGraph(
 
         screen<Profile>(state = navState) {
             ProfileScreen()
-        }
-
-        screen<Showcase>(state = navState) {
-            ShowcaseScreen(snackbarScope)
         }
 
         screen<MyEvents>(state = navState) {

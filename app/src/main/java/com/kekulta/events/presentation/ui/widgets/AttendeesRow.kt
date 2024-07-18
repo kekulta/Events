@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.zIndex
 import com.kekulta.events.presentation.ui.models.AttendeeVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
+import logcat.logcat
 
 
 @Composable
@@ -39,6 +40,7 @@ fun AttendeesRow(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                logcat { attendees.joinToString() }
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(-EventsTheme.sizes.sizeX9)
                 ) {

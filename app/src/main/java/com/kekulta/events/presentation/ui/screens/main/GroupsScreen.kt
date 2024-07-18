@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import com.kekulta.events.presentation.ui.navigation.GroupDetails
 import com.kekulta.events.presentation.ui.navigation.findNavigator
-import com.kekulta.events.presentation.ui.showcase.mockGroupsVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsSearchField
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
@@ -42,9 +40,9 @@ fun GroupsScreen() {
         LazyColumn(
             modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8)
         ) {
-            groupsList(groups = mockGroupsVo(20), onClick = { vo ->
-                navigator.navTo(GroupDetails(id = vo.id, tab = navigator.currTab()))
-            })
+//            groupsList(groups = mockGroupsVo(20), onClick = { vo ->
+//                navigator.navTo(GroupDetails(id = vo.id, tab = navigator.currTab()))
+//            })
         }
     }
 }

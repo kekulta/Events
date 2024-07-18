@@ -14,17 +14,4 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 fun LazyListScope.eventsList(
     events: List<EventElementVo>, onClick: ((EventElementVo) -> Unit)? = null
 ) {
-    itemsIndexed(events) { _, vo ->
-        EventElement(modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX9)
-            .fillMaxWidth(),
-            eventVo = vo,
-            onClick = { onClick?.invoke(vo) })
-        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-        HorizontalDivider(
-            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-            color = EventsTheme.colors.neutralLine,
-        )
-        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-    }
 }

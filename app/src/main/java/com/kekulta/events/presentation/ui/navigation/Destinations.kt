@@ -67,12 +67,6 @@ data class Profile(
 ) : Screen
 
 @Serializable
-data class Showcase(
-    override val tab: Tab = Tab.MORE,
-    override val isRoot: Boolean = false,
-) : Screen
-
-@Serializable
 data class GroupDetails(
     val id: String,
     override val tab: Tab,

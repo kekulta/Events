@@ -12,7 +12,6 @@ import com.kekulta.events.presentation.ui.models.ProfileVo
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.MyEvents
 import com.kekulta.events.presentation.ui.navigation.Profile
-import com.kekulta.events.presentation.ui.navigation.Showcase
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
@@ -105,14 +104,6 @@ fun MoreScreen(
         }
         item {
             HorizontalDivider(color = EventsTheme.colors.neutralLine)
-        }
-        item {
-            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
-                icon = painterResource(id = R.drawable.icon_search),
-                name = "Showcase",
-                onClick = {
-                    navigator.navTo(Showcase())
-                })
         }
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),

@@ -12,10 +12,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import logcat.logcat
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class EventDetailViewModel(
+class EventDetailsViewModel(
     private val eventDetailsUseCase: EventDetailsUseCase,
     private val eventRegistrationUseCase: EventRegistrationUseCase,
 ) : AbstractCoroutineViewModel() {
@@ -48,11 +47,6 @@ class EventDetailViewModel(
         launchScope {
             eventRegistrationUseCase.cancel(id)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        logcat { "On cleared!" }
     }
 }
 

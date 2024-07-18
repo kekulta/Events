@@ -3,7 +3,7 @@ package com.kekulta.events.domain.repository.mock
 import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.domain.models.UserModel
 import com.kekulta.events.domain.repository.api.UsersRepository
-import com.kekulta.events.domain.repository.mock.MockFunctions.mockUsers
+import com.kekulta.events.domain.repository.mock.functions.mockUsers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map

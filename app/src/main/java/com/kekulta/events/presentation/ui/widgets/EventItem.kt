@@ -13,14 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.presentation.ui.models.EventElementVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.chips.RoundChip
+import com.kekulta.events.presentation.viewmodel.EventItemVo
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+fun EventItem(
+    eventVo: EventItemVo,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
     Row(
         modifier = modifier.clickable(
             interactionSource = remember { MutableInteractionSource() },
@@ -30,7 +33,7 @@ fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick
     ) {
         EventSquareAvatar(
             modifier = Modifier.padding(EventsTheme.sizes.sizeX2),
-            avatar = Avatar(eventVo.avatar)
+            avatar = eventVo.avatar
         )
         Column(
             modifier = Modifier
@@ -43,16 +46,16 @@ fun EventElement(eventVo: EventElementVo, modifier: Modifier = Modifier, onClick
                     text = eventVo.name,
                     style = EventsTheme.typography.bodyText1
                 )
-                if (eventVo.note != null) {
+                if (eventVo.isPast) {
                     Text(
-                        text = eventVo.note,
+                        text = "Event is over",
                         color = EventsTheme.colors.neutralWeak,
                         style = EventsTheme.typography.metadata2,
                     )
                 }
             }
             Text(
-                text = "${eventVo.date} — ${eventVo.place}",
+                text = "${eventVo.date} — ${eventVo.location}",
                 style = EventsTheme.typography.metadata1,
                 color = EventsTheme.colors.neutralWeak
             )
