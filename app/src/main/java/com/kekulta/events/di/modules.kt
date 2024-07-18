@@ -6,7 +6,7 @@ import com.kekulta.events.domain.formatters.ActiveEventItemVoFormatter
 import com.kekulta.events.domain.formatters.EventDetailsFormatter
 import com.kekulta.events.domain.formatters.EventItemVoFormatter
 import com.kekulta.events.domain.formatters.GroupItemVoFormatter
-import com.kekulta.events.domain.formatters.ProfileFormatter
+import com.kekulta.events.domain.formatters.ProfileDetailsFormatter
 import com.kekulta.events.domain.repository.api.AuthRepository
 import com.kekulta.events.domain.repository.api.EventsRepository
 import com.kekulta.events.domain.repository.api.GroupsRepository
@@ -22,7 +22,7 @@ import com.kekulta.events.domain.usecase.AllEventsUseCase
 import com.kekulta.events.domain.usecase.AllGroupsUseCase
 import com.kekulta.events.domain.usecase.CheckCodeUseCase
 import com.kekulta.events.domain.usecase.CurrentAuthStatusUseCase
-import com.kekulta.events.domain.usecase.CurrentProfileUseCase
+import com.kekulta.events.domain.usecase.CurrentProfileDetailsUseCase
 import com.kekulta.events.domain.usecase.EventDetailsUseCase
 import com.kekulta.events.domain.usecase.EventRegistrationUseCase
 import com.kekulta.events.domain.usecase.GroupDetailsUseCase
@@ -31,14 +31,17 @@ import com.kekulta.events.domain.usecase.MyPastEventsUseCase
 import com.kekulta.events.domain.usecase.MyPlannedEventsUseCase
 import com.kekulta.events.domain.usecase.RegisterUseCase
 import com.kekulta.events.domain.usecase.SendCodeUseCase
-import com.kekulta.events.presentation.viewmodel.EnterCodeViewModel
+import com.kekulta.events.presentation.viewmodel.CurrentProfileItemUseCase
+import com.kekulta.events.presentation.viewmodel.EnterCodeScreenViewModel
 import com.kekulta.events.presentation.viewmodel.EnterPhoneScreenViewModel
-import com.kekulta.events.presentation.viewmodel.EnterProfileViewModel
-import com.kekulta.events.presentation.viewmodel.EventDetailsViewModel
+import com.kekulta.events.presentation.viewmodel.EnterProfileScreenViewModel
+import com.kekulta.events.presentation.viewmodel.EventDetailsScreenViewModel
 import com.kekulta.events.presentation.viewmodel.EventsScreenViewModel
-import com.kekulta.events.presentation.viewmodel.GroupDetailsViewModel
+import com.kekulta.events.presentation.viewmodel.GroupDetailsScreenViewModel
 import com.kekulta.events.presentation.viewmodel.GroupsScreenViewModel
+import com.kekulta.events.presentation.viewmodel.MoreScreenViewModel
 import com.kekulta.events.presentation.viewmodel.MyEventsScreenViewModel
+import com.kekulta.events.presentation.viewmodel.ProfileItemFormatter
 import com.kekulta.events.presentation.viewmodel.ProfileScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.bind
@@ -48,15 +51,16 @@ import org.koin.dsl.module
 
 
 val viewModelsModule = module {
-    viewModelOf(::EventDetailsViewModel)
+    viewModelOf(::EventDetailsScreenViewModel)
     viewModelOf(::GroupsScreenViewModel)
     viewModelOf(::EventsScreenViewModel)
     viewModelOf(::MyEventsScreenViewModel)
-    viewModelOf(::GroupDetailsViewModel)
+    viewModelOf(::GroupDetailsScreenViewModel)
     viewModelOf(::ProfileScreenViewModel)
     viewModelOf(::EnterPhoneScreenViewModel)
-    viewModelOf(::EnterProfileViewModel)
-    viewModelOf(::EnterCodeViewModel)
+    viewModelOf(::EnterProfileScreenViewModel)
+    viewModelOf(::EnterCodeScreenViewModel)
+    viewModelOf(::MoreScreenViewModel)
     singleOf(::MockUsersService)
     singleOf(::MockAuthService)
     singleOf(::ProfileRepositoryMock) { bind<ProfileRepository>() }
@@ -72,6 +76,8 @@ val viewModelsModule = module {
     factoryOf(::CheckCodeUseCase)
     factoryOf(::AllEventsUseCase)
     factoryOf(::ActiveEventsUseCase)
+    factoryOf(::CurrentProfileItemUseCase)
+    factoryOf(::ProfileItemFormatter)
     factoryOf(::ActiveEventItemVoFormatter)
     factoryOf(::EventItemVoFormatter)
     factoryOf(::MyPastEventsUseCase)
@@ -80,7 +86,7 @@ val viewModelsModule = module {
     factoryOf(::RegisterUseCase)
     factoryOf(::AllGroupsUseCase)
     factoryOf(::GroupDetailsUseCase)
-    factoryOf(::ProfileFormatter)
-    factoryOf(::CurrentProfileUseCase)
+    factoryOf(::ProfileDetailsFormatter)
+    factoryOf(::CurrentProfileDetailsUseCase)
     factoryOf(::LogOutUseCase)
 }

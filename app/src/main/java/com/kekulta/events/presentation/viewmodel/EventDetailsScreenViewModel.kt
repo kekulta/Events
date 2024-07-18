@@ -6,17 +6,15 @@ import com.kekulta.events.domain.usecase.EventRegistrationUseCase
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class EventDetailsViewModel(
+class EventDetailsScreenViewModel(
     private val eventDetailsUseCase: EventDetailsUseCase,
     private val eventRegistrationUseCase: EventRegistrationUseCase,
 ) : AbstractCoroutineViewModel() {

@@ -26,11 +26,11 @@ import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.UserCircleAddAvatar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.presentation.ui.widgets.base.text.EventsInputField
-import com.kekulta.events.presentation.viewmodel.EnterProfileViewModel
+import com.kekulta.events.presentation.viewmodel.EnterProfileScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun EnterProfileScreen(viewModel: EnterProfileViewModel = koinViewModel()) {
+fun EnterProfileScreen(viewModel: EnterProfileScreenViewModel = koinViewModel()) {
     val state by viewModel.observeAuthStatus().collectAsStateWithLifecycle()
 
     val navigator = findNavigator()

@@ -32,12 +32,12 @@ import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsTextButton
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.ShakeConfig
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.rememberShakeController
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.shake
-import com.kekulta.events.presentation.viewmodel.EnterCodeViewModel
+import com.kekulta.events.presentation.viewmodel.EnterCodeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EnterCodeScreen(
-    viewModel: EnterCodeViewModel = koinViewModel()
+    viewModel: EnterCodeScreenViewModel = koinViewModel()
 ) {
     val state by viewModel.observeAuthStatus().collectAsStateWithLifecycle()
 

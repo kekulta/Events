@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.presentation.ui.models.ProfileVo
+import com.kekulta.events.presentation.ui.models.ProfileDetailsVo
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
@@ -85,7 +85,7 @@ private fun LoggedOutProfile() {
 }
 
 @Composable
-private fun LoggedInProfile(vo: ProfileVo, logOut: () -> Unit) {
+private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally

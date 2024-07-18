@@ -7,7 +7,7 @@ import com.kekulta.events.domain.usecase.CurrentAuthStatusUseCase
 import com.kekulta.events.domain.usecase.LogOutUseCase
 import kotlinx.coroutines.flow.StateFlow
 
-class EnterCodeViewModel(
+class EnterCodeScreenViewModel(
     private val currentAuthStatusUseCase: CurrentAuthStatusUseCase,
     private val checkCodeUseCase: CheckCodeUseCase,
     private val logOutUseCase: LogOutUseCase,
