@@ -194,20 +194,22 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsViewModel) 
             attendees = vo.attendees,
         )
 
-        if (vo.isAttending) {
-            EventsOutlinedButton(modifier = Modifier
-                .padding(horizontal = EventsTheme.sizes.sizeX5)
-                .fillMaxWidth(),
-                onClick = { viewModel.cancelRegistration() }) {
-                Text(text = "Maybe another time")
-            }
-        } else {
-            EventsFilledButton(modifier = Modifier
-                // Paddings are *mess*
-                .padding(horizontal = EventsTheme.sizes.sizeX5)
-                .fillMaxWidth(),
-                onClick = { viewModel.registerOnEvent() }) {
-                Text(text = "I'll go!")
+        if (vo.isAbleToRegister) {
+            if (vo.isAttending) {
+                EventsOutlinedButton(modifier = Modifier
+                    .padding(horizontal = EventsTheme.sizes.sizeX5)
+                    .fillMaxWidth(),
+                    onClick = { viewModel.cancelRegistration() }) {
+                    Text(text = "Maybe another time")
+                }
+            } else {
+                EventsFilledButton(modifier = Modifier
+                    // Paddings are *mess*
+                    .padding(horizontal = EventsTheme.sizes.sizeX5)
+                    .fillMaxWidth(),
+                    onClick = { viewModel.registerOnEvent() }) {
+                    Text(text = "I'll go!")
+                }
             }
         }
     }

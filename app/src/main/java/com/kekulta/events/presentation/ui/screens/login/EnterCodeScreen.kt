@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.kekulta.events.domain.models.PhoneNumber
 import com.kekulta.events.presentation.ui.navigation.EnterProfile
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
@@ -21,7 +23,6 @@ import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsTextButton
 
-
 @Composable
 fun EnterCodeScreen(
     number: String,
@@ -29,12 +30,14 @@ fun EnterCodeScreen(
     val navigator = findNavigator()
 
     SetTopBar {
-        EventsTopBarState(
-            enabled = true,
-            showBackButton = true,
-            currScreenAction = null,
-            currScreenName = ""
-        )
+        remember {
+            EventsTopBarState(
+                enabled = true,
+                showBackButton = true,
+                currScreenAction = null,
+                currScreenName = ""
+            )
+        }
     }
 
     Column(
@@ -60,7 +63,7 @@ fun EnterCodeScreen(
         Text(
             modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
             textAlign = TextAlign.Center,
-            text = formatNumber(number),
+            text = "",
             style = EventsTheme.typography.bodyText2
         )
         Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX20))
@@ -92,12 +95,18 @@ fun EnterCodeScreen(
     }
 }
 
-private fun formatNumber(number: String): String {
+fun PhoneNumber.format(): String {
     val builder = StringBuilder(number)
-    builder.insert(2, " ")
-    builder.insert(6, " ")
-    builder.insert(10, "-")
-    builder.insert(13, "-")
+
+    builder.append(code)
+    builder.append(" (")
+    builder.append(number.substring(0, 3))
+    builder.append(") ")
+    builder.append(number.substring(3, 6))
+    builder.append('-')
+    builder.append(number.substring(6, 8))
+    builder.append('-')
+    builder.append(number.substring(8, 10))
 
     return builder.toString()
 }

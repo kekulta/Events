@@ -36,6 +36,7 @@ class EventDetailsFormatter {
             mapUrl = event.mapUrl,
             attendees = attendees,
             isAttending = isAttending,
+            isAbleToRegister = profile != null,
         )
     }
 

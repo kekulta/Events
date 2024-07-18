@@ -44,7 +44,7 @@ fun AttendeesRow(
                 ) {
                     itemsIndexed(
                         attendees.take(showAvatarsNum),
-                        { _, attendee -> attendee.id }) { index, attendee ->
+                    ) { index, attendee ->
                         UserSquareAvatar(
                             modifier = Modifier
                                 .zIndex(-index.toFloat())

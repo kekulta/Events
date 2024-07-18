@@ -1,46 +1,34 @@
 package com.kekulta.events.domain.repository.mock
 
-import com.kekulta.events.domain.models.AccessToken
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.domain.models.PhoneNumber
+import com.kekulta.events.data.MockAuthService
+import com.kekulta.events.data.MockUsersService
+import com.kekulta.events.domain.models.AuthStatus
+import com.kekulta.events.domain.models.PersonalInfo
 import com.kekulta.events.domain.models.ProfileModel
-import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.domain.repository.api.ProfileRepository
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.kekulta.events.utils.stateMapLatest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
-class ProfileRepositoryMock : ProfileRepository {
-    private val profile = MutableStateFlow<ProfileModel?>(
-        ProfileModel(
-            id = UserId("2"),
-            accessToken = MockToken,
-            number = PhoneNumber("+7", "9959177242"),
-            name = "Ruslan",
-            surname = "Russkikh",
-            avatar = Avatar(null),
-        )
-    )
+@OptIn(ExperimentalCoroutinesApi::class)
+class ProfileRepositoryMock(
+    private val mockAuthService: MockAuthService,
+    private val mockUsersService: MockUsersService,
+) : ProfileRepository {
+    private val authStatus: StateFlow<AuthStatus> = mockAuthService.observeAuthStatus()
 
-    override fun observeCurrentProfile(): StateFlow<ProfileModel?> = profile.asStateFlow()
+    private val currentProfile =
+        authStatus.stateMapLatest { auth -> (auth as? AuthStatus.Authorized)?.profile }
 
-    override suspend fun getCurrentProfile(): ProfileModel? = profile.value
+    override fun observeCurrentProfile(): StateFlow<ProfileModel?> = currentProfile
 
-    override suspend fun sendVerification(number: String): Boolean {
-        return true
-    }
+    override fun getCurrentProfile(): ProfileModel? = currentProfile.value
 
-    override suspend fun checkVerification(number: String, code: String): AccessToken {
-        return MockToken
-    }
+    override fun logOut(): Boolean = mockAuthService.logOut()
 
-    override suspend fun createProfile(profile: ProfileModel, token: AccessToken): Boolean {
-        this.profile.update { profile }
-        return true
-    }
+    override fun changeProfile(info: PersonalInfo): Boolean {
+        val currentId = currentProfile.value?.id ?: return false
 
-    companion object {
-        private val MockToken = AccessToken("Mock Token")
+        return mockUsersService.changeProfile(currentId, info) != null
     }
 }
