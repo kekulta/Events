@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -61,11 +62,12 @@ fun ProvideEventsTopBarState(
 @Composable
 fun SetTopBar(builder: (EventsTopBarState) -> EventsTopBarState) {
     val topBarState = LocalEventsTopBarState.current
-    if (topBarState != null) {
+    if (topBarState != null && topBarState.value != builder(topBarState.value)) {
         topBarState.value = builder(topBarState.value)
     }
 }
 
+@Stable
 data class EventsTopBarState(
     val enabled: Boolean,
     val showBackButton: Boolean,

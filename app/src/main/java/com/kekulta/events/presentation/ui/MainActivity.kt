@@ -29,6 +29,7 @@ import com.kekulta.events.presentation.ui.widgets.EventsTopBar
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.ProvideEventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.noIndicationClickable
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.ProvideSnackbarScope
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.rememberSnackbarScope
 import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -90,12 +91,14 @@ class MainActivity : ComponentActivity() {
                                 },
                         ) { innerPadding ->
                             Box(modifier = Modifier.padding(innerPadding)) {
-                                ProvideEventsTopBarState(state = topBarState) {
-                                    EventsNavGraph(
-                                        navController = navController,
-                                        snackbarScope = snackbarScope,
-                                        navState = navBarState
-                                    )
+                                ProvideSnackbarScope(snackbarScope = snackbarScope) {
+                                    ProvideEventsTopBarState(state = topBarState) {
+                                        EventsNavGraph(
+                                            navController = navController,
+                                            snackbarScope = snackbarHostState,
+                                            navState = navBarState,
+                                        )
+                                    }
                                 }
                             }
                         }

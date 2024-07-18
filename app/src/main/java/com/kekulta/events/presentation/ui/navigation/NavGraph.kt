@@ -3,6 +3,7 @@ package com.kekulta.events.presentation.ui.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
@@ -23,7 +24,7 @@ import com.kekulta.events.presentation.ui.widgets.base.snackbar.SnackbarScope
 @Composable
 fun EventsNavGraph(
     navController: NavHostController,
-    snackbarScope: SnackbarScope,
+    snackbarScope: SnackbarHostState,
     navState: MutableState<EventsNavBarState>,
 ) {
     NavHost(

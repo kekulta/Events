@@ -19,6 +19,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
 import com.kekulta.events.domain.models.EventId
+import com.kekulta.events.presentation.ui.models.ActiveEventItemVo
+import com.kekulta.events.presentation.ui.models.EventItemVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.navigation.EventDetails
 import com.kekulta.events.presentation.ui.navigation.findNavigator
@@ -31,17 +33,30 @@ import com.kekulta.events.presentation.ui.widgets.EventsTabs
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickable
-import com.kekulta.events.presentation.ui.models.ActiveEventItemVo
-import com.kekulta.events.presentation.ui.models.EventItemVo
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.showSnackbar
 import com.kekulta.events.presentation.viewmodel.EventsScreenViewModel
+import kotlinx.datetime.Clock
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun EventsScreen(viewModel: EventsScreenViewModel = koinViewModel()) {
-
+fun EventsScreen(
+    viewModel: EventsScreenViewModel = koinViewModel()
+) {
     val navigator = findNavigator()
     val allEventsState by viewModel.observeAllEvents().collectAsStateWithLifecycle()
     val activeEventsState by viewModel.observeActiveEvents().collectAsStateWithLifecycle()
+    val snackbarScope = findSnackbarScope()
+
+    val topBarState = remember {
+        EventsTopBarState(
+            enabled = true, showBackButton = false, currScreenAction = {
+                EventsAction {
+                    snackbarScope?.showSnackbar("Events action: ${Clock.System.now().epochSeconds % 60}")
+                }
+            }, currScreenName = "Events"
+        )
+    }
 
     fun navToDetails(id: EventId) {
         navigator.navTo(
@@ -52,13 +67,7 @@ fun EventsScreen(viewModel: EventsScreenViewModel = koinViewModel()) {
     }
 
     SetTopBar {
-        EventsTopBarState(
-            enabled = true, showBackButton = false, currScreenAction = {
-                EventsAction {
-                    /* TODO */
-                }
-            }, currScreenName = "Events"
-        )
+        topBarState
     }
 
     Column {
