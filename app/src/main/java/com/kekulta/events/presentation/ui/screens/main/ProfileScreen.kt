@@ -24,29 +24,36 @@ import com.kekulta.events.presentation.ui.widgets.UserCircleAvatar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsButtonDefaults
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsOutlinedButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickable
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.showSnackbar
+import kotlinx.datetime.Clock
 
 @Composable
 fun ProfileScreen(
 ) {
+    val profileVO = ProfileVo(
+        name = "Ruslan Russkikh",
+        phone = "+7 995 917-72-42",
+        avatar = Avatar(null)
+    )
+    val snackbarScope = findSnackbarScope()
 
-    SetTopBar {
+    val topBarState = remember {
         EventsTopBarState(
             enabled = true,
             showBackButton = true,
             currScreenAction = {
                 ProfileAction {
-                    /* TODO */
+                    snackbarScope?.showSnackbar("Profile action: ${Clock.System.now().epochSeconds % 60}")
                 }
             },
             currScreenName = "Profile"
         )
     }
 
-    val profileVO = ProfileVo(
-        name = "Ruslan Russkikh",
-        phone = "+7 995 917-72-42",
-        avatar = Avatar(null)
-    )
+    SetTopBar {
+        topBarState
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth(),

@@ -4,17 +4,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.presentation.ui.loremIpsum
-import com.kekulta.events.presentation.ui.navigation.EventDetails
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
-import com.kekulta.events.presentation.ui.widgets.eventsList
 import com.kekulta.events.presentation.viewmodel.GroupDetailsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -22,13 +20,17 @@ import org.koin.androidx.compose.koinViewModel
 fun GroupDetailsScreen(id: String, viewModel: GroupDetailsViewModel = koinViewModel()) {
     val navigator = findNavigator()
 
-    SetTopBar {
+    val topBarState = remember {
         EventsTopBarState(
             enabled = true,
             showBackButton = true,
             currScreenAction = null,/* Will be loaded from viewModel */
             currScreenName = "Group's Name"
         )
+    }
+
+    SetTopBar {
+        topBarState
     }
 
     LazyColumn {

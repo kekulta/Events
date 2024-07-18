@@ -50,7 +50,10 @@ import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickabl
 import com.kekulta.events.presentation.ui.widgets.base.chips.RoundChip
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.blur
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.noIndicationClickable
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.showSnackbar
 import com.kekulta.events.presentation.viewmodel.EventDetailsViewModel
+import kotlinx.datetime.Clock
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 import org.koin.androidx.compose.koinViewModel
@@ -83,36 +86,29 @@ fun EventDetailsScreen(id: EventId, viewModel: EventDetailsViewModel = koinViewM
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsViewModel) {
+    val snackbarScope = findSnackbarScope()
     var isSelected by rememberSaveable {
         mutableStateOf(false)
+    }
+
+    val topBarState = remember(vo) {
+        EventsTopBarState(
+            enabled = true, showBackButton = true, currScreenAction = {
+                if (vo.isAttending) {
+                    EventDetailsAction {
+                        snackbarScope?.showSnackbar("${vo.name} action: ${Clock.System.now().epochSeconds % 60}")
+                    }
+                }
+            }, currScreenName = vo.name
+        )
     }
 
     BackHandler(enabled = isSelected) {
         isSelected = false
     }
 
-    /*
-        It won't appear if change only action, I don't know why
-     */
-    if (vo.isAttending) {
-        SetTopBar {
-            EventsTopBarState(
-                enabled = true, showBackButton = true, currScreenAction = {
-                    EventDetailsAction {
-                        /* TODO */
-                    }
-                }, currScreenName = vo.name
-            )
-        }
-    } else {
-        SetTopBar {
-            EventsTopBarState(
-                enabled = true,
-                showBackButton = true,
-                currScreenAction = null,
-                currScreenName = vo.name
-            )
-        }
+    SetTopBar {
+        topBarState
     }
 
     Column(

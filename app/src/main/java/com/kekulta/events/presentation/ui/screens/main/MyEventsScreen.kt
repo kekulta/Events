@@ -10,6 +10,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.domain.models.EventId
@@ -34,6 +35,15 @@ fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
     val plannedEventsState by viewModel.observePlannedEvents().collectAsStateWithLifecycle()
     val pastEventsState by viewModel.observePastEvents().collectAsStateWithLifecycle()
 
+    val topBarState = remember {
+        EventsTopBarState(
+            enabled = true,
+            showBackButton = true,
+            currScreenAction = null,
+            currScreenName = "My Events Screen"
+        )
+    }
+
     fun navToDetails(id: EventId) {
         navigator.navTo(
             EventDetails(
@@ -43,12 +53,7 @@ fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
     }
 
     SetTopBar {
-        EventsTopBarState(
-            enabled = true,
-            showBackButton = true,
-            currScreenAction = null,
-            currScreenName = "My Events Screen"
-        )
+        topBarState
     }
 
     Column {
