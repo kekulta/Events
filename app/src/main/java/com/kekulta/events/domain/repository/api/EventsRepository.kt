@@ -13,17 +13,23 @@ interface EventsRepository {
 }
 
 sealed interface EventsQuery {
-    val types: List<EventType>
+    val statusList: List<EventStatus>
     val limit: Int
 
     data class Search(
-        val query: String, override val types: List<EventType>, override val limit: Int
+        val query: String, override val statusList: List<EventStatus>, override val limit: Int,
     ) : EventsQuery
 
-    data class Recommendation(override val types: List<EventType>, override val limit: Int) :
-        EventsQuery
+    data class Recommendation(
+        override val statusList: List<EventStatus>, override val limit: Int,
+    ) : EventsQuery
+
+
+    data class User(
+        val id: UserId, override val statusList: List<EventStatus>, override val limit: Int,
+    ) : EventsQuery
 }
 
-enum class EventType {
+enum class EventStatus {
     PAST, ACTIVE, FUTURE,
 }
