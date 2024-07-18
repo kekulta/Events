@@ -105,7 +105,6 @@ fun EventsInputField(
 
             BasicTextField(
                 enabled = enabled,
-                modifier = Modifier.padding(bottom = EventsTheme.sizes.sizeX4).fillMaxWidth(),
                 onKeyboardAction = {
                     onDone(state)
                     focusManager.clearFocus()
