@@ -1,5 +1,6 @@
 package com.kekulta.events.presentation.ui.screens.login
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,6 +56,10 @@ fun EnterCodeScreen(
         is AuthStatus.Unauthorized -> navigator.setRoot(EnterPhone())
         is AuthStatus.Authorized -> navigator.setRoot(Events())
         is AuthStatus.NeedsRegistration -> navigator.navTo(EnterProfile())
+    }
+
+    BackHandler {
+        viewModel.logOut()
     }
 }
 

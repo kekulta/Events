@@ -7,6 +7,7 @@ import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.domain.models.UserModel
 import com.kekulta.events.presentation.ui.models.AttendeeVo
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
+import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format
 import kotlinx.datetime.format.DateTimeFormat
@@ -20,10 +21,17 @@ class EventDetailsFormatter {
         format: DateTimeFormat<LocalDateTime> = DateFormat,
     ): EventDetailsVo {
         val missingUsersCount = (event.attendees.size - users.size).coerceAtLeast(0)
-        val attendees =
-            users.map { user -> AttendeeVo(id = user.id, avatar = user.avatar) } + List(
-                missingUsersCount
-            ) { AttendeeVo(id = UserId("no-user"), avatar = Avatar(null)) }
+        val attendees = users.map { user -> AttendeeVo(id = user.id, avatar = user.avatar) } + List(
+            missingUsersCount
+        ) {
+            /*
+                Every attendee MUST have an unique id!!
+             */
+            AttendeeVo(
+                id = UserId("no-user-${Clock.System.now().toEpochMilliseconds()}"),
+                avatar = Avatar(null)
+            )
+        }
         val isAttending =
             profile?.id != null && users.firstOrNull { user -> user.id == profile.id } != null
 
