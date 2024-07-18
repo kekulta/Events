@@ -24,7 +24,9 @@ import com.kekulta.events.domain.usecase.EventRegistrationUseCase
 import com.kekulta.events.domain.usecase.GroupDetailsUseCase
 import com.kekulta.events.domain.usecase.MyPastEventsUseCase
 import com.kekulta.events.domain.usecase.MyPlannedEventsUseCase
+import com.kekulta.events.domain.usecase.CurrentAuthStatusUseCase
 import com.kekulta.events.presentation.viewmodel.CurrentProfileUseCase
+import com.kekulta.events.presentation.viewmodel.EnterPhoneScreenViewModel
 import com.kekulta.events.presentation.viewmodel.EventDetailsViewModel
 import com.kekulta.events.presentation.viewmodel.EventsScreenViewModel
 import com.kekulta.events.presentation.viewmodel.GroupDetailsViewModel
@@ -33,6 +35,7 @@ import com.kekulta.events.presentation.viewmodel.LogOutUseCase
 import com.kekulta.events.presentation.viewmodel.MyEventsScreenViewModel
 import com.kekulta.events.presentation.viewmodel.ProfileFormatter
 import com.kekulta.events.presentation.viewmodel.ProfileScreenViewModel
+import com.kekulta.events.domain.usecase.SendCodeUseCase
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
@@ -47,6 +50,7 @@ val viewModelsModule = module {
     viewModelOf(::MyEventsScreenViewModel)
     viewModelOf(::GroupDetailsViewModel)
     viewModelOf(::ProfileScreenViewModel)
+    viewModelOf(::EnterPhoneScreenViewModel)
     singleOf(::MockUsersService)
     singleOf(::MockAuthService)
     singleOf(::ProfileRepositoryMock) { bind<ProfileRepository>() }
@@ -55,6 +59,8 @@ val viewModelsModule = module {
     singleOf(::EventsRepositoryMock) { bind<EventsRepository>() }
     singleOf(::UsersRepositoryMock) { bind<UsersRepository>() }
     factoryOf(::EventDetailsUseCase)
+    factoryOf(::CurrentAuthStatusUseCase)
+    factoryOf(::SendCodeUseCase)
     factoryOf(::EventDetailsFormatter)
     factoryOf(::EventRegistrationUseCase)
     factoryOf(::AllEventsUseCase)

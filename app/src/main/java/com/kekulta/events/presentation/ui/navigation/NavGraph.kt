@@ -74,7 +74,7 @@ fun EventsNavGraph(
         }
 
         screen<EnterCode>(state = navState, slide = true) { (_, dest) ->
-            EnterCodeScreen(dest.phone)
+            EnterCodeScreen()
         }
 
         screen<EnterProfile>(state = navState, slide = true) {
