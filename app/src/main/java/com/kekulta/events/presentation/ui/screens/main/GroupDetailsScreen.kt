@@ -8,16 +8,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.kekulta.events.R
+import com.kekulta.events.domain.models.GroupId
 import com.kekulta.events.presentation.ui.loremIpsum
 import com.kekulta.events.presentation.ui.navigation.findNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
-import com.kekulta.events.presentation.viewmodel.GroupDetailsViewModel
+import com.kekulta.events.presentation.viewmodel.GroupsScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun GroupDetailsScreen(id: String, viewModel: GroupDetailsViewModel = koinViewModel()) {
+fun GroupDetailsScreen(id: GroupId) {
     val navigator = findNavigator()
 
     val topBarState = remember {

@@ -14,19 +14,4 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 fun LazyListScope.groupsList(
     groups: List<GroupElementVo>, onClick: ((GroupElementVo) -> Unit)? = null
 ) {
-    itemsIndexed(groups) { index, vo ->
-        GroupElement(modifier = Modifier
-            .padding(horizontal = EventsTheme.sizes.sizeX9)
-            .fillMaxWidth(),
-            groupVo = vo,
-            onClick = { onClick?.invoke(vo) })
-        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-        if (index != 9) {
-            HorizontalDivider(
-                modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-                color = EventsTheme.colors.neutralLine,
-            )
-            Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX6))
-        }
-    }
 }

@@ -10,25 +10,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.style.TextAlign
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.presentation.ui.models.GroupElementVo
+import com.kekulta.events.R
+import com.kekulta.events.presentation.ui.models.GroupItemVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 
 @Composable
-fun GroupElement(
-    groupVo: GroupElementVo, modifier: Modifier = Modifier, onClick: () -> Unit = {}
+fun GroupItem(
+    groupVo: GroupItemVo, modifier: Modifier = Modifier, onClick: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                onClick = onClick
-            ), verticalAlignment = Alignment.Top
+        modifier = modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null,
+            onClick = onClick
+        ), verticalAlignment = Alignment.Top
     ) {
         GroupSquareAvatar(
-            modifier = Modifier.padding(EventsTheme.sizes.sizeX2), avatar = Avatar(groupVo.avatar)
+            modifier = Modifier.padding(EventsTheme.sizes.sizeX2), avatar = groupVo.avatar
         )
         Column(
             modifier = Modifier.padding(start = EventsTheme.sizes.sizeX6)
@@ -40,9 +40,12 @@ fun GroupElement(
             )
 
             Text(
-                text = groupVo.members,
-                style = EventsTheme.typography.metadata1,
-                color = EventsTheme.colors.neutralWeak
+                text = pluralStringResource(
+                    id = R.plurals.members_count,
+                    count = groupVo.membersCount,
+                    groupVo.membersCount,
+                ),
+                style = EventsTheme.typography.metadata1, color = EventsTheme.colors.neutralWeak,
             )
         }
     }

@@ -67,7 +67,6 @@ fun SetTopBar(builder: (EventsTopBarState) -> EventsTopBarState) {
     }
 }
 
-@Stable
 data class EventsTopBarState(
     val enabled: Boolean,
     val showBackButton: Boolean,

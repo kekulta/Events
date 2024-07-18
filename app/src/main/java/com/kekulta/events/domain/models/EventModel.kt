@@ -6,7 +6,7 @@ data class EventModel(
     val id: EventId,
     val name: String,
     val description: String,
-    val avatarUrl: Avatar,
+    val avatar: Avatar,
     val mapUrl: String,
     val tags: List<String>,
     val date: LocalDateTime,

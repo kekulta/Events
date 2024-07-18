@@ -15,7 +15,7 @@ class ActiveEventItemVoFormatter() {
                 date = model.date.format(DateFormat),
                 location = model.location,
                 tags = model.tags,
-                avatar = model.avatarUrl,
+                avatar = model.avatar,
             )
         }
     }
