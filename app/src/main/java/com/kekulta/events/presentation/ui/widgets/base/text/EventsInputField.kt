@@ -106,7 +106,7 @@ fun EventsInputField(
 
             BasicTextField(
                 enabled = enabled,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.padding(bottom = EventsTheme.sizes.sizeX4).fillMaxWidth(),
                 onKeyboardAction = {
                     onDone(state)
                     focusManager.clearFocus()
@@ -120,6 +120,5 @@ fun EventsInputField(
                 state = state,
             )
         }
-        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX4))
     }
 }

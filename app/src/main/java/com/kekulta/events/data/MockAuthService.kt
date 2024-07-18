@@ -39,6 +39,13 @@ class MockAuthService(
     }
 
     fun checkCode(code: VerificationCode): Boolean {
+        /*
+            We accept only even codes.
+         */
+        if ((code.code.toIntOrNull() ?: 1) % 2 == 1) {
+            return false
+        }
+
         val newStatus = authStatus.updateAndGet { status ->
             if (status is AuthStatus.CodeSent) {
                 val profile = mockUsersService.getProfile(status.number)

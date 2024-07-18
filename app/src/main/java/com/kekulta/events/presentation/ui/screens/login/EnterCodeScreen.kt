@@ -1,11 +1,11 @@
 package com.kekulta.events.presentation.ui.screens.login
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +29,9 @@ import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsTextButton
+import com.kekulta.events.presentation.ui.widgets.base.modifiers.ShakeConfig
+import com.kekulta.events.presentation.ui.widgets.base.modifiers.rememberShakeController
+import com.kekulta.events.presentation.ui.widgets.base.modifiers.shake
 import com.kekulta.events.presentation.viewmodel.EnterCodeViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -64,7 +67,8 @@ fun EnterCodeScreen(
 }
 
 @Composable
-private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode) -> Unit) {
+private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode) -> Boolean) {
+
     Column(
         modifier = Modifier
             .padding(top = EventsTheme.sizes.sizeX50)
@@ -72,47 +76,58 @@ private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode)
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val codeState = rememberTextFieldState()
+        val shakeController = rememberShakeController()
 
         Text(
             modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
             text = "Enter the code",
             style = EventsTheme.typography.heading2
         )
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX4))
         Text(
-            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .padding(top = EventsTheme.sizes.sizeX4),
             textAlign = TextAlign.Center,
             text = "We sent in on the number",
             style = EventsTheme.typography.bodyText2
         )
         Text(
-            modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
+            modifier = Modifier
+                .padding(horizontal = EventsTheme.sizes.sizeX9)
+                .padding(bottom = EventsTheme.sizes.sizeX20),
             textAlign = TextAlign.Center,
             text = number,
             style = EventsTheme.typography.bodyText2
         )
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX20))
-        CodeField(state = codeState)
+        CodeField(
+            state = codeState,
+            modifier = Modifier.padding(bottom = EventsTheme.sizes.sizeX25)
+        )
 
-        Spacer(modifier = Modifier.height(EventsTheme.sizes.sizeX25))
-
-        if (codeState.text.length == CODE_LENGTH) {
-            EventsFilledButton(modifier = Modifier
-                .padding(horizontal = EventsTheme.sizes.sizeX5)
-                .fillMaxWidth(),
-                onClick = {
-                    checkCode(VerificationCode(codeState.text.toString()))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shake(shakeController)
+        ) {
+            if (codeState.text.length == CODE_LENGTH) {
+                EventsFilledButton(modifier = Modifier
+                    .padding(horizontal = EventsTheme.sizes.sizeX5)
+                    .fillMaxWidth(), onClick = {
+                    if (!checkCode(VerificationCode(codeState.text.toString()))) {
+                        shakeController.shake(ShakeConfig(10, translateX = 10f))
+                        codeState.clearText()
+                    }
                 }) {
-                Text("Continue")
-            }
-        } else {
-            EventsTextButton(modifier = Modifier
-                .padding(horizontal = EventsTheme.sizes.sizeX5)
-                .fillMaxWidth(),
-                onClick = {
+                    Text("Continue")
+                }
+            } else {
+                EventsTextButton(modifier = Modifier
+                    .padding(horizontal = EventsTheme.sizes.sizeX5)
+                    .fillMaxWidth(), onClick = {
                     /* TODO */
                 }) {
-                Text("Resend the code")
+                    Text("Resend the code")
+                }
             }
         }
     }

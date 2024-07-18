@@ -105,16 +105,5 @@ fun MoreScreen(
                     /* TODO */
                 })
         }
-        item {
-            HorizontalDivider(color = EventsTheme.colors.neutralLine)
-        }
-        item {
-            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
-                icon = painterResource(id = R.drawable.icon_pencil),
-                name = "Login Flow",
-                onClick = {
-                    navigator.setRoot(EnterPhone())
-                })
-        }
     }
 }

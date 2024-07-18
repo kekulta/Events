@@ -137,8 +137,8 @@ fun PhoneField(
             }
         }
 
-        Spacer(modifier = Modifier.width(EventsTheme.sizes.sizeX4))
         EventsInputField(
+            modifier = Modifier.padding(top = EventsTheme.sizes.sizeX4),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             state = numberState,
             shouldDrawBorder = shouldDrawBorder,
