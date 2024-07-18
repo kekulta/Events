@@ -6,11 +6,9 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.kekulta.events.presentation.ui.theme.EventsTheme
-import com.kekulta.events.presentation.ui.widgets.EventsTabs
 import com.kekulta.events.presentation.ui.widgets.EventsSearchField
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
-import com.kekulta.events.presentation.ui.widgets.mockTabVo
 
 @Composable
 fun MyEventsScreen() {
@@ -35,9 +33,9 @@ fun MyEventsScreen() {
                 .padding(horizontal = EventsTheme.sizes.sizeX8), state = rememberTextFieldState()
         )
 
-        EventsTabs(
-            modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8),
-            tabs = listOf(mockTabVo("Planned Events"), mockTabVo("Past Events"))
-        )
+//        EventsTabs(
+//            modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8),
+//            tabs = listOf(mockTabVo("Planned Events"), mockTabVo("Past Events"))
+//        )
     }
 }

@@ -50,14 +50,13 @@ import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickabl
 import com.kekulta.events.presentation.ui.widgets.base.chips.RoundChip
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.blur
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.noIndicationClickable
-import com.kekulta.events.presentation.viewmodel.EventDetailViewModel
-import logcat.logcat
+import com.kekulta.events.presentation.viewmodel.EventDetailsViewModel
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun EventDetailsScreen(id: EventId, viewModel: EventDetailViewModel = koinViewModel()) {
+fun EventDetailsScreen(id: EventId, viewModel: EventDetailsViewModel = koinViewModel()) {
     viewModel.setId(id)
 
     val state by viewModel.observeState().collectAsStateWithLifecycle()
@@ -83,7 +82,7 @@ fun EventDetailsScreen(id: EventId, viewModel: EventDetailViewModel = koinViewMo
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailViewModel) {
+private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsViewModel) {
     var isSelected by rememberSaveable {
         mutableStateOf(false)
     }
@@ -130,7 +129,7 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailViewModel) {
                     modifier = Modifier.padding(
                         horizontal = EventsTheme.sizes.sizeX9
                     ),
-                    text = vo.dateLocation,
+                    text = "${vo.date} — ${vo.location}",
                     style = EventsTheme.typography.bodyText1,
                     color = EventsTheme.colors.neutralWeak,
                 )
@@ -180,8 +179,6 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailViewModel) {
 
         }
 
-
-        logcat { vo.attendees.joinToString() }
         AttendeesRow(
             modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
             attendees = vo.attendees,

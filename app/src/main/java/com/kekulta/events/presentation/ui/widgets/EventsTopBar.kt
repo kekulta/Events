@@ -28,6 +28,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.navigation.getOnBackPressedDispatcher
 import com.kekulta.events.presentation.ui.theme.EventsTheme
@@ -113,11 +114,13 @@ fun EventsTopBar(
         )
 
         Text(
+            maxLines = 1,
             modifier = Modifier
                 .padding(start = namePadding)
                 .weight(1f),
             text = topBarState.currScreenName,
-            style = EventsTheme.typography.subheading1
+            overflow = TextOverflow.Ellipsis,
+            style = EventsTheme.typography.subheading1,
         )
 
         AnimatedContent(targetState = topBarState.currScreenAction, transitionSpec = {

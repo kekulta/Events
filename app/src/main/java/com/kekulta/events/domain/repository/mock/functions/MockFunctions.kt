@@ -1,4 +1,4 @@
-package com.kekulta.events.domain.repository.mock.MockFunctions
+package com.kekulta.events.domain.repository.mock.functions
 
 import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.domain.models.EventId
@@ -48,7 +48,7 @@ fun mockEventModels(size: Int): List<EventModel> {
             avatarUrl = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4".takeIf { index % 2 == 0 }),
             mapUrl = "https://i.ibb.co/Lphf2PK/map.jpg",
             tags = List(index % tags.size) { tagIndex -> tags[(index + tagIndex) % tags.size] },
-            date = Clock.System.now().plus((24 * index) - 4, DateTimeUnit.HOUR)
+            date = Clock.System.now().plus((24 * (index - 4)), DateTimeUnit.HOUR)
                 .toLocalDateTime(TimeZone.currentSystemDefault()),
             location = places[index % places.size],
             attendees = mockUsers(index % 15).map { user -> user.id },
