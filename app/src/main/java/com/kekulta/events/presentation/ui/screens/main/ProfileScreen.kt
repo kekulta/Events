@@ -38,21 +38,19 @@ fun ProfileScreen(
     )
     val snackbarScope = findSnackbarScope()
 
-    val topBarState = remember {
-        EventsTopBarState(
-            enabled = true,
-            showBackButton = true,
-            currScreenAction = {
-                ProfileAction {
-                    snackbarScope?.showSnackbar("Profile action: ${Clock.System.now().epochSeconds % 60}")
-                }
-            },
-            currScreenName = "Profile"
-        )
-    }
-
     SetTopBar {
-        topBarState
+        remember {
+            EventsTopBarState(
+                enabled = true,
+                showBackButton = true,
+                currScreenAction = {
+                    ProfileAction {
+                        snackbarScope?.showSnackbar("Profile action: ${Clock.System.now().epochSeconds % 60}")
+                    }
+                },
+                currScreenName = "Profile"
+            )
+        }
     }
 
     Column(

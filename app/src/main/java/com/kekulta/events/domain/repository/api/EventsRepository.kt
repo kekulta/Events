@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface EventsRepository {
     fun observeEventsForQuery(query: EventsQuery): Flow<List<EventModel>>
     fun observeEvent(id: EventId): Flow<EventModel?>
+    fun observeEvents(ids: List<EventId>): Flow<List<EventModel>>
     suspend fun registerForEvent(id: EventId, userId: UserId): Boolean
     suspend fun cancelRegistration(id: EventId, userId: UserId): Boolean
 }

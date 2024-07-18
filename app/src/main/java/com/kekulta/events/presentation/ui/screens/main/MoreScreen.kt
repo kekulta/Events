@@ -25,17 +25,15 @@ fun MoreScreen(
 ) {
     val navigator = findNavigator()
 
-    val topBarState = remember {
-        EventsTopBarState(
-            enabled = true,
-            showBackButton = false,
-            currScreenAction = null,
-            currScreenName = "More"
-        )
-    }
-
     SetTopBar {
-        topBarState
+        remember {
+            EventsTopBarState(
+                enabled = true,
+                showBackButton = false,
+                currScreenAction = null,
+                currScreenName = "More"
+            )
+        }
     }
 
     LazyColumn(
