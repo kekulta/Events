@@ -31,7 +31,7 @@ import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsOutlinedBut
 import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickable
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
 import com.kekulta.events.presentation.viewmodel.ProfileScreenViewModel
-import com.kekulta.events.presentation.viewmodel.ProfileVo
+import com.kekulta.events.presentation.ui.models.ProfileVo
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -44,7 +44,7 @@ fun ProfileItem(
         ) {
             Text(text = profileVo.name, style = EventsTheme.typography.bodyText1)
             Text(
-                text = profileVo.phone,
+                text = profileVo.number,
                 style = EventsTheme.typography.metadata1,
                 color = EventsTheme.colors.neutralWeak,
             )
