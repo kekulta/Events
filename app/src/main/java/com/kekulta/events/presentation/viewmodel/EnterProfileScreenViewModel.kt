@@ -7,7 +7,7 @@ import com.kekulta.events.domain.usecase.LogOutUseCase
 import com.kekulta.events.domain.usecase.RegisterUseCase
 import kotlinx.coroutines.flow.StateFlow
 
-class EnterProfileViewModel(
+class EnterProfileScreenViewModel(
     private val currentAuthStatusUseCase: CurrentAuthStatusUseCase,
     private val registerUseCase: RegisterUseCase,
     private val logOutUseCase: LogOutUseCase,

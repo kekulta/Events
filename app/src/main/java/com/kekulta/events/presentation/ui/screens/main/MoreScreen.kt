@@ -1,15 +1,18 @@
 package com.kekulta.events.presentation.ui.screens.main
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.presentation.ui.models.ProfileVo
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.MyEvents
 import com.kekulta.events.presentation.ui.navigation.Profile
@@ -19,10 +22,16 @@ import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.ProfileItem
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.SettingsItem
+import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
+import com.kekulta.events.presentation.viewmodel.MoreScreenViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MoreScreen(
+    viewModel: MoreScreenViewModel = koinViewModel()
 ) {
+    val state by viewModel.observeState().collectAsStateWithLifecycle()
+
     val navigator = findNavigator()
 
     SetTopBar {
@@ -39,20 +48,39 @@ fun MoreScreen(
     LazyColumn(
         modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX8),
     ) {
-        item {
-            ProfileItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
-                profileVo = ProfileVo(
-                    name = "Ruslan Russkikh", number = "+7 995 917-72-42", avatar = Avatar(null)
-                ),
-                onClick = { navigator.navTo(Profile()) })
-        }
-        item {
-            SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX6),
-                icon = painterResource(id = R.drawable.icon_events),
-                name = "My events",
-                onClick = {
-                    navigator.navTo(MyEvents())
-                })
+        val s = state
+        if (s != null) {
+            item {
+                ProfileItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
+                    profileDetailsVo = s,
+                    onClick = { navigator.navTo(Profile()) })
+            }
+            item {
+                SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX6),
+                    icon = painterResource(id = R.drawable.icon_events),
+                    name = "My events",
+                    onClick = {
+                        navigator.navTo(MyEvents())
+                    })
+            }
+        } else {
+            item {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Continue with your account.",
+                    style = EventsTheme.typography.subheading2,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            item {
+                EventsFilledButton(modifier = Modifier
+                    // Paddings are *mess*
+                    .padding(horizontal = EventsTheme.sizes.sizeX5)
+                    .fillMaxWidth(),
+                    onClick = { navigator.setRoot(EnterPhone()) }) {
+                    Text(text = "Login")
+                }
+            }
         }
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),

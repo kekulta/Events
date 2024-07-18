@@ -136,7 +136,7 @@ fun PhoneField(
         }
 
         EventsInputField(
-            modifier = Modifier.padding(top = EventsTheme.sizes.sizeX4),
+            modifier = Modifier.padding(start = EventsTheme.sizes.sizeX4),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             state = numberState,
             shouldDrawBorder = shouldDrawBorder,

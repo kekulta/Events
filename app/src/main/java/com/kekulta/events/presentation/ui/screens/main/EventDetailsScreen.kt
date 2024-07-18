@@ -52,14 +52,14 @@ import com.kekulta.events.presentation.ui.widgets.base.modifiers.blur
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.noIndicationClickable
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.showSnackbar
-import com.kekulta.events.presentation.viewmodel.EventDetailsViewModel
+import com.kekulta.events.presentation.viewmodel.EventDetailsScreenViewModel
 import kotlinx.datetime.Clock
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun EventDetailsScreen(id: EventId, viewModel: EventDetailsViewModel = koinViewModel()) {
+fun EventDetailsScreen(id: EventId, viewModel: EventDetailsScreenViewModel = koinViewModel()) {
     viewModel.setId(id)
     val state by viewModel.observeState().collectAsStateWithLifecycle()
 
@@ -101,7 +101,7 @@ fun EventDetailsScreen(id: EventId, viewModel: EventDetailsViewModel = koinViewM
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsViewModel) {
+private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsScreenViewModel) {
     val snackbarScope = findSnackbarScope()
     var isSelected by rememberSaveable {
         mutableStateOf(false)

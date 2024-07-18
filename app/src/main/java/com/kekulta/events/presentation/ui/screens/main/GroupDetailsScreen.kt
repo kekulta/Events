@@ -23,11 +23,11 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventItem
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
-import com.kekulta.events.presentation.viewmodel.GroupDetailsViewModel
+import com.kekulta.events.presentation.viewmodel.GroupDetailsScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun GroupDetailsScreen(id: GroupId, viewModel: GroupDetailsViewModel = koinViewModel()) {
+fun GroupDetailsScreen(id: GroupId, viewModel: GroupDetailsScreenViewModel = koinViewModel()) {
     viewModel.setId(id)
     val state by viewModel.observeState().collectAsStateWithLifecycle()
 

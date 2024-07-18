@@ -2,7 +2,6 @@ package com.kekulta.events.presentation.viewmodel
 
 import com.kekulta.events.domain.models.GroupId
 import com.kekulta.events.domain.usecase.GroupDetailsUseCase
-import com.kekulta.events.presentation.ui.models.EventDetailsVo
 import com.kekulta.events.presentation.ui.models.GroupDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +13,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GroupDetailsViewModel(
+class GroupDetailsScreenViewModel(
     private val groupDetailsUseCase: GroupDetailsUseCase,
 ) : AbstractCoroutineViewModel() {
     private val currId = MutableStateFlow<GroupId?>(null)
