@@ -24,9 +24,7 @@ import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButto
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsTextButton
 
 @Composable
-fun EnterCodeScreen(
-    number: String,
-) {
+fun EnterCodeScreen() {
     val navigator = findNavigator()
 
     SetTopBar {

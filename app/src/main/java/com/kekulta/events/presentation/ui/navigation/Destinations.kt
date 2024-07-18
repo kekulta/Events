@@ -32,7 +32,6 @@ data class EnterPhone(
 
 @Serializable
 data class EnterCode(
-    val phone: String,
     override val tab: Tab = Tab.NO_BAR,
     override val isRoot: Boolean = false,
 ) : Screen
