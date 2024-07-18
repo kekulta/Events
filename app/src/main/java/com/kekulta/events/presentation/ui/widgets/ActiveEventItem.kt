@@ -15,8 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.chips.RoundChip
-import com.kekulta.events.presentation.viewmodel.ActiveEventItemVo
-import com.kekulta.events.presentation.viewmodel.EventItemVo
+import com.kekulta.events.presentation.ui.models.ActiveEventItemVo
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

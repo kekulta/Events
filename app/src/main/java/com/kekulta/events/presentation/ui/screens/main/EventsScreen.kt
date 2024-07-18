@@ -31,13 +31,14 @@ import com.kekulta.events.presentation.ui.widgets.EventsTabs
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickable
-import com.kekulta.events.presentation.viewmodel.ActiveEventItemVo
-import com.kekulta.events.presentation.viewmodel.EventItemVo
+import com.kekulta.events.presentation.ui.models.ActiveEventItemVo
+import com.kekulta.events.presentation.ui.models.EventItemVo
 import com.kekulta.events.presentation.viewmodel.EventsScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EventsScreen(viewModel: EventsScreenViewModel = koinViewModel()) {
+
     val navigator = findNavigator()
     val allEventsState by viewModel.observeAllEvents().collectAsStateWithLifecycle()
     val activeEventsState by viewModel.observeActiveEvents().collectAsStateWithLifecycle()

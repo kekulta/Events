@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -21,7 +22,7 @@ class EventDetailsViewModel(
     private val currId = MutableStateFlow<EventId?>(null)
 
     private val state: StateFlow<ScreenState<EventDetailsVo>> =
-        currId.filterNotNull().flatMapLatest { id -> eventDetailsUseCase.execute(id) }.map { vo ->
+        currId.filterNotNull().flatMapLatest { id -> eventDetailsUseCase.execute(id) }.mapLatest { vo ->
             if (vo != null) {
                 ScreenState.Success(vo)
             } else {
