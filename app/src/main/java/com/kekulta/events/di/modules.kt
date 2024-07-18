@@ -49,6 +49,45 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
+val servicesModule = module {
+    singleOf(::MockUsersService)
+    singleOf(::MockAuthService)
+}
+
+val usecaseModule = module {
+    factoryOf(::CurrentProfileDetailsUseCase)
+    factoryOf(::LogOutUseCase)
+    factoryOf(::EventDetailsUseCase)
+    factoryOf(::CurrentAuthStatusUseCase)
+    factoryOf(::SendCodeUseCase)
+    factoryOf(::EventRegistrationUseCase)
+    factoryOf(::CheckCodeUseCase)
+    factoryOf(::AllEventsUseCase)
+    factoryOf(::ActiveEventsUseCase)
+    factoryOf(::CurrentProfileItemUseCase)
+    factoryOf(::RegisterUseCase)
+    factoryOf(::AllGroupsUseCase)
+    factoryOf(::GroupDetailsUseCase)
+    factoryOf(::MyPastEventsUseCase)
+    factoryOf(::MyPlannedEventsUseCase)
+}
+
+val formattersModule = module {
+    factoryOf(::EventDetailsFormatter)
+    factoryOf(::ProfileItemFormatter)
+    factoryOf(::ActiveEventItemVoFormatter)
+    factoryOf(::EventItemVoFormatter)
+    factoryOf(::GroupItemVoFormatter)
+    factoryOf(::ProfileDetailsFormatter)
+}
+
+val repositoriesModule = module {
+    singleOf(::ProfileRepositoryMock) { bind<ProfileRepository>() }
+    singleOf(::AuthRepositoryMock) { bind<AuthRepository>() }
+    singleOf(::GroupsRepositoryMock) { bind<GroupsRepository>() }
+    singleOf(::EventsRepositoryMock) { bind<EventsRepository>() }
+    singleOf(::UsersRepositoryMock) { bind<UsersRepository>() }
+}
 
 val viewModelsModule = module {
     viewModelOf(::EventDetailsScreenViewModel)
@@ -61,32 +100,6 @@ val viewModelsModule = module {
     viewModelOf(::EnterProfileScreenViewModel)
     viewModelOf(::EnterCodeScreenViewModel)
     viewModelOf(::MoreScreenViewModel)
-    singleOf(::MockUsersService)
-    singleOf(::MockAuthService)
-    singleOf(::ProfileRepositoryMock) { bind<ProfileRepository>() }
-    singleOf(::AuthRepositoryMock) { bind<AuthRepository>() }
-    singleOf(::GroupsRepositoryMock) { bind<GroupsRepository>() }
-    singleOf(::EventsRepositoryMock) { bind<EventsRepository>() }
-    singleOf(::UsersRepositoryMock) { bind<UsersRepository>() }
-    factoryOf(::EventDetailsUseCase)
-    factoryOf(::CurrentAuthStatusUseCase)
-    factoryOf(::SendCodeUseCase)
-    factoryOf(::EventDetailsFormatter)
-    factoryOf(::EventRegistrationUseCase)
-    factoryOf(::CheckCodeUseCase)
-    factoryOf(::AllEventsUseCase)
-    factoryOf(::ActiveEventsUseCase)
-    factoryOf(::CurrentProfileItemUseCase)
-    factoryOf(::ProfileItemFormatter)
-    factoryOf(::ActiveEventItemVoFormatter)
-    factoryOf(::EventItemVoFormatter)
-    factoryOf(::MyPastEventsUseCase)
-    factoryOf(::MyPlannedEventsUseCase)
-    factoryOf(::GroupItemVoFormatter)
-    factoryOf(::RegisterUseCase)
-    factoryOf(::AllGroupsUseCase)
-    factoryOf(::GroupDetailsUseCase)
-    factoryOf(::ProfileDetailsFormatter)
-    factoryOf(::CurrentProfileDetailsUseCase)
-    factoryOf(::LogOutUseCase)
 }
+
+

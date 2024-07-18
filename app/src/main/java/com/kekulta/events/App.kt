@@ -1,6 +1,10 @@
 package com.kekulta.events
 
 import android.app.Application
+import com.kekulta.events.di.formattersModule
+import com.kekulta.events.di.repositoriesModule
+import com.kekulta.events.di.servicesModule
+import com.kekulta.events.di.usecaseModule
 import com.kekulta.events.di.viewModelsModule
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority
@@ -20,7 +24,13 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(viewModelsModule)
+            modules(
+                viewModelsModule,
+                usecaseModule,
+                formattersModule,
+                servicesModule,
+                repositoriesModule,
+            )
         }
     }
 }
