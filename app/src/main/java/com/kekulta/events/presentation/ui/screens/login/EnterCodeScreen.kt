@@ -15,9 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.kekulta.events.domain.formatters.format
 import com.kekulta.events.domain.models.AuthStatus
 import com.kekulta.events.domain.models.VerificationCode
+import com.kekulta.events.presentation.formatters.format
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.EnterProfile
 import com.kekulta.events.presentation.ui.navigation.Events

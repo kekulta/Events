@@ -43,7 +43,7 @@ fun AttendeesRow(
                     horizontalArrangement = Arrangement.spacedBy(-EventsTheme.sizes.sizeX9)
                 ) {
                     itemsIndexed(
-                        attendees.take(showAvatarsNum), { _, attendee -> attendee.id }
+                        attendees.take(showAvatarsNum), { _, attendee -> attendee.id.id }
                     ) { index, attendee ->
                         UserSquareAvatar(
                             modifier = Modifier

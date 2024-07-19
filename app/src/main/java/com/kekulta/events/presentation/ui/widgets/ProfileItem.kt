@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.theme.EventsTheme
-import com.kekulta.events.presentation.viewmodel.ProfileItemVo
+import com.kekulta.events.presentation.ui.models.ProfileItemVo
 
 @Composable
 fun ProfileItem(
