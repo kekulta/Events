@@ -55,6 +55,15 @@ android {
 }
 
 dependencies {
+    implementation(libs.logcat)
+    implementation(libs.kotlinx.datetime)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.android)
+    implementation(platform(libs.kotlinx.coroutines.bom))
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.lottie.compose)
     implementation(libs.coil.compose)
