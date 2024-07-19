@@ -1,14 +1,11 @@
 package com.kekulta.events
 
 import android.app.Application
-import com.kekulta.events.di.formattersModule
-import com.kekulta.events.di.repositoriesModule
-import com.kekulta.events.di.servicesModule
-import com.kekulta.events.di.usecaseModule
-import com.kekulta.events.di.viewModelsModule
+import com.kekulta.events.presentation.di.eventsAppModule
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority
 import logcat.LogcatLogger
+import logcat.logcat
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -24,13 +21,9 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(
-                viewModelsModule,
-                usecaseModule,
-                formattersModule,
-                servicesModule,
-                repositoriesModule,
-            )
+            modules(eventsAppModule)
+
+            logcat { "Koin started!" }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.kekulta.events.presentation.ui.navigation
 
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -76,10 +77,19 @@ inline fun <reified T : Screen> NavGraphBuilder.screen(
 
     composable<T>(
         typeMap = mapOf(
-            typeOf<Tab>() to parcelableType<Tab>(),
-            typeOf<EventId>() to parcelableType<EventId>(),
-            typeOf<GroupId>() to parcelableType<GroupId>(),
-            typeOf<UserId>() to parcelableType<UserId>(),
+            typeOf<Tab>() to parcelableNavArg<Tab>(),
+            typeOf<EventId>() to stringNavArg<EventId>(
+                encode = { id },
+                decode = { value -> EventId(value) },
+            ),
+            typeOf<GroupId>() to stringNavArg<GroupId>(
+                encode = { id },
+                decode = { value -> GroupId(value) },
+            ),
+            typeOf<UserId>() to stringNavArg<UserId>(
+                encode = { id },
+                decode = { value -> UserId(value) },
+            ),
         ),
         enterTransition = slideInRight.takeIf { slide },
         exitTransition = slideOutLeft.takeIf { slide },
@@ -94,7 +104,23 @@ inline fun <reified T : Screen> NavGraphBuilder.screen(
     }
 }
 
-inline fun <reified T : Parcelable> parcelableType(
+
+inline fun <reified T> stringNavArg(
+    crossinline encode: T.() -> String,
+    crossinline decode: (value: String) -> T,
+    isNullableAllowed: Boolean = false,
+) = object : NavType<T>(isNullableAllowed = isNullableAllowed) {
+    override fun get(bundle: Bundle, key: String) =
+        decode(requireNotNull(bundle.getString(key)) { "Error while extracting NavArg!" })
+
+    override fun parseValue(value: String): T = decode(Uri.decode(value))
+
+    override fun serializeAsValue(value: T): String = Uri.encode(encode(value))
+
+    override fun put(bundle: Bundle, key: String, value: T) = bundle.putString(key, encode(value))
+}
+
+inline fun <reified T : Parcelable> parcelableNavArg(
     isNullableAllowed: Boolean = false,
     json: Json = Json,
 ) = object : NavType<T>(isNullableAllowed = isNullableAllowed) {
@@ -105,9 +131,9 @@ inline fun <reified T : Parcelable> parcelableType(
             @Suppress("DEPRECATION") bundle.getParcelable(key)
         }
 
-    override fun parseValue(value: String): T = json.decodeFromString(value)
+    override fun parseValue(value: String): T = json.decodeFromString(Uri.decode(value))
 
-    override fun serializeAsValue(value: T): String = json.encodeToString(value)
+    override fun serializeAsValue(value: T): String = Uri.encode(json.encodeToString(value))
 
     override fun put(bundle: Bundle, key: String, value: T) = bundle.putParcelable(key, value)
 }

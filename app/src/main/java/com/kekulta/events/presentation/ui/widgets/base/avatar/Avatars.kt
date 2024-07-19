@@ -21,11 +21,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import com.kekulta.events.R
 import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.presentation.ui.theme.EventsTheme
-import logcat.logcat
 
 @Composable
 fun BasicAvatar(
