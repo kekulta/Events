@@ -61,30 +61,42 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
     implementation(project(":data"))
+
     implementation(libs.logcat)
+
     implementation(libs.kotlinx.datetime)
+
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.android)
+
     implementation(platform(libs.kotlinx.coroutines.bom))
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.lottie.compose)
-    implementation(libs.coil.compose)
+
     implementation(libs.telephoto.zoomable)
+
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.lottie.compose)
+
+    implementation(libs.coil.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
+
     testImplementation(libs.junit)
     testImplementation(libs.koin.test)
-    androidTestImplementation(libs.androidx.junit)
 }

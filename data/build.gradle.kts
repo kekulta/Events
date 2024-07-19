@@ -35,11 +35,12 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
+
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
-    implementation(libs.koin.android)
+
     implementation(libs.kotlinx.datetime)
-    implementation(libs.androidx.core.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+
+    implementation(platform(libs.kotlinx.coroutines.bom))
+    implementation(libs.kotlinx.coroutines.core)
 }
