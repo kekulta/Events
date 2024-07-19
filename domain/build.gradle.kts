@@ -10,12 +10,13 @@ java {
 
 dependencies {
     implementation(project(":common"))
-//    implementation(libs.logcat)
+
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
+
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+
     implementation(platform(libs.kotlinx.coroutines.bom))
     implementation(libs.kotlinx.coroutines.core)
-    testImplementation(libs.junit)
 }

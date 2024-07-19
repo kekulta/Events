@@ -8,7 +8,8 @@ java {
 }
 
 dependencies {
-    implementation(libs.kotlinx.datetime)
     implementation(platform(libs.kotlinx.coroutines.bom))
     implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.kotlinx.datetime)
 }
