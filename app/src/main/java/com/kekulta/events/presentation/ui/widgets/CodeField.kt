@@ -117,7 +117,7 @@ fun CodeField(
 }
 
 @Composable
-fun measureRenderedHeight(style: TextStyle): Dp {
+private fun measureRenderedHeight(style: TextStyle): Dp {
     val textMeasurer = rememberTextMeasurer()
     val singleLineHeightPx = remember(textMeasurer, style) {
         textMeasurer.measure("0", style).size.height

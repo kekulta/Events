@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
 import com.kekulta.events.domain.models.EventId
@@ -58,13 +59,17 @@ fun EventsScreen(
     }
 
     SetTopBar {
-        remember {
+        val screeName = stringResource(id = R.string.screen_events)
+
+        remember(screeName) {
             EventsTopBarState(
-                enabled = true, showBackButton = false, currScreenAction = {
+                showBackButton = false,
+                currScreenAction = {
                     EventsAction {
                         snackbarScope?.showSnackbar("Events action: ${Clock.System.now().epochSeconds % 60}")
                     }
-                }, currScreenName = "Events"
+                },
+                currScreenName = screeName,
             )
         }
     }
@@ -80,11 +85,11 @@ fun EventsScreen(
         EventsTabs(
             modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8), tabs = listOf(
                 EventsTab(
-                    title = "All Events",
+                    title = stringResource(id = R.string.all_events),
                     content = {
                         when (val events = allEventsState) {
-                            is ScreenState.Error -> Text("Error")
-                            is ScreenState.Loading -> Text("Loading")
+                            is ScreenState.Error -> Text(stringResource(id = R.string.error_message))
+                            is ScreenState.Loading -> Text(stringResource(id = R.string.loading_message))
                             is ScreenState.Success -> AllEventsTab(
                                 events = events.state, onClick = ::navToDetails
                             )
@@ -92,11 +97,11 @@ fun EventsScreen(
                     },
                 ),
                 EventsTab(
-                    title = "Active Events",
+                    title = stringResource(id = R.string.active_events),
                     content = {
                         when (val events = activeEventsState) {
-                            is ScreenState.Error -> Text("Error")
-                            is ScreenState.Loading -> Text("Loading")
+                            is ScreenState.Error -> Text(stringResource(id = R.string.error_message))
+                            is ScreenState.Loading -> Text(stringResource(id = R.string.loading_message))
                             is ScreenState.Success -> ActiveEventsTab(
                                 events = events.state, onClick = ::navToDetails
                             )

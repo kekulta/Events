@@ -21,8 +21,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.kekulta.events.presentation.ui.navigation.EventsNavGraph
 import com.kekulta.events.presentation.ui.navigation.ProvideNavComponentNavigator
-import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.navigation.rememberNavState
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsNavBar
 import com.kekulta.events.presentation.ui.widgets.EventsTopBar
@@ -51,7 +51,9 @@ class MainActivity : ComponentActivity() {
             KoinAndroidContext {
                 EventsTheme {
                     val navController = rememberNavController()
-                    ProvideNavComponentNavigator(navController = navController, onExit = { finish() }) {
+                    ProvideNavComponentNavigator(
+                        navController = navController,
+                        onExit = { finish() }) {
                         val navigator = requireNavigator()
 
                         val snackbarHostState = remember { SnackbarHostState() }
@@ -65,8 +67,6 @@ class MainActivity : ComponentActivity() {
                                 EventsTopBarState(
                                     enabled = false,
                                     showBackButton = false,
-                                    currScreenAction = null,
-                                    currScreenName = "",
                                 )
                             )
                         }

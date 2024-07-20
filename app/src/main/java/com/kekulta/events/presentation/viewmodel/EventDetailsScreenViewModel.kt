@@ -1,5 +1,6 @@
 package com.kekulta.events.presentation.viewmodel
 
+import androidx.compose.ui.res.stringResource
 import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.domain.usecase.CancelEventRegistrationUseCase
 import com.kekulta.events.domain.usecase.EventDetailsUseCase
@@ -36,7 +37,7 @@ class EventDetailsScreenViewModel(
                 if (vo != null) {
                     ScreenState.Success(vo)
                 } else {
-                    ScreenState.Error("Something went wrong!")
+                    ScreenState.Error(message = null)
                 }
             }.asStateFlow(ScreenState.Loading())
 

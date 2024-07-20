@@ -44,26 +44,26 @@ fun GroupDetailsScreen(id: GroupId, viewModel: GroupDetailsScreenViewModel = koi
 
     when (val s = state) {
         is ScreenState.Loading -> {
+
             SetTopBar {
-                remember {
+                val screenName = stringResource(id = R.string.topbar_loading)
+
+                remember(screenName) {
                     EventsTopBarState(
-                        enabled = true,
-                        showBackButton = true,
-                        currScreenAction = null,
-                        currScreenName = "Loading.."
+                        currScreenName = screenName,
                     )
                 }
             }
         }
 
         is ScreenState.Error -> {
+
             SetTopBar {
-                remember {
+                val screenName = stringResource(id = R.string.topbar_error)
+
+                remember(screenName) {
                     EventsTopBarState(
-                        enabled = true,
-                        showBackButton = true,
-                        currScreenAction = null,
-                        currScreenName = "Error.."
+                        currScreenName = screenName
                     )
                 }
             }
@@ -81,9 +81,6 @@ private fun SuccessScreen(vo: GroupDetailsVo, onClick: (id: EventId) -> Unit) {
     SetTopBar {
         remember(vo) {
             EventsTopBarState(
-                enabled = true,
-                showBackButton = true,
-                currScreenAction = null,
                 currScreenName = vo.name,
             )
         }
@@ -92,7 +89,7 @@ private fun SuccessScreen(vo: GroupDetailsVo, onClick: (id: EventId) -> Unit) {
     LazyColumn {
         item {
             Text(
-                vo.description,
+                vo.description ?: stringResource(id = R.string.group_no_description),
                 modifier = Modifier
                     .padding(horizontal = EventsTheme.sizes.sizeX9)
                     .padding(bottom = EventsTheme.sizes.sizeX6),
@@ -102,7 +99,7 @@ private fun SuccessScreen(vo: GroupDetailsVo, onClick: (id: EventId) -> Unit) {
         }
         item {
             val groupsHeading = if (vo.events.isEmpty()) {
-                "Group has no events"
+                stringResource(id = R.string.group_no_events)
             } else {
                 stringResource(R.string.groups_events)
             }

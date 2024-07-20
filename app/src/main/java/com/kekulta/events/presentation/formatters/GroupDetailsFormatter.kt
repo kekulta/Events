@@ -10,7 +10,7 @@ class GroupDetailsFormatter(
         return GroupDetailsVo(
             id = model.group.id,
             name = model.group.name,
-            description = model.group.description ?: "No description.",
+            description = model.group.description,
             events = eventItemFormatter.format(model.events),
         )
     }

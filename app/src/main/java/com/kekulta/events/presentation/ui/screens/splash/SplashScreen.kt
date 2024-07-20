@@ -19,14 +19,7 @@ import com.kekulta.events.presentation.ui.widgets.base.animation.LottieAnimation
 fun SplashScreen() {
     val navigator = requireNavigator()
 
-    SetTopBar {
-        EventsTopBarState(
-            enabled = false,
-            showBackButton = false,
-            currScreenAction = null,
-            currScreenName = "",
-        )
-    }
+    SetTopBar { EventsTopBarState(enabled = false) }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LottieAnimation(

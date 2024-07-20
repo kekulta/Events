@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kekulta.events.R
 import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.presentation.ui.models.EventItemVo
 import com.kekulta.events.presentation.ui.models.ScreenState
@@ -44,13 +46,10 @@ fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
     }
 
     SetTopBar {
-        remember {
-            EventsTopBarState(
-                enabled = true,
-                showBackButton = true,
-                currScreenAction = null,
-                currScreenName = "My Events Screen"
-            )
+        val screenName = stringResource(id = R.string.screen_my_events)
+
+        remember(screenName) {
+            EventsTopBarState(currScreenName = screenName)
         }
     }
 
@@ -67,11 +66,11 @@ fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
         EventsTabs(
             modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8), tabs = listOf(
                 EventsTab(
-                    title = "Planned Events",
+                    title = stringResource(id = R.string.planned_events),
                     content = {
                         when (val events = plannedEventsState) {
-                            is ScreenState.Error -> Text("Error")
-                            is ScreenState.Loading -> Text("Loading")
+                            is ScreenState.Error -> Text(stringResource(id = R.string.loading_message))
+                            is ScreenState.Loading -> Text(stringResource(id = R.string.error_message))
                             is ScreenState.Success -> EventsTab(
                                 events = events.state, onClick = ::navToDetails
                             )
@@ -79,11 +78,11 @@ fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
                     },
                 ),
                 EventsTab(
-                    title = "Past Events",
+                    title = stringResource(id = R.string.past_events),
                     content = {
                         when (val events = pastEventsState) {
-                            is ScreenState.Error -> Text("Error")
-                            is ScreenState.Loading -> Text("Loading")
+                            is ScreenState.Error -> Text(stringResource(id = R.string.loading_message))
+                            is ScreenState.Loading -> Text(stringResource(id = R.string.error_message))
                             is ScreenState.Success -> EventsTab(
                                 events = events.state, onClick = ::navToDetails
                             )

@@ -28,7 +28,7 @@ class GroupDetailsScreenViewModel(
                 if (vo != null) {
                     ScreenState.Success(vo)
                 } else {
-                    ScreenState.Error("Something went wrong!")
+                    ScreenState.Error(message = null)
                 }
             }.asStateFlow(ScreenState.Loading())
 

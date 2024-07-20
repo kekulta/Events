@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.chips.RoundChip
 import com.kekulta.events.presentation.ui.models.EventItemVo
@@ -48,7 +50,7 @@ fun EventItem(
                 )
                 if (eventVo.isPast) {
                     Text(
-                        text = "Event is over",
+                        text = stringResource(id = R.string.event_is_over),
                         color = EventsTheme.colors.neutralWeak,
                         style = EventsTheme.typography.metadata2,
                     )

@@ -11,8 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.zIndex
+import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.models.AttendeeVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 
@@ -32,7 +34,7 @@ fun AttendeesRow(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = "Be the first!",
+                text = stringResource(id = R.string.be_first_attendee),
                 style = EventsTheme.typography.subheading2
             )
         } else {

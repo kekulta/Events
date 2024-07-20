@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
@@ -35,12 +36,12 @@ fun MoreScreen(
     val navigator = requireNavigator()
 
     SetTopBar {
-        remember {
+        val screenName = stringResource(id = R.string.screen_more)
+
+        remember(screenName) {
             EventsTopBarState(
-                enabled = true,
                 showBackButton = false,
-                currScreenAction = null,
-                currScreenName = "More"
+                currScreenName = screenName,
             )
         }
     }
@@ -58,7 +59,7 @@ fun MoreScreen(
             item {
                 SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX6),
                     icon = painterResource(id = R.drawable.icon_events),
-                    name = "My events",
+                    name = stringResource(id = R.string.item_my_events),
                     onClick = {
                         navigator.navTo(MyEvents())
                     })
@@ -67,7 +68,7 @@ fun MoreScreen(
             item {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Continue with your account.",
+                    text = stringResource(id = R.string.continue_with_account),
                     style = EventsTheme.typography.subheading2,
                     textAlign = TextAlign.Center,
                 )
@@ -78,14 +79,14 @@ fun MoreScreen(
                     .padding(horizontal = EventsTheme.sizes.sizeX5)
                     .fillMaxWidth(),
                     onClick = { navigator.setRoot(EnterPhone()) }) {
-                    Text(text = "Login")
+                    Text(text = stringResource(id = R.string.login_button))
                 }
             }
         }
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 icon = painterResource(id = R.drawable.icon_theme),
-                name = "Theme",
+                name = stringResource(id = R.string.item_theme),
                 onClick = {
                     /* TODO */
                 })
@@ -93,7 +94,7 @@ fun MoreScreen(
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 icon = painterResource(id = R.drawable.icon_notification),
-                name = "Notifications",
+                name = stringResource(id = R.string.item_notifications),
                 onClick = {
                     /* TODO */
                 })
@@ -101,7 +102,7 @@ fun MoreScreen(
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 icon = painterResource(id = R.drawable.icon_safety),
-                name = "Safety",
+                name = stringResource(id = R.string.item_safety),
                 onClick = {
                     /* TODO */
                 })
@@ -109,7 +110,7 @@ fun MoreScreen(
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 icon = painterResource(id = R.drawable.icon_res),
-                name = "Resources",
+                name = stringResource(id = R.string.item_resources),
                 onClick = {
                     /* TODO */
                 })
@@ -120,7 +121,7 @@ fun MoreScreen(
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 icon = painterResource(id = R.drawable.icon_help),
-                name = "Help",
+                name = stringResource(id = R.string.item_help),
                 onClick = {
                     /* TODO */
                 })
@@ -128,7 +129,7 @@ fun MoreScreen(
         item {
             SettingsItem(modifier = Modifier.padding(vertical = EventsTheme.sizes.sizeX4),
                 icon = painterResource(id = R.drawable.icon_mail),
-                name = "Invite friends",
+                name = stringResource(id = R.string.item_invite),
                 onClick = {
                     /* TODO */
                 })
