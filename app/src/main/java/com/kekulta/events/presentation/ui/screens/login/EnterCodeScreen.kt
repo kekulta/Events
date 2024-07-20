@@ -21,7 +21,7 @@ import com.kekulta.events.presentation.formatters.format
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.EnterProfile
 import com.kekulta.events.presentation.ui.navigation.Events
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.CODE_LENGTH
 import com.kekulta.events.presentation.ui.widgets.CodeField
@@ -41,7 +41,7 @@ fun EnterCodeScreen(
 ) {
     val state by viewModel.observeAuthStatus().collectAsStateWithLifecycle()
 
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     SetTopBar {
         remember {

@@ -19,7 +19,7 @@ import com.kekulta.events.domain.models.PersonalInfo
 import com.kekulta.events.presentation.ui.navigation.EnterCode
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.Events
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
@@ -33,7 +33,7 @@ import org.koin.androidx.compose.koinViewModel
 fun EnterProfileScreen(viewModel: EnterProfileScreenViewModel = koinViewModel()) {
     val state by viewModel.observeAuthStatus().collectAsStateWithLifecycle()
 
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     SetTopBar {
         remember {

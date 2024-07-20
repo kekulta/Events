@@ -18,7 +18,7 @@ import com.kekulta.events.domain.models.GroupId
 import com.kekulta.events.presentation.ui.models.GroupDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.navigation.EventDetails
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventItem
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
@@ -31,7 +31,7 @@ fun GroupDetailsScreen(id: GroupId, viewModel: GroupDetailsScreenViewModel = koi
     viewModel.setId(id)
     val state by viewModel.observeState().collectAsStateWithLifecycle()
 
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     fun navToEvent(id: EventId) {
         navigator.navTo(

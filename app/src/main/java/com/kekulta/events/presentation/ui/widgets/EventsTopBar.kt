@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -31,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.kekulta.events.R
-import com.kekulta.events.presentation.ui.navigation.getOnBackPressedDispatcher
+import com.kekulta.events.presentation.ui.navigation.requireOnBackPressDispatcher
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.buttons.debouncedClickable
 
@@ -83,7 +82,7 @@ fun EventsTopBar(
     state: State<EventsTopBarState>,
 ) {
     val topBarState by state
-    val onBackPressedDispatcher = getOnBackPressedDispatcher()
+    val onBackPressedDispatcher = requireOnBackPressDispatcher()
 
     Row(
         verticalAlignment = Alignment.CenterVertically,

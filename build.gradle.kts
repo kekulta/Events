@@ -9,9 +9,9 @@ plugins {
 }
 
 subprojects {
-    /*
-        Run compiler analyzer with:
-        ./gradlew assembleRelease -PcomposeCompilerReports=true
+    /**
+     * Run compiler analyzer with:
+     * ./gradlew assembleRelease -PcomposeCompilerReports=true
      */
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         kotlinOptions {
