@@ -21,7 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.models.ProfileDetailsVo
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
@@ -66,7 +66,7 @@ fun ProfileScreen(
 
 @Composable
 private fun LoggedOutProfile() {
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     Column(
         modifier = Modifier.fillMaxSize(),

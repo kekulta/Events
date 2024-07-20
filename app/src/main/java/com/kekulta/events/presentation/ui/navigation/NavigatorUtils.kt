@@ -33,24 +33,40 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.reflect.typeOf
 
+/**
+ * Returns [LocalOnBackPressedDispatcherOwner.current] or throws if it is empty.
+ */
 @Composable
-fun getOnBackPressedDispatcher() = checkNotNull(LocalOnBackPressedDispatcherOwner.current) {
+fun requireOnBackPressDispatcher() = checkNotNull(LocalOnBackPressedDispatcherOwner.current) {
     "No OnBackPressedDispatcherOwner was provided via LocalOnBackPressedDispatcherOwner"
 }.onBackPressedDispatcher
 
-val LocalNavigator = staticCompositionLocalOf<Navigator> {
-    error("No navigator provided!")
+/**
+ * Provides [Navigator]
+ */
+val LocalNavigator = staticCompositionLocalOf<Navigator?> {
+    null
 }
 
+/**
+ * Returns [LocalNavigator] or throws if no [Navigator] was provided.
+ */
 @Composable
-fun rememberNavState(): MutableState<EventsNavBarState> =
-    remember { mutableStateOf(EventsNavBarState(Tab.EVENTS)) }
+fun requireNavigator(): Navigator = LocalNavigator.current
+    ?: error("No navigator provided! Make sure that any Event's Custom Composable nested inside [ProvideNavigator]")
 
+/**
+ * Remembers EventsNavBarState.
+ */
 @Composable
-fun findNavigator(): Navigator = LocalNavigator.current
+fun rememberNavState(state: EventsNavBarState = EventsNavBarState(Tab.EVENTS)): MutableState<EventsNavBarState> =
+    remember { mutableStateOf(state) }
 
+/**
+ * Provides [NavComponentNavigator] implementation of the [Navigator] to its children.
+ */
 @Composable
-fun ProvideNavigator(
+fun ProvideNavComponentNavigator(
     navController: NavController, onExit: () -> Unit, content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
@@ -58,6 +74,9 @@ fun ProvideNavigator(
     )
 }
 
+/**
+ * Adds composable destination to the NavGraph, that sets current Tab accordingly when navigated to.
+ */
 inline fun <reified T : Screen> NavGraphBuilder.screen(
     state: MutableState<EventsNavBarState>,
     slide: Boolean = false,
@@ -104,7 +123,10 @@ inline fun <reified T : Screen> NavGraphBuilder.screen(
     }
 }
 
-
+/**
+ * Creates custom [NavType] with provided [encode] and [decode] functions.
+ * Intended for use with value classes or other easily serializable classes.
+ */
 inline fun <reified T> stringNavArg(
     crossinline encode: T.() -> String,
     crossinline decode: (value: String) -> T,
@@ -120,6 +142,9 @@ inline fun <reified T> stringNavArg(
     override fun put(bundle: Bundle, key: String, value: T) = bundle.putString(key, encode(value))
 }
 
+/**
+ * Creates custom [NavType] from provided [Parcelable] type.
+ */
 inline fun <reified T : Parcelable> parcelableNavArg(
     isNullableAllowed: Boolean = false,
     json: Json = Json,

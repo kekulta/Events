@@ -16,7 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.domain.models.GroupId
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.navigation.GroupDetails
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsSearchField
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
@@ -29,7 +29,7 @@ import org.koin.androidx.compose.koinViewModel
 fun GroupsScreen(viewModel: GroupsScreenViewModel = koinViewModel()) {
     val state by viewModel.observeAllGroups().collectAsStateWithLifecycle()
 
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     fun navToDetails(id: GroupId) {
         navigator.navTo(

@@ -17,7 +17,7 @@ import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.presentation.ui.models.EventItemVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.navigation.EventDetails
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventItem
 import com.kekulta.events.presentation.ui.widgets.EventsSearchField
@@ -33,7 +33,7 @@ fun MyEventsScreen(viewModel: MyEventsScreenViewModel = koinViewModel()) {
     val plannedEventsState by viewModel.observePlannedEvents().collectAsStateWithLifecycle()
     val pastEventsState by viewModel.observePastEvents().collectAsStateWithLifecycle()
 
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     fun navToDetails(id: EventId) {
         navigator.navTo(

@@ -23,7 +23,7 @@ import com.kekulta.events.presentation.ui.models.ActiveEventItemVo
 import com.kekulta.events.presentation.ui.models.EventItemVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.navigation.EventDetails
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.ActiveEventItem
 import com.kekulta.events.presentation.ui.widgets.EventItem
@@ -46,7 +46,7 @@ fun EventsScreen(
     val allEventsState by viewModel.observeAllEvents().collectAsStateWithLifecycle()
     val activeEventsState by viewModel.observeActiveEvents().collectAsStateWithLifecycle()
 
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
     val snackbarScope = findSnackbarScope()
 
     fun navToDetails(id: EventId) {

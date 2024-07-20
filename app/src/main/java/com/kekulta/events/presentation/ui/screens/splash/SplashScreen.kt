@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.navigation.Events
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
@@ -17,7 +17,7 @@ import com.kekulta.events.presentation.ui.widgets.base.animation.LottieAnimation
 
 @Composable
 fun SplashScreen() {
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     SetTopBar {
         EventsTopBarState(

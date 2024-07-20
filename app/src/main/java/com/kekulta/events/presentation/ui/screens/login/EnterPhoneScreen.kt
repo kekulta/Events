@@ -1,9 +1,7 @@
 package com.kekulta.events.presentation.ui.screens.login
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
@@ -20,7 +18,7 @@ import com.kekulta.events.domain.models.PhoneNumber
 import com.kekulta.events.presentation.ui.navigation.EnterCode
 import com.kekulta.events.presentation.ui.navigation.EnterProfile
 import com.kekulta.events.presentation.ui.navigation.Events
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.PHONE_NUMBER_LENGTH
@@ -37,7 +35,7 @@ fun EnterPhoneScreen(
 ) {
     val state by viewModel.observeAuthStatus().collectAsStateWithLifecycle()
 
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
 
     SetTopBar {
         remember {
