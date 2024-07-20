@@ -1,7 +1,6 @@
 package com.kekulta.events.presentation.ui.navigation
 
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -19,6 +18,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.core.os.BundleCompat
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -150,11 +150,7 @@ inline fun <reified T : Parcelable> parcelableNavArg(
     json: Json = Json,
 ) = object : NavType<T>(isNullableAllowed = isNullableAllowed) {
     override fun get(bundle: Bundle, key: String) =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            bundle.getParcelable(key, T::class.java)
-        } else {
-            @Suppress("DEPRECATION") bundle.getParcelable(key)
-        }
+        BundleCompat.getParcelable(bundle, key, T::class.java)
 
     override fun parseValue(value: String): T = json.decodeFromString(Uri.decode(value))
 
