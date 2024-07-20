@@ -12,7 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kekulta.events.R
 import com.kekulta.events.domain.models.AuthStatus
 import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.domain.models.PersonalInfo
@@ -36,12 +38,14 @@ fun EnterProfileScreen(viewModel: EnterProfileScreenViewModel = koinViewModel())
     val navigator = requireNavigator()
 
     SetTopBar {
-        remember {
+        val screenName = stringResource(id = R.string.screen_profile)
+
+        remember(screenName) {
             EventsTopBarState(
                 enabled = true,
                 showBackButton = true,
                 currScreenAction = null,
-                currScreenName = "Profile",
+                currScreenName = screenName,
             )
         }
     }
@@ -69,14 +73,14 @@ private fun EnterProfileContent(registerProfile: (info: PersonalInfo) -> Unit) {
         UserCircleAddAvatar(modifier = Modifier.padding(top = EventsTheme.sizes.sizeX26))
         EventsInputField(
             state = nameState,
-            hint = "Name (required)",
+            hint = stringResource(id = R.string.name_hint),
             modifier = Modifier
                 .padding(horizontal = EventsTheme.sizes.sizeX9)
                 .padding(top = EventsTheme.sizes.sizeX12),
         )
         EventsInputField(
             state = surnameState,
-            hint = "Surname (optional)",
+            hint = stringResource(id = R.string.surname_hint),
             modifier = Modifier
                 .padding(horizontal = EventsTheme.sizes.sizeX9)
                 .padding(top = EventsTheme.sizes.sizeX4),
@@ -96,7 +100,7 @@ private fun EnterProfileContent(registerProfile: (info: PersonalInfo) -> Unit) {
                     )
                 )
             }) {
-            Text("Continue")
+            Text(stringResource(id = R.string.continue_button))
         }
     }
 }

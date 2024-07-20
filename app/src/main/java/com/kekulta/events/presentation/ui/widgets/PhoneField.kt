@@ -42,6 +42,7 @@ import com.kekulta.events.presentation.ui.widgets.base.modifiers.MaskOutputTrans
 import com.kekulta.events.presentation.ui.widgets.base.text.EventsInputField
 
 const val PHONE_NUMBER_LENGTH = 10
+const val PHONE_NUMBER_MASK = "(###) ###-##-##"
 
 @Composable
 fun PhoneField(
@@ -141,8 +142,8 @@ fun PhoneField(
             state = numberState,
             shouldDrawBorder = shouldDrawBorder,
             inputTransformation = InputTransformation.maxLength(PHONE_NUMBER_LENGTH),
-            outputTransformation = MaskOutputTransformation("(###) ###-##-##"),
-            hint = "000 000-00-00",
+            outputTransformation = MaskOutputTransformation(PHONE_NUMBER_MASK),
+            hint = "(000) 000-00-00",
             onDone = {
                 focusManager.clearFocus()
                 onDone(numberState, countryState)

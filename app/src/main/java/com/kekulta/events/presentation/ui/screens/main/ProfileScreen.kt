@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.models.ProfileDetailsVo
@@ -41,17 +42,10 @@ fun ProfileScreen(
     val state by viewModel.observeProfileState().collectAsStateWithLifecycle()
 
     SetTopBar {
+        val screenName = stringResource(id = R.string.screen_profile)
+
         remember {
-            EventsTopBarState(
-                enabled = true,
-                showBackButton = true,
-                currScreenAction = {
-                    ProfileAction {
-                        /* TODO */
-                    }
-                },
-                currScreenName = "Profile"
-            )
+            EventsTopBarState(currScreenName = screenName)
         }
     }
 
@@ -68,27 +62,54 @@ fun ProfileScreen(
 private fun LoggedOutProfile() {
     val navigator = requireNavigator()
 
+    SetTopBar {
+        val screenName = stringResource(id = R.string.screen_profile)
+
+        remember {
+            EventsTopBarState(currScreenName = screenName)
+        }
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Continue with your account.", style = EventsTheme.typography.subheading2)
-        EventsFilledButton(modifier = Modifier
-            // Paddings are *mess*
-            .padding(horizontal = EventsTheme.sizes.sizeX5)
-            .fillMaxWidth(),
-            onClick = { navigator.setRoot(EnterPhone()) }) {
-            Text(text = "Login")
+        Text(
+            text = stringResource(id = R.string.continue_with_account),
+            style = EventsTheme.typography.subheading2,
+        )
+        EventsFilledButton(
+            modifier = Modifier
+                // Paddings are *mess*
+                .padding(horizontal = EventsTheme.sizes.sizeX5)
+                .fillMaxWidth(),
+            onClick = { navigator.setRoot(EnterPhone()) },
+        ) {
+            Text(text = stringResource(id = R.string.login_button))
         }
     }
 }
 
 @Composable
 private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
+    SetTopBar {
+        val screenName = stringResource(id = R.string.screen_profile)
+
+        remember {
+            EventsTopBarState(
+                currScreenAction = {
+                    ProfileAction {
+                        /* TODO */
+                    }
+                },
+                currScreenName = screenName,
+            )
+        }
+    }
+
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         UserCircleAvatar(
             modifier = Modifier
@@ -97,8 +118,7 @@ private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
             avatar = vo.avatar,
         )
         Text(
-            modifier =
-            Modifier.padding(top = EventsTheme.sizes.sizeX8),
+            modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8),
             text = vo.name,
             style = EventsTheme.typography.heading2
         )
@@ -121,7 +141,7 @@ private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
                 Icon(
                     modifier = Modifier.size(EventsTheme.sizes.sizeX8),
                     painter = painterResource(id = R.drawable.icon_twittter),
-                    contentDescription = "Delete icon",
+                    contentDescription = stringResource(id = R.string.twitter_button_description),
                     tint = EventsTheme.colors.brandDefault
                 )
             }
@@ -132,7 +152,7 @@ private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
                 Icon(
                     modifier = Modifier.size(EventsTheme.sizes.sizeX8),
                     painter = painterResource(id = R.drawable.icon_inst),
-                    contentDescription = "Delete icon",
+                    contentDescription = stringResource(id = R.string.instagram_button_description),
                     tint = EventsTheme.colors.brandDefault
                 )
             }
@@ -143,7 +163,7 @@ private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
                 Icon(
                     modifier = Modifier.size(EventsTheme.sizes.sizeX8),
                     painter = painterResource(id = R.drawable.icon_in),
-                    contentDescription = "Delete icon",
+                    contentDescription = stringResource(id = R.string.linkedin_button_description),
                     tint = EventsTheme.colors.brandDefault
                 )
             }
@@ -154,7 +174,7 @@ private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
                 Icon(
                     modifier = Modifier.size(EventsTheme.sizes.sizeX8),
                     painter = painterResource(id = R.drawable.icon_fb),
-                    contentDescription = "Delete icon",
+                    contentDescription = stringResource(id = R.string.facebook_button_description),
                     tint = EventsTheme.colors.brandDefault
                 )
             }
@@ -162,7 +182,10 @@ private fun LoggedInProfile(vo: ProfileDetailsVo, logOut: () -> Unit) {
         Spacer(modifier = Modifier.weight(1f))
 
         EventsTextButton(onClick = { logOut() }) {
-            Text(text = "Log out", style = EventsTheme.typography.subheading2)
+            Text(
+                text = stringResource(id = R.string.logout_button),
+                style = EventsTheme.typography.subheading2,
+            )
         }
     }
 }

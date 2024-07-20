@@ -6,7 +6,8 @@ import com.kekulta.events.presentation.ui.models.ProfileDetailsVo
 class ProfileDetailsFormatter() {
     fun format(model: ProfileModel): ProfileDetailsVo {
         return ProfileDetailsVo(
-            name = "${model.info.name} ${model.info.surname ?: ""}",
+            // Append surname with prefixed with space, append nothing if its null
+            name = model.info.name + (model.info.surname?.let { surname -> " $surname" } ?: ""),
             number = model.number.format(),
             avatar = model.info.avatar,
         )

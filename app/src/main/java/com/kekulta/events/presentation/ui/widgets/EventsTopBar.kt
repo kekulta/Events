@@ -71,10 +71,10 @@ fun SetTopBar(builder: @Composable () -> EventsTopBarState) {
 }
 
 data class EventsTopBarState(
-    val enabled: Boolean,
-    val showBackButton: Boolean,
-    val currScreenAction: @Composable (() -> Unit)?,
-    val currScreenName: String,
+    val enabled: Boolean = true,
+    val showBackButton: Boolean = true,
+    val currScreenAction: @Composable (() -> Unit)? = null,
+    val currScreenName: String = "",
 )
 
 @Composable
@@ -84,55 +84,55 @@ fun EventsTopBar(
     val topBarState by state
     val onBackPressedDispatcher = requireOnBackPressDispatcher()
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .statusBarsPadding()
-            .padding(vertical = EventsTheme.sizes.sizeX6)
-    ) {
-        AnimatedVisibility(
-            visible = state.value.showBackButton,
-            enter = fadeIn() + expandHorizontally(),
-            exit = shrinkHorizontally() + fadeOut(),
-        ) {
-            Icon(
-                modifier = Modifier
-                    .padding(start = EventsTheme.sizes.sizeX8)
-                    .size(EventsTheme.sizes.sizeX12)
-                    .debouncedClickable(
-                        interactionSource = remember {
-                            MutableInteractionSource()
-                        },
-                        indication = null,
-                        onClick = onBackPressedDispatcher::onBackPressed
-                    ),
-                painter = painterResource(id = R.drawable.icon_arr_left),
-                tint = EventsTheme.colors.neutralActive,
-                contentDescription = null
-            )
-        }
-
-        val namePadding by animateDpAsState(
-            targetValue = if (!topBarState.showBackButton) EventsTheme.sizes.sizeX12 else EventsTheme.sizes.sizeX4,
-            label = "Name padding"
-        )
-
-        Text(
-            maxLines = 1,
+    if (topBarState.enabled) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(start = namePadding)
-                .weight(1f),
-            text = topBarState.currScreenName,
-            overflow = TextOverflow.Ellipsis,
-            style = EventsTheme.typography.subheading1,
-        )
+                .statusBarsPadding()
+                .padding(vertical = EventsTheme.sizes.sizeX6)
+        ) {
+            AnimatedVisibility(
+                visible = state.value.showBackButton,
+                enter = fadeIn() + expandHorizontally(),
+                exit = shrinkHorizontally() + fadeOut(),
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .padding(start = EventsTheme.sizes.sizeX8)
+                        .size(EventsTheme.sizes.sizeX12)
+                        .debouncedClickable(
+                            interactionSource = remember {
+                                MutableInteractionSource()
+                            }, indication = null, onClick = onBackPressedDispatcher::onBackPressed
+                        ),
+                    painter = painterResource(id = R.drawable.icon_arr_left),
+                    tint = EventsTheme.colors.neutralActive,
+                    contentDescription = null
+                )
+            }
 
-        AnimatedContent(targetState = topBarState.currScreenAction, transitionSpec = {
-            slideInHorizontally { width -> width } + fadeIn() togetherWith slideOutHorizontally { width -> width } + fadeOut()
-        }, label = "Top Bar Action") { newAction ->
-            if (newAction != null) {
-                Box(modifier = Modifier.padding(end = EventsTheme.sizes.sizeX12)) {
-                    newAction.invoke()
+            val namePadding by animateDpAsState(
+                targetValue = if (!topBarState.showBackButton) EventsTheme.sizes.sizeX12 else EventsTheme.sizes.sizeX4,
+                label = "Name padding"
+            )
+
+            Text(
+                maxLines = 1,
+                modifier = Modifier
+                    .padding(start = namePadding)
+                    .weight(1f),
+                text = topBarState.currScreenName,
+                overflow = TextOverflow.Ellipsis,
+                style = EventsTheme.typography.subheading1,
+            )
+
+            AnimatedContent(targetState = topBarState.currScreenAction, transitionSpec = {
+                slideInHorizontally { width -> width } + fadeIn() togetherWith slideOutHorizontally { width -> width } + fadeOut()
+            }, label = "Top Bar Action") { newAction ->
+                if (newAction != null) {
+                    Box(modifier = Modifier.padding(end = EventsTheme.sizes.sizeX12)) {
+                        newAction.invoke()
+                    }
                 }
             }
         }

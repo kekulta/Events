@@ -13,8 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kekulta.events.R
 import com.kekulta.events.domain.models.AuthStatus
 import com.kekulta.events.domain.models.VerificationCode
 import com.kekulta.events.presentation.formatters.format
@@ -45,9 +47,7 @@ fun EnterCodeScreen(
 
     SetTopBar {
         remember {
-            EventsTopBarState(
-                enabled = true, showBackButton = true, currScreenAction = null, currScreenName = ""
-            )
+            EventsTopBarState()
         }
     }
 
@@ -80,7 +80,7 @@ private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode)
 
         Text(
             modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-            text = "Enter the code",
+            text = stringResource(id = R.string.enter_code),
             style = EventsTheme.typography.heading2
         )
         Text(
@@ -88,7 +88,7 @@ private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode)
                 .padding(horizontal = EventsTheme.sizes.sizeX9)
                 .padding(top = EventsTheme.sizes.sizeX4),
             textAlign = TextAlign.Center,
-            text = "We sent in on the number",
+            text = stringResource(id = R.string.code_sent),
             style = EventsTheme.typography.bodyText2
         )
         Text(
@@ -118,7 +118,7 @@ private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode)
                         codeState.clearText()
                     }
                 }) {
-                    Text("Continue")
+                    Text(stringResource(id = R.string.continue_button))
                 }
             } else {
                 EventsTextButton(modifier = Modifier
@@ -126,7 +126,7 @@ private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode)
                     .fillMaxWidth(), onClick = {
                     /* TODO */
                 }) {
-                    Text("Resend the code")
+                    Text(stringResource(id = R.string.resend_code))
                 }
             }
         }

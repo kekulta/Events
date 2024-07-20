@@ -1,52 +1,50 @@
 package com.kekulta.events.presentation.ui.widgets.base.data
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.kekulta.events.R
 
 data class Country(
-    val country: String,
-    val countryCode: String,
+    @StringRes val country: Int,
     @DrawableRes val flagIcon: Int,
+    val countryCode: String,
 )
 
 object Countries {
     val russia = Country(
-        "russia",
+        R.string.russia,
+        R.drawable.icon_flag_russia,
         countryCode = "+7",
-        R.drawable.icon_flag_russia
     )
     val kazakhstan = Country(
-        "kazakhstan",
+        R.string.kazakhstan,
+        R.drawable.icon_flag_kazakhstan,
         countryCode = "+7",
-        R.drawable.icon_flag_kazakhstan
     )
-    val uzbekistan =
-        Country(
-            "uzbekistan",
-            countryCode = "+998",
-            R.drawable.icon_flag_uzbekistan
-        )
-    val tajikistan =
-        Country(
-            "tajikistan",
-            countryCode = "+996",
-            R.drawable.icon_flag_tajikistan
-        )
-    val georgia =
-        Country(
-            "georgia",
-            countryCode = "+995",
-            R.drawable.icon_flag_georgia
-        )
-    val turkey =
-        Country(
-            "turkey", countryCode = "+90",
-            R.drawable.icon_flag_turkey
-        )
+    val uzbekistan = Country(
+        R.string.uzbekistan,
+        R.drawable.icon_flag_uzbekistan,
+        countryCode = "+998",
+    )
+    val tajikistan = Country(
+        R.string.tajikistan,
+        R.drawable.icon_flag_tajikistan,
+        countryCode = "+996",
+    )
+    val georgia = Country(
+        R.string.georgia,
+        R.drawable.icon_flag_georgia,
+        countryCode = "+995",
+    )
+    val turkey = Country(
+        R.string.turkey,
+        R.drawable.icon_flag_turkey,
+        countryCode = "+90",
+    )
     val usa = Country(
-        "usa",
+        R.string.usa,
+        R.drawable.icon_flag_usa,
         countryCode = "+1",
-        R.drawable.icon_flag_usa
     )
 
     val countries = listOf(
