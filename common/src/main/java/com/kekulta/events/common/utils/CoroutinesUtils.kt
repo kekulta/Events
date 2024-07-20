@@ -13,12 +13,18 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 
+/**
+ * Map [StateFlow] into another [StateFlow] in the given [coroutineScope]
+ */
 inline fun <T, M> StateFlow<T>.map(
     coroutineScope: CoroutineScope, crossinline mapper: (value: T) -> M
 ): StateFlow<M> = map { mapper(it) }.stateIn(
     coroutineScope, SharingStarted.Eagerly, mapper(value)
 )
 
+/**
+ * Flattens nested [Flow]. Last emitted [Flow] emits value to the collector.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 inline fun <reified T> Flow<Flow<T>>.flattenLatest(): Flow<T> =
     flatMapLatest { flow -> flow }
