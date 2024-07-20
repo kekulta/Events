@@ -9,14 +9,22 @@ java {
 }
 
 dependencies {
+    /**
+     * Modules
+     */
     implementation(project(":common"))
 
+    /**
+     * KotlinX
+     */
+    implementation(platform(libs.kotlinx.coroutines.bom))
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
 
+    /**
+     * DI
+     */
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
-
-    implementation(platform(libs.kotlinx.coroutines.bom))
-    implementation(libs.kotlinx.coroutines.core)
 }

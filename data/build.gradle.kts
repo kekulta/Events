@@ -33,14 +33,22 @@ android {
 }
 
 dependencies {
+    /**
+     * Modules
+     */
     implementation(project(":common"))
     implementation(project(":domain"))
 
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.core)
-
-    implementation(libs.kotlinx.datetime)
-
+    /**
+     * KotlinX
+     */
     implementation(platform(libs.kotlinx.coroutines.bom))
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
+
+    /**
+     * DI
+     */
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
 }
