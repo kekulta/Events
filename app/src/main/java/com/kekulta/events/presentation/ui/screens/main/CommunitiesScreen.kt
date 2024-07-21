@@ -15,27 +15,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.GroupId
+import com.kekulta.events.domain.models.CommunityId
 import com.kekulta.events.presentation.ui.models.ScreenState
-import com.kekulta.events.presentation.ui.navigation.GroupDetails
+import com.kekulta.events.presentation.ui.navigation.CommunityDetails
 import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsSearchField
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
-import com.kekulta.events.presentation.ui.widgets.GroupItem
+import com.kekulta.events.presentation.ui.widgets.CommunityItem
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
-import com.kekulta.events.presentation.viewmodel.GroupsScreenViewModel
+import com.kekulta.events.presentation.viewmodel.CommunitiesScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun GroupsScreen(viewModel: GroupsScreenViewModel = koinViewModel()) {
-    val state by viewModel.observeAllGroups().collectAsStateWithLifecycle()
+fun CommunitiesScreen(viewModel: CommunitiesScreenViewModel = koinViewModel()) {
+    val state by viewModel.observeAllCommunities().collectAsStateWithLifecycle()
 
     val navigator = requireNavigator()
 
-    fun navToDetails(id: GroupId) {
+    fun navToDetails(id: CommunityId) {
         navigator.navTo(
-            GroupDetails(
+            CommunityDetails(
                 id = id,
                 tab = navigator.currTab(),
             )
@@ -43,7 +43,7 @@ fun GroupsScreen(viewModel: GroupsScreenViewModel = koinViewModel()) {
     }
 
     SetTopBar {
-        val screenName = stringResource(id = R.string.screen_groups)
+        val screenName = stringResource(id = R.string.screen_communities)
 
         remember(screenName) {
             EventsTopBarState(
@@ -68,14 +68,14 @@ fun GroupsScreen(viewModel: GroupsScreenViewModel = koinViewModel()) {
                 LazyColumn(
                     modifier = Modifier.padding(top = EventsTheme.sizes.sizeX8)
                 ) {
-                    val groups = s.state
+                    val communities = s.state
 
-                    items(groups) { vo ->
-                        GroupItem(
+                    items(communities) { vo ->
+                        CommunityItem(
                             modifier = Modifier
                                 .padding(horizontal = EventsTheme.sizes.sizeX9)
                                 .fillMaxWidth(),
-                            groupVo = vo, onClick = { navToDetails(vo.id) },
+                            communityVo = vo, onClick = { navToDetails(vo.id) },
                         )
 
                         HorizontalDivider(

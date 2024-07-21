@@ -37,7 +37,7 @@ fun EventSquareAvatar(
 }
 
 @Composable
-fun GroupSquareAvatar(
+fun CommunitiesquareAvatar(
     modifier: Modifier = Modifier,
     avatar: Avatar = Avatar(null),
 ) {

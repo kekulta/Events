@@ -1,7 +1,7 @@
 package com.kekulta.events.domain.models
 
-data class GroupModel(
-    val id: GroupId,
+data class CommunityModel(
+    val id: CommunityId,
     val name: String,
     val description: String?,
     val avatar: Avatar,
