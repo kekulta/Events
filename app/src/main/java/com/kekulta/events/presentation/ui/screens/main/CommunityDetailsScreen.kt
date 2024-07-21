@@ -14,8 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
 import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.models.GroupId
-import com.kekulta.events.presentation.ui.models.GroupDetailsVo
+import com.kekulta.events.domain.models.CommunityId
+import com.kekulta.events.presentation.ui.models.CommunityDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.navigation.EventDetails
 import com.kekulta.events.presentation.ui.navigation.requireNavigator
@@ -23,11 +23,11 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventItem
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
-import com.kekulta.events.presentation.viewmodel.GroupDetailsScreenViewModel
+import com.kekulta.events.presentation.viewmodel.CommunityDetailsScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun GroupDetailsScreen(id: GroupId, viewModel: GroupDetailsScreenViewModel = koinViewModel()) {
+fun CommunityDetailsScreen(id: CommunityId, viewModel: CommunityDetailsScreenViewModel = koinViewModel()) {
     viewModel.setId(id)
     val state by viewModel.observeState().collectAsStateWithLifecycle()
 
@@ -76,7 +76,7 @@ fun GroupDetailsScreen(id: GroupId, viewModel: GroupDetailsScreenViewModel = koi
 }
 
 @Composable
-private fun SuccessScreen(vo: GroupDetailsVo, onClick: (id: EventId) -> Unit) {
+private fun SuccessScreen(vo: CommunityDetailsVo, onClick: (id: EventId) -> Unit) {
 
     SetTopBar {
         remember(vo) {
@@ -89,7 +89,7 @@ private fun SuccessScreen(vo: GroupDetailsVo, onClick: (id: EventId) -> Unit) {
     LazyColumn {
         item {
             Text(
-                vo.description ?: stringResource(id = R.string.group_no_description),
+                vo.description ?: stringResource(id = R.string.community_no_description),
                 modifier = Modifier
                     .padding(horizontal = EventsTheme.sizes.sizeX9)
                     .padding(bottom = EventsTheme.sizes.sizeX6),
@@ -98,17 +98,17 @@ private fun SuccessScreen(vo: GroupDetailsVo, onClick: (id: EventId) -> Unit) {
             )
         }
         item {
-            val groupsHeading = if (vo.events.isEmpty()) {
-                stringResource(id = R.string.group_no_events)
+            val communitiesHeading = if (vo.events.isEmpty()) {
+                stringResource(id = R.string.community_no_events)
             } else {
-                stringResource(R.string.groups_events)
+                stringResource(R.string.communities_events)
             }
 
             Text(
                 modifier = Modifier.padding(
                     horizontal = EventsTheme.sizes.sizeX9, vertical = EventsTheme.sizes.sizeX6
                 ),
-                text = groupsHeading,
+                text = communitiesHeading,
                 style = EventsTheme.typography.bodyText1,
                 color = EventsTheme.colors.neutralWeak,
             )

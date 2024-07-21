@@ -3,8 +3,8 @@
 
     <string name="tab_more">More</string>
     <string name="tab_events">Events</string>
-    <string name="tab_groups">Groups</string>
-    <string name="groups_events">Group\'s Events</string>
+    <string name="tab_communities">Communities</string>
+    <string name="communities_events">Community\'s Events</string>
     <string name="error_message">Something went wrong!</string>
     <string name="loading_message">Loading…</string>
     <string name="enter_code">Enter the code</string>
@@ -21,14 +21,14 @@
     <string name="cancel_registration">Maybe another time</string>
     <string name="register_to_event">I\'ll go!</string>
     <string name="map_content_description">Map</string>
-    <string name="group_no_description">Group has no description</string>
-    <string name="group_no_events">Group has no events</string>
+    <string name="community_no_description">Community has no description</string>
+    <string name="community_no_events">Community has no events</string>
     <string name="screen_events">Events</string>
     <string name="all_events">All Events</string>
     <string name="active_events">Active Events</string>
     <string name="past_events">Past Events</string>
     <string name="planned_events">Planned Events</string>
-    <string name="screen_groups">Groups</string>
+    <string name="screen_communities">Communities</string>
     <string name="screen_more">More</string>
     <string name="item_my_events">My events</string>
     <string name="continue_with_account">Continue with your account.</string>

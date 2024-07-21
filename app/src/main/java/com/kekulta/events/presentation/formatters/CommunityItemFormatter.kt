@@ -1,12 +1,12 @@
 package com.kekulta.events.presentation.formatters
 
-import com.kekulta.events.presentation.ui.models.GroupItemVo
-import com.kekulta.events.domain.models.GroupModel
+import com.kekulta.events.presentation.ui.models.CommunityItemVo
+import com.kekulta.events.domain.models.CommunityModel
 
-class GroupItemFormatter() {
-    fun format(models: List<GroupModel>): List<GroupItemVo> {
+class CommunityItemFormatter() {
+    fun format(models: List<CommunityModel>): List<CommunityItemVo> {
         return models.map { model ->
-            GroupItemVo(
+            CommunityItemVo(
                 id = model.id,
                 name = model.name,
                 avatar = model.avatar,

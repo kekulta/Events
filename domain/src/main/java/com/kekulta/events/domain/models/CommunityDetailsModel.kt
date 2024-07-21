@@ -1,6 +1,6 @@
 package com.kekulta.events.domain.models
 
-data class GroupDetailsModel(
-    val group: GroupModel,
+data class CommunityDetailsModel(
+    val community: CommunityModel,
     val events: List<EventModel>
 )

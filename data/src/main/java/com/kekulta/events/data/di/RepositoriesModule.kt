@@ -2,12 +2,12 @@ package com.kekulta.events.data.di
 
 import com.kekulta.events.data.mock.repository.AuthRepositoryMock
 import com.kekulta.events.data.mock.repository.EventsRepositoryMock
-import com.kekulta.events.data.mock.repository.GroupsRepositoryMock
+import com.kekulta.events.data.mock.repository.CommunitiesRepositoryMock
 import com.kekulta.events.data.mock.repository.ProfileRepositoryMock
 import com.kekulta.events.data.mock.repository.UsersRepositoryMock
 import com.kekulta.events.domain.repository.api.AuthRepository
 import com.kekulta.events.domain.repository.api.EventsRepository
-import com.kekulta.events.domain.repository.api.GroupsRepository
+import com.kekulta.events.domain.repository.api.CommunitiesRepository
 import com.kekulta.events.domain.repository.api.ProfileRepository
 import com.kekulta.events.domain.repository.api.UsersRepository
 import org.koin.core.module.dsl.bind
@@ -26,6 +26,6 @@ internal val repositoriesModule = module {
     /*
         Stateful repos
      */
-    singleOf(::GroupsRepositoryMock) { bind<GroupsRepository>() }
+    singleOf(::CommunitiesRepositoryMock) { bind<CommunitiesRepository>() }
     singleOf(::EventsRepositoryMock) { bind<EventsRepository>() }
 }

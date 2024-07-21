@@ -26,7 +26,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.models.GroupId
+import com.kekulta.events.domain.models.CommunityId
 import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.presentation.ui.update
 import kotlinx.serialization.encodeToString
@@ -101,9 +101,9 @@ inline fun <reified T : Screen> NavGraphBuilder.screen(
                 encode = { id },
                 decode = { value -> EventId(value) },
             ),
-            typeOf<GroupId>() to stringNavArg<GroupId>(
+            typeOf<CommunityId>() to stringNavArg<CommunityId>(
                 encode = { id },
-                decode = { value -> GroupId(value) },
+                decode = { value -> CommunityId(value) },
             ),
             typeOf<UserId>() to stringNavArg<UserId>(
                 encode = { id },

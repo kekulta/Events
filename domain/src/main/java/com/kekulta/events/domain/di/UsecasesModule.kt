@@ -2,13 +2,13 @@ package com.kekulta.events.domain.di
 
 import com.kekulta.events.domain.usecase.ActiveEventsUseCase
 import com.kekulta.events.domain.usecase.AllEventsUseCase
-import com.kekulta.events.domain.usecase.AllGroupsUseCase
+import com.kekulta.events.domain.usecase.AllCommunitiesUseCase
 import com.kekulta.events.domain.usecase.CancelEventRegistrationUseCase
 import com.kekulta.events.domain.usecase.CheckCodeUseCase
 import com.kekulta.events.domain.usecase.CurrentAuthStatusUseCase
 import com.kekulta.events.domain.usecase.CurrentProfileUseCase
 import com.kekulta.events.domain.usecase.EventDetailsUseCase
-import com.kekulta.events.domain.usecase.GroupDetailsUseCase
+import com.kekulta.events.domain.usecase.CommunityDetailsUseCase
 import com.kekulta.events.domain.usecase.LogOutUseCase
 import com.kekulta.events.domain.usecase.MyPastEventsUseCase
 import com.kekulta.events.domain.usecase.MyPlannedEventsUseCase
@@ -30,8 +30,8 @@ internal val usecasesModule = module {
     factoryOf(::AllEventsUseCase)
     factoryOf(::ActiveEventsUseCase)
     factoryOf(::RegisterUseCase)
-    factoryOf(::AllGroupsUseCase)
-    factoryOf(::GroupDetailsUseCase)
+    factoryOf(::AllCommunitiesUseCase)
+    factoryOf(::CommunityDetailsUseCase)
     factoryOf(::MyPastEventsUseCase)
     factoryOf(::MyPlannedEventsUseCase)
 }

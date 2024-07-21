@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.navigation.Events
 import com.kekulta.events.presentation.ui.navigation.EventsNavBarState
-import com.kekulta.events.presentation.ui.navigation.Groups
+import com.kekulta.events.presentation.ui.navigation.Communities
 import com.kekulta.events.presentation.ui.navigation.More
 import com.kekulta.events.presentation.ui.navigation.Tab
 import com.kekulta.events.presentation.ui.navigation.requireNavigator
@@ -41,10 +41,10 @@ fun EventsNavBar(
             )
 
             EventsNavigationItem(
-                selected = currentTab == Tab.GROUPS,
-                onClick = { navigator.navTo(Groups()) },
-                icon = R.drawable.icon_groups,
-                name = R.string.tab_groups,
+                selected = currentTab == Tab.COMMUNITIES,
+                onClick = { navigator.navTo(Communities()) },
+                icon = R.drawable.icon_communities,
+                name = R.string.tab_communities,
             )
 
             EventsNavigationItem(

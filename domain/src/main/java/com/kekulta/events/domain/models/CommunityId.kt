@@ -4,4 +4,4 @@ import kotlinx.serialization.Serializable
 
 @JvmInline
 @Serializable
-value class GroupId(val id: String)
+value class CommunityId(val id: String)
