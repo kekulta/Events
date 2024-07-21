@@ -5,6 +5,8 @@
 .externalNativeBuild
 .gradle
 .idea
+.kotlin
+/.kotlin
 /.idea
 /.idea/assetWizardSettings.xml
 /.idea/caches
