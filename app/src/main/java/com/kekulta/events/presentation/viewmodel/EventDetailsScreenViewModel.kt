@@ -1,9 +1,8 @@
 package com.kekulta.events.presentation.viewmodel
 
-import androidx.compose.ui.res.stringResource
 import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.domain.interactor.CancelEventRegistrationInteractor
-import com.kekulta.events.domain.interactor.EventDetailsInteractor
+import com.kekulta.events.domain.interactor.GetEventDetailsInteractor
 import com.kekulta.events.domain.interactor.RegisterToEventInteractor
 import com.kekulta.events.presentation.formatters.EventDetailsFormatter
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
@@ -18,7 +17,7 @@ import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventDetailsScreenViewModel(
-    private val eventDetailsInteractor: EventDetailsInteractor,
+    private val getEventDetailsInteractor: GetEventDetailsInteractor,
     private val registerToEventInteractor: RegisterToEventInteractor,
     private val cancelEventRegistrationInteractor: CancelEventRegistrationInteractor,
     private val eventDetailsFormatter: EventDetailsFormatter,
@@ -26,7 +25,7 @@ class EventDetailsScreenViewModel(
     private val currId = MutableStateFlow<EventId?>(null)
 
     private val state: StateFlow<ScreenState<EventDetailsVo>> =
-        currId.filterNotNull().flatMapLatest { id -> eventDetailsInteractor.execute(id) }
+        currId.filterNotNull().flatMapLatest { id -> getEventDetailsInteractor.execute(id) }
             .mapLatest { model ->
                 val vo = model?.let { modelNotNull ->
                     eventDetailsFormatter.format(

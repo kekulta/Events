@@ -1,13 +1,14 @@
-package com.kekulta.events.domain.interactor
+package com.kekulta.events.domain.interactor.impl
 
+import com.kekulta.events.domain.interactor.GetCurrentAuthStatusInteractor
 import com.kekulta.events.domain.models.AuthStatus
 import com.kekulta.events.domain.repository.api.AuthRepository
 import kotlinx.coroutines.flow.StateFlow
 
-class CurrentAuthStatusInteractor(
+class GetCurrentAuthStatusInteractorImpl(
     private val authRepository: AuthRepository,
-) {
-    fun execute(): StateFlow<AuthStatus> {
+): GetCurrentAuthStatusInteractor {
+    override fun execute(): StateFlow<AuthStatus> {
         return authRepository.observeAuthStatus()
     }
 }

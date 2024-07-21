@@ -1,6 +1,7 @@
-package com.kekulta.events.domain.interactor
+package com.kekulta.events.domain.interactor.impl
 
 import com.kekulta.events.common.utils.flattenLatest
+import com.kekulta.events.domain.interactor.GetEventDetailsInteractor
 import com.kekulta.events.domain.models.EventDetailsModel
 import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.domain.repository.api.EventsRepository
@@ -13,14 +14,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class EventDetailsInteractor(
+class GetEventDetailsInteractorImpl(
     private val profileRepository: ProfileRepository,
     private val eventsRepository: EventsRepository,
     private val usersRepository: UsersRepository,
-) {
-    fun execute(
-        id: EventId,
-    ): Flow<EventDetailsModel?> {
+) : GetEventDetailsInteractor {
+    override fun execute(id: EventId): Flow<EventDetailsModel?> {
         return combine(
             profileRepository.observeCurrentProfile(), eventsRepository.observeEvent(id)
         ) { profile, event ->

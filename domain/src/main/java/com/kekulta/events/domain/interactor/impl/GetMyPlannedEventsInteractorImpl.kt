@@ -1,5 +1,6 @@
-package com.kekulta.events.domain.interactor
+package com.kekulta.events.domain.interactor.impl
 
+import com.kekulta.events.domain.interactor.GetMyPlannedEventsInteractor
 import com.kekulta.events.domain.models.EventModel
 import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.domain.repository.api.EventStatus
@@ -12,11 +13,11 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MyPlannedEventsInteractor(
+class GetMyPlannedEventsInteractorImpl(
     private val profileRepository: ProfileRepository,
     private val eventsRepository: EventsRepository,
-) {
-    fun execute(): Flow<List<EventModel>> {
+) : GetMyPlannedEventsInteractor {
+    override fun execute(): Flow<List<EventModel>> {
         return profileRepository.observeCurrentProfile().flatMapLatest { profile ->
             if (profile != null) {
                 eventsRepository.observeEventsForQuery(
