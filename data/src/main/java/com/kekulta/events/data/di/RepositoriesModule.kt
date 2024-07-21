@@ -13,19 +13,20 @@ import com.kekulta.events.domain.repository.api.UsersRepository
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 internal val repositoriesModule = module {
     /*
         Stateless repos
      */
-    factoryOf(::ProfileRepositoryMock) { bind<ProfileRepository>() }
-    factoryOf(::AuthRepositoryMock) { bind<AuthRepository>() }
-    factoryOf(::UsersRepositoryMock) { bind<UsersRepository>() }
+    factoryOf(::ProfileRepositoryMock) bind ProfileRepository::class
+    factoryOf(::AuthRepositoryMock)  bind AuthRepository::class
+    factoryOf(::UsersRepositoryMock) bind UsersRepository::class
 
     /*
         Stateful repos
      */
-    singleOf(::CommunitiesRepositoryMock) { bind<CommunitiesRepository>() }
-    singleOf(::EventsRepositoryMock) { bind<EventsRepository>() }
+    singleOf(::CommunitiesRepositoryMock) bind CommunitiesRepository::class
+    singleOf(::EventsRepositoryMock) bind EventsRepository::class
 }
