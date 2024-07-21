@@ -37,7 +37,7 @@ internal class EventsRepositoryMock : EventsRepository {
             is EventsQuery.User -> {
                 eventsFlow.mapLatest { events ->
                     events.filterEvents(query) { event ->
-                        event.attendees.contains(
+                        event.visitors.contains(
                             query.id
                         )
                     }
@@ -58,11 +58,11 @@ internal class EventsRepositoryMock : EventsRepository {
 
     override suspend fun registerForEvent(id: EventId, userId: UserId): Boolean {
         val event = eventsMap[id] ?: return false
-        val isRegistered = event.attendees.contains(userId)
+        val isRegistered = event.visitors.contains(userId)
         if (isRegistered) {
             return false
         }
-        eventsMap[id] = event.copy(attendees = event.attendees + userId)
+        eventsMap[id] = event.copy(visitors = event.visitors + userId)
         eventsFlow.update { eventsMap.values.toList() }
 
         return true
@@ -70,11 +70,11 @@ internal class EventsRepositoryMock : EventsRepository {
 
     override suspend fun cancelRegistration(id: EventId, userId: UserId): Boolean {
         val event = eventsMap[id] ?: return false
-        val attendees = event.attendees.filterNot { user -> user.id == userId.id }
-        if (attendees.size == event.attendees.size) {
+        val visitors = event.visitors.filterNot { user -> user.id == userId.id }
+        if (visitors.size == event.visitors.size) {
             return false
         }
-        eventsMap[id] = event.copy(attendees = attendees)
+        eventsMap[id] = event.copy(visitors = visitors)
         eventsFlow.update { eventsMap.values.toList() }
 
         return true

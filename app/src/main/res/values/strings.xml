@@ -45,7 +45,7 @@
     <string name="linkedin_button_description">LinkedIn button</string>
     <string name="instagram_button_description">Instagram button</string>
     <string name="logout_button">Log out</string>
-    <string name="be_first_attendee">Be the first!</string>
+    <string name="be_first_visitor">Be the first!</string>
     <string name="event_is_over">Event is over</string>
     <string name="default_avatar_description">Default avatar</string>
     <string name="search_hint">Search</string>
