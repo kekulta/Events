@@ -42,7 +42,7 @@ import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.theme.EventsTheme
-import com.kekulta.events.presentation.ui.widgets.AttendeesRow
+import com.kekulta.events.presentation.ui.widgets.VisitorsRow
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
@@ -189,9 +189,9 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsScreenViewM
 
         }
 
-        AttendeesRow(
+        VisitorsRow(
             modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-            attendees = vo.attendees,
+            visitors = vo.visitors,
         )
 
         if (vo.isAbleToRegister) {

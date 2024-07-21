@@ -30,7 +30,7 @@ class EventDetailsScreenViewModel(
             .mapLatest { model ->
                 val vo = model?.let { modelNotNull ->
                     eventDetailsFormatter.format(
-                        modelNotNull.event, modelNotNull.attendees, modelNotNull.currentProfile
+                        modelNotNull.event, modelNotNull.visitors, modelNotNull.currentProfile
                     )
                 }
 

@@ -56,7 +56,7 @@ internal fun mockEventModels(size: Int): List<EventModel> {
             date = Clock.System.now().plus((24 * (index - 4)), DateTimeUnit.HOUR)
                 .toLocalDateTime(TimeZone.currentSystemDefault()),
             location = places[index % places.size],
-            attendees = mockUsers(index % 15).map { user -> user.id },
+            visitors = mockUsers(index % 15).map { user -> user.id },
         )
     }
 

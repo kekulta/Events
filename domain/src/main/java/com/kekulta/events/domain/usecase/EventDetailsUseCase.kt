@@ -25,7 +25,7 @@ class EventDetailsUseCase(
             profileRepository.observeCurrentProfile(), eventsRepository.observeEvent(id)
         ) { profile, event ->
             if (event != null) {
-                usersRepository.observeUsers(event.attendees).mapLatest { users ->
+                usersRepository.observeUsers(event.visitors).mapLatest { users ->
                     EventDetailsModel(event, users, profile)
                 }
             } else {

@@ -12,5 +12,5 @@ data class EventModel(
     val date: LocalDateTime,
     // Should be some kind of geo tag probably
     val location: String,
-    val attendees: List<UserId>
+    val visitors: List<UserId>
 )
