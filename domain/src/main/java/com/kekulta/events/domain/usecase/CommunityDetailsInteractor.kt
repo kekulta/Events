@@ -1,4 +1,4 @@
-package com.kekulta.events.domain.usecase
+package com.kekulta.events.domain.interactor
 
 import com.kekulta.events.domain.models.CommunityDetailsModel
 import com.kekulta.events.domain.models.CommunityId
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CommunityDetailsUseCase(
+class CommunityDetailsInteractor(
     private val eventsRepository: EventsRepository,
     private val communitiesRepository: CommunitiesRepository,
 ) {

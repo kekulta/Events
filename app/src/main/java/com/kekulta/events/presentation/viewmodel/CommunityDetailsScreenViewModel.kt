@@ -1,7 +1,7 @@
 package com.kekulta.events.presentation.viewmodel
 
 import com.kekulta.events.domain.models.CommunityId
-import com.kekulta.events.domain.usecase.CommunityDetailsUseCase
+import com.kekulta.events.domain.interactor.CommunityDetailsInteractor
 import com.kekulta.events.presentation.formatters.CommunityDetailsFormatter
 import com.kekulta.events.presentation.ui.models.CommunityDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
@@ -15,13 +15,13 @@ import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CommunityDetailsScreenViewModel(
-    private val communityDetailsUseCase: CommunityDetailsUseCase,
+    private val communityDetailsInteractor: CommunityDetailsInteractor,
     private val communityDetailsFormatter: CommunityDetailsFormatter,
 ) : AbstractCoroutineViewModel() {
     private val currId = MutableStateFlow<CommunityId?>(null)
 
     private val state: StateFlow<ScreenState<CommunityDetailsVo>> =
-        currId.filterNotNull().flatMapLatest { id -> communityDetailsUseCase.execute(id) }
+        currId.filterNotNull().flatMapLatest { id -> communityDetailsInteractor.execute(id) }
             .mapLatest { model ->
                 val vo = model?.let { modelNotNull -> communityDetailsFormatter.format(modelNotNull) }
 

@@ -1,4 +1,4 @@
-package com.kekulta.events.domain.usecase
+package com.kekulta.events.domain.interactor
 
 import com.kekulta.events.domain.models.EventModel
 import com.kekulta.events.domain.models.UserId
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MyPastEventsUseCase(
+class MyPastEventsInteractor(
     private val profileRepository: ProfileRepository,
     private val eventsRepository: EventsRepository,
 ) {
