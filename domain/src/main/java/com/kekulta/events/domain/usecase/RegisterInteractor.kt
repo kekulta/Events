@@ -1,9 +1,9 @@
-package com.kekulta.events.domain.usecase
+package com.kekulta.events.domain.interactor
 
 import com.kekulta.events.domain.models.PersonalInfo
 import com.kekulta.events.domain.repository.api.AuthRepository
 
-class RegisterUseCase(
+class RegisterInteractor(
     private val authRepository: AuthRepository,
 ) {
     fun execute(info: PersonalInfo): Boolean {

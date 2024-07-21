@@ -1,10 +1,10 @@
-package com.kekulta.events.domain.usecase
+package com.kekulta.events.domain.interactor
 
 import com.kekulta.events.domain.models.AuthStatus
 import com.kekulta.events.domain.repository.api.AuthRepository
 import kotlinx.coroutines.flow.StateFlow
 
-class CurrentAuthStatusUseCase(
+class CurrentAuthStatusInteractor(
     private val authRepository: AuthRepository,
 ) {
     fun execute(): StateFlow<AuthStatus> {

@@ -1,4 +1,4 @@
-package com.kekulta.events.domain.usecase
+package com.kekulta.events.domain.interactor
 
 import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.domain.repository.api.EventsRepository
@@ -6,7 +6,7 @@ import com.kekulta.events.domain.repository.api.ProfileRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class CancelEventRegistrationUseCase(
+class CancelEventRegistrationInteractor(
     private val profileRepository: ProfileRepository,
     private val eventsRepository: EventsRepository,
 ) {

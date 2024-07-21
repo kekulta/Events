@@ -1,9 +1,9 @@
-package com.kekulta.events.domain.usecase
+package com.kekulta.events.domain.interactor
 
 import com.kekulta.events.domain.models.PhoneNumber
 import com.kekulta.events.domain.repository.api.AuthRepository
 
-class SendCodeUseCase(
+class SendCodeInteractor(
     private val authRepository: AuthRepository,
 ) {
     fun execute(number: PhoneNumber): Boolean {

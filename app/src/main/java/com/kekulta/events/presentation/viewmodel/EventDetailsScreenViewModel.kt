@@ -2,9 +2,9 @@ package com.kekulta.events.presentation.viewmodel
 
 import androidx.compose.ui.res.stringResource
 import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.usecase.CancelEventRegistrationUseCase
-import com.kekulta.events.domain.usecase.EventDetailsUseCase
-import com.kekulta.events.domain.usecase.RegisterToEventUseCase
+import com.kekulta.events.domain.interactor.CancelEventRegistrationInteractor
+import com.kekulta.events.domain.interactor.EventDetailsInteractor
+import com.kekulta.events.domain.interactor.RegisterToEventInteractor
 import com.kekulta.events.presentation.formatters.EventDetailsFormatter
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
@@ -18,15 +18,15 @@ import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventDetailsScreenViewModel(
-    private val eventDetailsUseCase: EventDetailsUseCase,
-    private val registerToEventUseCase: RegisterToEventUseCase,
-    private val cancelEventRegistrationUseCase: CancelEventRegistrationUseCase,
+    private val eventDetailsInteractor: EventDetailsInteractor,
+    private val registerToEventInteractor: RegisterToEventInteractor,
+    private val cancelEventRegistrationInteractor: CancelEventRegistrationInteractor,
     private val eventDetailsFormatter: EventDetailsFormatter,
 ) : AbstractCoroutineViewModel() {
     private val currId = MutableStateFlow<EventId?>(null)
 
     private val state: StateFlow<ScreenState<EventDetailsVo>> =
-        currId.filterNotNull().flatMapLatest { id -> eventDetailsUseCase.execute(id) }
+        currId.filterNotNull().flatMapLatest { id -> eventDetailsInteractor.execute(id) }
             .mapLatest { model ->
                 val vo = model?.let { modelNotNull ->
                     eventDetailsFormatter.format(
@@ -50,14 +50,14 @@ class EventDetailsScreenViewModel(
     fun registerOnEvent() {
         val id = currId.value ?: return
         launchScope {
-            registerToEventUseCase.execute(id)
+            registerToEventInteractor.execute(id)
         }
     }
 
     fun cancelRegistration() {
         val id = currId.value ?: return
         launchScope {
-            cancelEventRegistrationUseCase.execute(id)
+            cancelEventRegistrationInteractor.execute(id)
         }
     }
 }
