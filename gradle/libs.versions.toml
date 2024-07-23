@@ -1,52 +1,144 @@
 [versions]
+# Plugins
 agp = "8.5.1"
-coilCompose = "2.6.0"
-coreSplashscreen = "1.0.1"
 kotlin = "2.0.0"
+jetbrainsKotlinJvm = "2.0.0"
+
+# AndroidX
 coreKtx = "1.13.1"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-kotlinxSerializationJson = "1.7.1"
+coreSplashscreen = "1.0.1"
 lifecycleRuntimeKtx = "2.8.3"
+appcompat = "1.7.0"
+
+# Compose
 activityCompose = "1.9.0"
-composeBom = "2024.06.00-alpha01"
 navigationCompose = "2.8.0-beta05"
+composeBom = "2024.06.00-alpha01"
 telephoto = "0.11.2"
+coilCompose = "2.6.0"
 lottieCompose = "6.4.1"
+
+# KotlinX
 kotlinx-coroutines = "1.9.0-RC"
+kotlinxSerializationJson = "1.7.1"
+kotlinxDateTime = "0.6.0"
+
+# DI
+koin-bom = "3.5.6"
+
+#Logging
+logcat = "0.1"
+
+# Testing
+junit = "4.13.2"
+androidx-junit = "1.2.1"
+androidx-espresso = "3.6.1"
 
 [libraries]
+### AndroidX
+
+### The Core KTX module provides extensions for common libraries that are part of the Android framework
+# [reference](https://developer.android.com/kotlin/ktx#core)
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+### Provides the compatibility APIs for SplashScreen and helper method to enable a splashscreen on devices prior Android 12
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+### Lifecycle-aware components perform actions in response to a change in the lifecycle status of another component, such as activities and fragments.
+# [reference](https://developer.android.com/jetpack/androidx/releases/lifecycle)
+# Lifecycles only (without ViewModel or LiveData)
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+### Allows access to new APIs on older API versions of the platform
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
+### Compose
+
+### Compose integration with Activity
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+### Compose integration with the Jetpack Navigation
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+
+### Compose packages
+# Compose bom contains versions for all of the Compose packages
 # Not the official compose BOM. This is a bad solution but it looks like the only way, to get
 # typesafe navigation without dependency hell.
 # Should be removed as soon as Navigation 2.8.0 gets into compose BOM.
 androidx-compose-bom = { group = "dev.chrisbanes.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+# Fundamental components of compose UI needed to interact with the device, including layout, drawing, and input.
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+# Material 3 includes updated theming and components and Material You personalization features
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+### Coil is an image loading library for Android backed by Kotlin Coroutines.
+# coil-compose contains only compose-specific functions for image loading
+# [reference](https://coil-kt.github.io/coil/api/coil-compose/coil3.compose/index.html)
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+
+### Telephoto provides composables featuring support for pan & zoom gestures and automatic sub‑sampling of large images that'd otherwise not fit into memory.
+# ZoomableImage's gesture detector, packaged as a standalone Modifier that can be used with non-image composables.
 telephoto-zoomable = { group = "me.saket.telephoto", name = "zoomable", version.ref = "telephoto" }
+
+### Lottie is a mobile library for Android and iOS that parses Adobe After Effects animations exported as json with Bodymovin and renders them natively on mobile.
+# Lottie player integration with Compose.
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+
+### KotlinX
+
+### Kotlin coroutines packages
+# [reference](https://kotlinlang.org/api/kotlinx.coroutines)
+# Coroutines bom contains versions for all of the Coroutines packages
 kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx-coroutines" }
+# Android specific coroutines classes
+# [reference](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-android/)
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
+# Common coroutines across all platforms
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+
+### A serialization library developed by JetBarins and tightly integrated with Kotlin
+# Provides Json serialization format
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+### A multiplatform Kotlin library for working with date and time.
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDateTime" }
+
+### DI
+
+### Koin is a smart Kotlin dependency injection library
+# Koin bom contains versions for all of the koin packages
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
+# Core koin utilities e.g. `module {}` and `factoryOf()`
+koin-core = { module = "io.insert-koin:koin-core" }
+# Contains koin test utilities for graph verification
+koin-test = { module = "io.insert-koin:koin-test" }
+# Contains Android specific utilities e.g. `viewModelOf()`
+koin-android = { module = "io.insert-koin:koin-android" }
+# Contains Compose specific utilities e.g. `koinViewModel()`
+koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
+
+### Logging
+
+### A tiny Kotlin API for cheap logging on top of Android's normal Log class.
+# It does look abandoned but it's just a small logging lib, it should be ok
+logcat = { module = "com.squareup.logcat:logcat", version.ref = "logcat" }
+
+### Testing
+
+### Programmer-friendly testing framework for Java and the JVM
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+### Android testing library junit integration for Android unit tests
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
+
+### Android testinf library espresso integration for Android UI tests
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

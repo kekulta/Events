@@ -12,7 +12,7 @@ import com.kekulta.events.presentation.ui.navigation.EventsNavBarState
 import com.kekulta.events.presentation.ui.navigation.Groups
 import com.kekulta.events.presentation.ui.navigation.More
 import com.kekulta.events.presentation.ui.navigation.Tab
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.advancedShadow
 
@@ -20,7 +20,7 @@ import com.kekulta.events.presentation.ui.widgets.base.modifiers.advancedShadow
 fun EventsNavBar(
     state: State<EventsNavBarState>
 ) {
-    val navigator = findNavigator()
+    val navigator = requireNavigator()
     val currentTab = state.value.tab
 
     if (currentTab != Tab.NO_BAR) {

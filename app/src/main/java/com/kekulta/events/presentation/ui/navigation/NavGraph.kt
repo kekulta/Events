@@ -3,6 +3,7 @@ package com.kekulta.events.presentation.ui.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
@@ -18,13 +19,12 @@ import com.kekulta.events.presentation.ui.screens.main.MoreScreen
 import com.kekulta.events.presentation.ui.screens.main.MyEventsScreen
 import com.kekulta.events.presentation.ui.screens.main.ProfileScreen
 import com.kekulta.events.presentation.ui.screens.splash.SplashScreen
-import com.kekulta.events.presentation.ui.showcase.ShowcaseScreen
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.SnackbarScope
 
 @Composable
 fun EventsNavGraph(
     navController: NavHostController,
-    snackbarScope: SnackbarScope,
+    snackbarScope: SnackbarHostState,
     navState: MutableState<EventsNavBarState>,
 ) {
     NavHost(
@@ -53,10 +53,6 @@ fun EventsNavGraph(
             ProfileScreen()
         }
 
-        screen<Showcase>(state = navState) {
-            ShowcaseScreen(snackbarScope)
-        }
-
         screen<MyEvents>(state = navState) {
             MyEventsScreen()
         }
@@ -78,7 +74,7 @@ fun EventsNavGraph(
         }
 
         screen<EnterCode>(state = navState, slide = true) { (_, dest) ->
-            EnterCodeScreen(dest.phone)
+            EnterCodeScreen()
         }
 
         screen<EnterProfile>(state = navState, slide = true) {

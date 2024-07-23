@@ -20,8 +20,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.kekulta.events.presentation.ui.navigation.EventsNavGraph
-import com.kekulta.events.presentation.ui.navigation.ProvideNavigator
-import com.kekulta.events.presentation.ui.navigation.findNavigator
+import com.kekulta.events.presentation.ui.navigation.ProvideNavComponentNavigator
+import com.kekulta.events.presentation.ui.navigation.requireNavigator
 import com.kekulta.events.presentation.ui.navigation.rememberNavState
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.EventsNavBar
@@ -29,9 +29,13 @@ import com.kekulta.events.presentation.ui.widgets.EventsTopBar
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.ProvideEventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.noIndicationClickable
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.ProvideSnackbarScope
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.rememberSnackbarScope
+import org.koin.androidx.compose.KoinAndroidContext
+import org.koin.core.annotation.KoinExperimentalAPI
 
 class MainActivity : ComponentActivity() {
+    @OptIn(KoinExperimentalAPI::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,59 +48,64 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            EventsTheme {
-                val navController = rememberNavController()
-                ProvideNavigator(navController = navController, onExit = { finish() }) {
-                    val navigator = findNavigator()
+            KoinAndroidContext {
+                EventsTheme {
+                    val navController = rememberNavController()
+                    ProvideNavComponentNavigator(navController = navController, onExit = { finish() }) {
+                        val navigator = requireNavigator()
 
-                    val snackbarHostState = remember { SnackbarHostState() }
-                    val snackbarScope = rememberSnackbarScope(snackbarHostState = snackbarHostState)
-                    val focusManager = LocalFocusManager.current
-                    val navBarState = rememberNavState()
+                        val snackbarHostState = remember { SnackbarHostState() }
+                        val snackbarScope =
+                            rememberSnackbarScope(snackbarHostState = snackbarHostState)
+                        val focusManager = LocalFocusManager.current
+                        val navBarState = rememberNavState()
 
-                    val topBarState = remember {
-                        mutableStateOf(
-                            EventsTopBarState(
-                                enabled = false,
-                                showBackButton = false,
-                                currScreenAction = null,
-                                currScreenName = "",
-                            )
-                        )
-                    }
-
-                    Scaffold(
-                        containerColor = EventsTheme.colors.neutralWhite,
-                        topBar = {
-                            EventsTopBar(
-                                state = topBarState,
-                            )
-                        },
-                        bottomBar = {
-                            EventsNavBar(state = navBarState)
-                        },
-                        snackbarHost = {
-                            SnackbarHost(hostState = snackbarHostState)
-                        },
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .noIndicationClickable {
-                                focusManager.clearFocus()
-                            },
-                    ) { innerPadding ->
-                        Box(modifier = Modifier.padding(innerPadding)) {
-                            ProvideEventsTopBarState(state = topBarState) {
-                                EventsNavGraph(
-                                    navController = navController,
-                                    snackbarScope = snackbarScope,
-                                    navState = navBarState
+                        val topBarState = remember {
+                            mutableStateOf(
+                                EventsTopBarState(
+                                    enabled = false,
+                                    showBackButton = false,
+                                    currScreenAction = null,
+                                    currScreenName = "",
                                 )
+                            )
+                        }
+
+                        Scaffold(
+                            containerColor = EventsTheme.colors.neutralWhite,
+                            topBar = {
+                                EventsTopBar(
+                                    state = topBarState,
+                                )
+                            },
+                            bottomBar = {
+                                EventsNavBar(state = navBarState)
+                            },
+                            snackbarHost = {
+                                SnackbarHost(hostState = snackbarHostState)
+                            },
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .noIndicationClickable {
+                                    focusManager.clearFocus()
+                                },
+                        ) { innerPadding ->
+                            Box(modifier = Modifier.padding(innerPadding)) {
+                                ProvideSnackbarScope(snackbarScope = snackbarScope) {
+                                    ProvideEventsTopBarState(state = topBarState) {
+                                        EventsNavGraph(
+                                            navController = navController,
+                                            snackbarScope = snackbarHostState,
+                                            navState = navBarState,
+                                        )
+                                    }
+                                }
                             }
                         }
-                    }
 
-                    BackHandler {
-                        navigator.popBack()
+                        BackHandler {
+                            navigator.popBack()
+                        }
                     }
                 }
             }

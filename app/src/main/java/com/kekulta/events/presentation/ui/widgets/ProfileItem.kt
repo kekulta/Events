@@ -14,12 +14,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.kekulta.events.R
-import com.kekulta.events.presentation.ui.models.ProfileVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
+import com.kekulta.events.presentation.ui.models.ProfileItemVo
 
 @Composable
 fun ProfileItem(
-    profileVo: ProfileVo,
+    profileDetailsVo: ProfileItemVo,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -35,16 +35,16 @@ fun ProfileItem(
     ) {
         UserCircleAvatar(
             modifier = Modifier.size(EventsTheme.sizes.sizeX25),
-            url = profileVo.avatar,
+            avatar = profileDetailsVo.avatar,
         )
         Column(
             modifier = Modifier
                 .padding(start = EventsTheme.sizes.sizeX10)
                 .weight(1f)
         ) {
-            Text(text = profileVo.name, style = EventsTheme.typography.bodyText1)
+            Text(text = profileDetailsVo.name, style = EventsTheme.typography.bodyText1)
             Text(
-                text = profileVo.phone,
+                text = profileDetailsVo.number,
                 style = EventsTheme.typography.metadata1,
                 color = EventsTheme.colors.neutralWeak,
             )

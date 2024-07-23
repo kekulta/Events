@@ -1,5 +1,7 @@
 package com.kekulta.events.presentation.ui.navigation
 
+import com.kekulta.events.domain.models.EventId
+import com.kekulta.events.domain.models.GroupId
 import kotlinx.serialization.Serializable
 
 /*
@@ -30,7 +32,6 @@ data class EnterPhone(
 
 @Serializable
 data class EnterCode(
-    val phone: String,
     override val tab: Tab = Tab.NO_BAR,
     override val isRoot: Boolean = false,
 ) : Screen
@@ -66,21 +67,15 @@ data class Profile(
 ) : Screen
 
 @Serializable
-data class Showcase(
-    override val tab: Tab = Tab.MORE,
-    override val isRoot: Boolean = false,
-) : Screen
-
-@Serializable
 data class GroupDetails(
-    val id: String,
+    val id: GroupId,
     override val tab: Tab,
     override val isRoot: Boolean = false,
 ) : Screen
 
 @Serializable
 data class EventDetails(
-    val id: String,
+    val id: EventId,
     override val tab: Tab,
     override val isRoot: Boolean = false,
 ) : Screen

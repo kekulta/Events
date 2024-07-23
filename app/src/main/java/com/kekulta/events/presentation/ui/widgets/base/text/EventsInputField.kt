@@ -6,8 +6,6 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +30,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalFocusManager
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.buttons.focusBorder
+import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
 
 @Composable
 fun EventsInputField(
@@ -50,6 +49,7 @@ fun EventsInputField(
     },
 ) {
     val focusManager = LocalFocusManager.current
+    val snackbarScope = findSnackbarScope()
 
     /*
         We do *not*  want to recompose on every symbol change. So using derived state.
@@ -65,6 +65,7 @@ fun EventsInputField(
         modifier = modifier
             .focusable(interactionSource = interactionSource)
             .hoverable(interactionSource = interactionSource)
+
             /*
                 Does not support font size change!
              */
@@ -106,7 +107,6 @@ fun EventsInputField(
 
             BasicTextField(
                 enabled = enabled,
-                modifier = Modifier.fillMaxWidth(),
                 onKeyboardAction = {
                     onDone(state)
                     focusManager.clearFocus()
@@ -120,6 +120,5 @@ fun EventsInputField(
                 state = state,
             )
         }
-        Spacer(modifier = Modifier.size(EventsTheme.sizes.sizeX4))
     }
 }

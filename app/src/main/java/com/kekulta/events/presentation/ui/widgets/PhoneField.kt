@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
@@ -40,7 +38,7 @@ import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.buttons.focusBorder
 import com.kekulta.events.presentation.ui.widgets.base.data.Countries
 import com.kekulta.events.presentation.ui.widgets.base.data.Country
-import com.kekulta.events.presentation.ui.widgets.base.modifiers.PhoneNumberOutputTransformation
+import com.kekulta.events.presentation.ui.widgets.base.modifiers.MaskOutputTransformation
 import com.kekulta.events.presentation.ui.widgets.base.text.EventsInputField
 
 const val PHONE_NUMBER_LENGTH = 10
@@ -136,13 +134,14 @@ fun PhoneField(
                 }
             }
         }
-        Spacer(modifier = Modifier.width(EventsTheme.sizes.sizeX4))
+
         EventsInputField(
+            modifier = Modifier.padding(start = EventsTheme.sizes.sizeX4),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             state = numberState,
             shouldDrawBorder = shouldDrawBorder,
             inputTransformation = InputTransformation.maxLength(PHONE_NUMBER_LENGTH),
-            outputTransformation = PhoneNumberOutputTransformation,
+            outputTransformation = MaskOutputTransformation("(###) ###-##-##"),
             hint = "000 000-00-00",
             onDone = {
                 focusManager.clearFocus()
