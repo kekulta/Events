@@ -1,9 +1,9 @@
 package com.kekulta.events.data.mock.repository
 
-import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.data.mock.functions.mockCommunityModels
 import com.kekulta.events.domain.models.CommunityId
 import com.kekulta.events.domain.models.CommunityModel
+import com.kekulta.events.domain.models.UserId
 import com.kekulta.events.domain.repository.api.CommunitiesQuery
 import com.kekulta.events.domain.repository.api.CommunitiesRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +15,8 @@ import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class CommunitiesRepositoryMock : CommunitiesRepository {
-    private val communitiesMap = mockCommunityModels(25).associateBy { event -> event.id }.toMutableMap()
+    private val communitiesMap =
+        mockCommunityModels(25).associateBy { event -> event.id }.toMutableMap()
 
     // Set would probably work better but lets not overengineer
     private val communitiesFlow = MutableStateFlow(communitiesMap.values.toList())
