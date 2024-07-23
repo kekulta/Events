@@ -9,7 +9,7 @@ enum class Tab : Parcelable {
     /*
         Main three Tabs
      */
-    EVENTS, GROUPS, MORE,
+    EVENTS, COMMUNITIES, MORE,
 
     /*
         No Tab will be selected

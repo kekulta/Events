@@ -13,8 +13,8 @@ import com.kekulta.events.presentation.ui.screens.login.EnterPhoneScreen
 import com.kekulta.events.presentation.ui.screens.login.EnterProfileScreen
 import com.kekulta.events.presentation.ui.screens.main.EventDetailsScreen
 import com.kekulta.events.presentation.ui.screens.main.EventsScreen
-import com.kekulta.events.presentation.ui.screens.main.GroupDetailsScreen
-import com.kekulta.events.presentation.ui.screens.main.GroupsScreen
+import com.kekulta.events.presentation.ui.screens.main.CommunityDetailsScreen
+import com.kekulta.events.presentation.ui.screens.main.CommunitiesScreen
 import com.kekulta.events.presentation.ui.screens.main.MoreScreen
 import com.kekulta.events.presentation.ui.screens.main.MyEventsScreen
 import com.kekulta.events.presentation.ui.screens.main.ProfileScreen
@@ -41,8 +41,8 @@ fun EventsNavGraph(
             EventsScreen()
         }
 
-        screen<Groups>(state = navState) {
-            GroupsScreen()
+        screen<Communities>(state = navState) {
+            CommunitiesScreen()
         }
 
         screen<More>(state = navState) {
@@ -57,8 +57,8 @@ fun EventsNavGraph(
             MyEventsScreen()
         }
 
-        screen<GroupDetails>(state = navState) { (_, dest) ->
-            GroupDetailsScreen(id = dest.id)
+        screen<CommunityDetails>(state = navState) { (_, dest) ->
+            CommunityDetailsScreen(id = dest.id)
         }
 
         screen<EventDetails>(state = navState) { (_, dest) ->

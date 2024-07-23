@@ -22,8 +22,6 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(eventsAppModule)
-
-            logcat { "Koin started!" }
         }
     }
 }

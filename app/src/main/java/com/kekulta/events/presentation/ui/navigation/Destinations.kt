@@ -1,7 +1,7 @@
 package com.kekulta.events.presentation.ui.navigation
 
 import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.models.GroupId
+import com.kekulta.events.domain.models.CommunityId
 import kotlinx.serialization.Serializable
 
 /*
@@ -43,8 +43,8 @@ data class Events(
 ) : Screen
 
 @Serializable
-data class Groups(
-    override val tab: Tab = Tab.GROUPS,
+data class Communities(
+    override val tab: Tab = Tab.COMMUNITIES,
     override val isRoot: Boolean = true,
 ) : Screen
 
@@ -67,8 +67,8 @@ data class Profile(
 ) : Screen
 
 @Serializable
-data class GroupDetails(
-    val id: GroupId,
+data class CommunityDetails(
+    val id: CommunityId,
     override val tab: Tab,
     override val isRoot: Boolean = false,
 ) : Screen

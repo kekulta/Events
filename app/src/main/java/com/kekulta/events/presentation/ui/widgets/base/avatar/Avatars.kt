@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.kekulta.events.R
@@ -65,7 +66,7 @@ fun BasicAvatar(
                         .aspectRatio(1f)
                         .clip(shape),
                     model = avatar.url,
-                    contentDescription = "Avatar",
+                    contentDescription = stringResource(id = R.string.avatar_description),
                 )
             }
         }
@@ -89,7 +90,7 @@ fun AddBadge(modifier: Modifier = Modifier, onClick: () -> Unit) {
             .clip(CircleShape)
             .background(Color.Black)
             .clickable(onClick = onClick),
-        contentDescription = "Add badge",
+        contentDescription = stringResource(id = R.string.add_badge_description),
         tint = EventsTheme.colors.neutralOffWhite,
     )
 }

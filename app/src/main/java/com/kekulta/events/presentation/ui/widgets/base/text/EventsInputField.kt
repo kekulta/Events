@@ -28,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import com.kekulta.events.R
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.buttons.focusBorder
 import com.kekulta.events.presentation.ui.widgets.base.snackbar.findSnackbarScope
@@ -86,7 +88,7 @@ fun EventsInputField(
         if (leadingIcon != null) {
             Icon(
                 leadingIcon,
-                "Input Icon",
+                contentDescription = stringResource(id = R.string.input_icon_description),
                 modifier = Modifier
                     .padding(start = EventsTheme.sizes.sizeX4)
                     .size(EventsTheme.sizes.sizeX12),

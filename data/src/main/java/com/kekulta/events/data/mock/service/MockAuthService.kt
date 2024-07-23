@@ -17,7 +17,7 @@ internal class MockAuthService(
     private val authStatus: MutableStateFlow<AuthStatus> =
         MutableStateFlow(
             AuthStatus.Authorized(
-                mockUsersService.createUser(
+                mockUsersService.createProfile(
                     UserInfo(
                         number = PhoneNumber(
                             code = "+7",
@@ -67,7 +67,7 @@ internal class MockAuthService(
     fun register(info: PersonalInfo): Boolean {
         val newStatus = authStatus.updateAndGet { status ->
             if (status is AuthStatus.NeedsRegistration) {
-                val newUser = mockUsersService.createUser(
+                val newUser = mockUsersService.createProfile(
                     UserInfo(
                         number = status.number,
                         info = info,

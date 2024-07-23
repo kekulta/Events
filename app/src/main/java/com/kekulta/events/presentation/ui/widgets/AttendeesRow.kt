@@ -11,15 +11,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.zIndex
-import com.kekulta.events.presentation.ui.models.AttendeeVo
+import com.kekulta.events.R
+import com.kekulta.events.presentation.ui.models.VisitorVo
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 
 
 @Composable
-fun AttendeesRow(
-    attendees: List<AttendeeVo>, modifier: Modifier = Modifier, showAvatarsNum: Int = 5
+fun VisitorsRow(
+    visitors: List<VisitorVo>, modifier: Modifier = Modifier, showAvatarsNum: Int = 5
 ) {
     Box(
         modifier = modifier
@@ -27,12 +29,12 @@ fun AttendeesRow(
             .fillMaxWidth(),
         contentAlignment = Alignment.CenterStart,
     ) {
-        if (attendees.isEmpty()) {
+        if (visitors.isEmpty()) {
             Text(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = "Be the first!",
+                text = stringResource(id = R.string.be_first_visitor),
                 style = EventsTheme.typography.subheading2
             )
         } else {
@@ -43,22 +45,22 @@ fun AttendeesRow(
                     horizontalArrangement = Arrangement.spacedBy(-EventsTheme.sizes.sizeX9)
                 ) {
                     itemsIndexed(
-                        attendees.take(showAvatarsNum), { _, attendee -> attendee.id.id }
-                    ) { index, attendee ->
+                        visitors.take(showAvatarsNum), { _, visitor -> visitor.id.id }
+                    ) { index, visitor ->
                         UserSquareAvatar(
                             modifier = Modifier
                                 .zIndex(-index.toFloat())
                                 .animateItem(),
                             drawBorder = true,
-                            avatar = attendee.avatar,
+                            avatar = visitor.avatar,
                         )
                     }
                 }
 
-                if (attendees.size > showAvatarsNum) {
+                if (visitors.size > showAvatarsNum) {
                     Text(
                         modifier = Modifier.padding(start = EventsTheme.sizes.sizeX5),
-                        text = "+${attendees.size - showAvatarsNum}",
+                        text = "+${visitors.size - showAvatarsNum}",
                         style = EventsTheme.typography.bodyText1
                     )
                 }

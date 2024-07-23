@@ -1,7 +1,7 @@
 package com.kekulta.events.presentation.viewmodel
 
-import com.kekulta.events.domain.usecase.ActiveEventsUseCase
-import com.kekulta.events.domain.usecase.AllEventsUseCase
+import com.kekulta.events.domain.interactor.GetActiveEventsInteractor
+import com.kekulta.events.domain.interactor.GetAllEventsInteractor
 import com.kekulta.events.presentation.formatters.ActiveEventItemFormatter
 import com.kekulta.events.presentation.formatters.EventItemFormatter
 import com.kekulta.events.presentation.ui.models.ActiveEventItemVo
@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.mapLatest
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventsScreenViewModel(
-    private val allEventsUseCase: AllEventsUseCase,
-    private val activeEventsUseCase: ActiveEventsUseCase,
+    private val getAllEventsInteractor: GetAllEventsInteractor,
+    private val getActiveEventsInteractor: GetActiveEventsInteractor,
     private val activeEventItemFormatter: ActiveEventItemFormatter,
     private val eventItemVoFormatter: EventItemFormatter,
 ) : AbstractCoroutineViewModel() {
     fun observeAllEvents(): StateFlow<ScreenState<List<EventItemVo>>> =
-        allEventsUseCase.execute().mapLatest { events ->
+        getAllEventsInteractor.execute().mapLatest { events ->
             ScreenState.Success(
                 eventItemVoFormatter.format(
                     events
@@ -28,7 +28,7 @@ class EventsScreenViewModel(
         }.asStateFlow(ScreenState.Loading())
 
     fun observeActiveEvents(): StateFlow<ScreenState<List<ActiveEventItemVo>>> =
-        activeEventsUseCase.execute().mapLatest { events ->
+        getActiveEventsInteractor.execute().mapLatest { events ->
             ScreenState.Success(
                 activeEventItemFormatter.format(events)
             )

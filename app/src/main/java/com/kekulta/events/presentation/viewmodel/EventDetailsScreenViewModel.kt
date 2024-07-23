@@ -1,9 +1,9 @@
 package com.kekulta.events.presentation.viewmodel
 
 import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.usecase.CancelEventRegistrationUseCase
-import com.kekulta.events.domain.usecase.EventDetailsUseCase
-import com.kekulta.events.domain.usecase.RegisterToEventUseCase
+import com.kekulta.events.domain.interactor.CancelEventRegistrationInteractor
+import com.kekulta.events.domain.interactor.GetEventDetailsInteractor
+import com.kekulta.events.domain.interactor.RegisterToEventInteractor
 import com.kekulta.events.presentation.formatters.EventDetailsFormatter
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
@@ -17,26 +17,26 @@ import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventDetailsScreenViewModel(
-    private val eventDetailsUseCase: EventDetailsUseCase,
-    private val registerToEventUseCase: RegisterToEventUseCase,
-    private val cancelEventRegistrationUseCase: CancelEventRegistrationUseCase,
+    private val getEventDetailsInteractor: GetEventDetailsInteractor,
+    private val registerToEventInteractor: RegisterToEventInteractor,
+    private val cancelEventRegistrationInteractor: CancelEventRegistrationInteractor,
     private val eventDetailsFormatter: EventDetailsFormatter,
 ) : AbstractCoroutineViewModel() {
     private val currId = MutableStateFlow<EventId?>(null)
 
     private val state: StateFlow<ScreenState<EventDetailsVo>> =
-        currId.filterNotNull().flatMapLatest { id -> eventDetailsUseCase.execute(id) }
+        currId.filterNotNull().flatMapLatest { id -> getEventDetailsInteractor.execute(id) }
             .mapLatest { model ->
                 val vo = model?.let { modelNotNull ->
                     eventDetailsFormatter.format(
-                        modelNotNull.event, modelNotNull.attendees, modelNotNull.currentProfile
+                        modelNotNull.event, modelNotNull.visitors, modelNotNull.currentProfile
                     )
                 }
 
                 if (vo != null) {
                     ScreenState.Success(vo)
                 } else {
-                    ScreenState.Error("Something went wrong!")
+                    ScreenState.Error(message = null)
                 }
             }.asStateFlow(ScreenState.Loading())
 
@@ -49,14 +49,14 @@ class EventDetailsScreenViewModel(
     fun registerOnEvent() {
         val id = currId.value ?: return
         launchScope {
-            registerToEventUseCase.execute(id)
+            registerToEventInteractor.execute(id)
         }
     }
 
     fun cancelRegistration() {
         val id = currId.value ?: return
         launchScope {
-            cancelEventRegistrationUseCase.execute(id)
+            cancelEventRegistrationInteractor.execute(id)
         }
     }
 }

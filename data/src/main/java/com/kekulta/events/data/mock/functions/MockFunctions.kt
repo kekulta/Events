@@ -4,8 +4,8 @@ import com.kekulta.events.common.utils.loremIpsum
 import com.kekulta.events.domain.models.Avatar
 import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.domain.models.EventModel
-import com.kekulta.events.domain.models.GroupId
-import com.kekulta.events.domain.models.GroupModel
+import com.kekulta.events.domain.models.CommunityId
+import com.kekulta.events.domain.models.CommunityModel
 import com.kekulta.events.domain.models.PersonalInfo
 import com.kekulta.events.domain.models.PhoneNumber
 import com.kekulta.events.domain.models.ProfileModel
@@ -56,7 +56,7 @@ internal fun mockEventModels(size: Int): List<EventModel> {
             date = Clock.System.now().plus((24 * (index - 4)), DateTimeUnit.HOUR)
                 .toLocalDateTime(TimeZone.currentSystemDefault()),
             location = places[index % places.size],
-            attendees = mockUsers(index % 15).map { user -> user.id },
+            visitors = mockUsers(index % 15).map { user -> user.id },
         )
     }
 
@@ -76,12 +76,12 @@ internal fun mockProfileModels(size: Int): List<ProfileModel> {
     }
 }
 
-internal fun mockGroupModels(size: Int): List<GroupModel> {
+internal fun mockCommunityModels(size: Int): List<CommunityModel> {
     val names = listOf("Developer Meeting", "Code'n'code", "Mobile Submarine", "Mobius")
 
     return List(size) { index ->
-        GroupModel(
-            id = GroupId(index.toString()),
+        CommunityModel(
+            id = CommunityId(index.toString()),
             name = "${names[index % names.size]} #$index",
             description = loremIpsum((500 * index) % 2000),
             avatar = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4".takeIf { index % 2 == 0 }),

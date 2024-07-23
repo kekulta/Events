@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.kekulta.events.R
@@ -41,7 +42,7 @@ import com.kekulta.events.domain.models.EventId
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.theme.EventsTheme
-import com.kekulta.events.presentation.ui.widgets.AttendeesRow
+import com.kekulta.events.presentation.ui.widgets.VisitorsRow
 import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
@@ -68,26 +69,24 @@ fun EventDetailsScreen(id: EventId, viewModel: EventDetailsScreenViewModel = koi
      */
     when (val s = state) {
         is ScreenState.Loading -> {
+            val screenName = stringResource(id = R.string.topbar_loading)
+
             SetTopBar {
-                remember {
+                remember(screenName) {
                     EventsTopBarState(
-                        enabled = true,
-                        showBackButton = true,
-                        currScreenAction = null,
-                        currScreenName = "Loading.."
+                        currScreenName = screenName
                     )
                 }
             }
         }
 
         is ScreenState.Error -> {
+            val screenName = stringResource(id = R.string.topbar_error)
+
             SetTopBar {
-                remember {
+                remember(screenName) {
                     EventsTopBarState(
-                        enabled = true,
-                        showBackButton = true,
-                        currScreenAction = null,
-                        currScreenName = "Error.."
+                        currScreenName = screenName
                     )
                 }
             }
@@ -114,13 +113,14 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsScreenViewM
     SetTopBar {
         remember(vo) {
             EventsTopBarState(
-                enabled = true, showBackButton = true, currScreenAction = {
+                currScreenAction = {
                     if (vo.isAttending) {
                         EventDetailsAction {
                             snackbarScope?.showSnackbar("${vo.name} action: ${Clock.System.now().epochSeconds % 60}")
                         }
                     }
-                }, currScreenName = vo.name
+                },
+                currScreenName = vo.name,
             )
         }
     }
@@ -172,7 +172,7 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsScreenViewM
                         .noIndicationClickable { isSelected = true }
                         .clip(RoundedCornerShape(EventsTheme.sizes.sizeX12)),
                     model = vo.mapUrl,
-                    contentDescription = "Map",
+                    contentDescription = stringResource(id = R.string.map_content_description),
                 )
             }
 
@@ -189,18 +189,17 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsScreenViewM
 
         }
 
-        AttendeesRow(
+        VisitorsRow(
             modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-            attendees = vo.attendees,
+            visitors = vo.visitors,
         )
 
         if (vo.isAbleToRegister) {
             if (vo.isAttending) {
                 EventsOutlinedButton(modifier = Modifier
                     .padding(horizontal = EventsTheme.sizes.sizeX5)
-                    .fillMaxWidth(),
-                    onClick = { viewModel.cancelRegistration() }) {
-                    Text(text = "Maybe another time")
+                    .fillMaxWidth(), onClick = { viewModel.cancelRegistration() }) {
+                    Text(text = stringResource(id = R.string.cancel_registration))
                 }
             } else {
                 EventsFilledButton(modifier = Modifier
@@ -208,7 +207,7 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsScreenViewM
                     .padding(horizontal = EventsTheme.sizes.sizeX5)
                     .fillMaxWidth(),
                     onClick = { viewModel.registerOnEvent() }) {
-                    Text(text = "I'll go!")
+                    Text(text = stringResource(id = R.string.register_to_event))
                 }
             }
         }
@@ -237,7 +236,7 @@ private fun SuccessScreen(vo: EventDetailsVo, viewModel: EventDetailsScreenViewM
                         .zoomable(state = rememberZoomableState()),
                     contentScale = ContentScale.Fit,
                     model = vo.mapUrl,
-                    contentDescription = "Map",
+                    contentDescription = stringResource(id = R.string.map_content_description),
                 )
             }
         }

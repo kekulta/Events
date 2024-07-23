@@ -11,8 +11,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kekulta.events.R
 import com.kekulta.events.domain.models.AuthStatus
 import com.kekulta.events.domain.models.PhoneNumber
 import com.kekulta.events.presentation.ui.navigation.EnterCode
@@ -39,9 +41,7 @@ fun EnterPhoneScreen(
 
     SetTopBar {
         remember {
-            EventsTopBarState(
-                enabled = true, showBackButton = false, currScreenAction = null, currScreenName = ""
-            )
+            EventsTopBarState(showBackButton = false)
         }
     }
 
@@ -66,7 +66,7 @@ private fun EnterPhoneContent(sendCode: (number: PhoneNumber) -> Unit) {
 
         Text(
             modifier = Modifier.padding(horizontal = EventsTheme.sizes.sizeX9),
-            text = "Enter phone number",
+            text = stringResource(id = R.string.enter_number),
             style = EventsTheme.typography.heading2
         )
         Text(
@@ -74,7 +74,7 @@ private fun EnterPhoneContent(sendCode: (number: PhoneNumber) -> Unit) {
                 .padding(horizontal = EventsTheme.sizes.sizeX9)
                 .padding(top = EventsTheme.sizes.sizeX4),
             textAlign = TextAlign.Center,
-            text = "We will send verification code\non this number",
+            text = stringResource(id = R.string.verification_send),
             style = EventsTheme.typography.bodyText2
         )
 
@@ -88,7 +88,8 @@ private fun EnterPhoneContent(sendCode: (number: PhoneNumber) -> Unit) {
 
         EventsFilledButton(enabled = numberState.text.length == PHONE_NUMBER_LENGTH,
             modifier = Modifier
-                .padding(horizontal = EventsTheme.sizes.sizeX5).padding(top = EventsTheme.sizes.sizeX25)
+                .padding(horizontal = EventsTheme.sizes.sizeX5)
+                .padding(top = EventsTheme.sizes.sizeX25)
                 .fillMaxWidth(),
             onClick = {
                 sendCode(
@@ -97,7 +98,7 @@ private fun EnterPhoneContent(sendCode: (number: PhoneNumber) -> Unit) {
                     )
                 )
             }) {
-            Text("Continue")
+            Text(stringResource(id = R.string.continue_button))
         }
     }
 }

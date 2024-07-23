@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
 import com.kekulta.events.domain.models.Avatar
@@ -30,13 +31,13 @@ fun EventSquareAvatar(
                 .fillMaxSize()
                 .aspectRatio(1f),
             painter = painterResource(id = R.drawable.icon_event_avatar),
-            contentDescription = "Default avatar"
+            contentDescription = stringResource(id = R.string.default_avatar_description),
         )
     }, shape = RoundedCornerShape(33), avatar = avatar)
 }
 
 @Composable
-fun GroupSquareAvatar(
+fun CommunitiesquareAvatar(
     modifier: Modifier = Modifier,
     avatar: Avatar = Avatar(null),
 ) {
@@ -46,7 +47,7 @@ fun GroupSquareAvatar(
                 .fillMaxSize()
                 .aspectRatio(1f),
             painter = painterResource(id = R.drawable.icon_community_avatar),
-            contentDescription = "Default avatar"
+            contentDescription = stringResource(id = R.string.default_avatar_description),
         )
     }, shape = RoundedCornerShape(33), avatar = avatar)
 }
@@ -66,7 +67,7 @@ fun UserCircleAddAvatar(
                     .fillMaxSize(0.5f)
                     .aspectRatio(1f),
                 painter = painterResource(id = R.drawable.icon_avatar),
-                contentDescription = "Default avatar"
+                contentDescription = stringResource(id = R.string.default_avatar_description),
             )
         },
         shape = CircleShape,
@@ -88,7 +89,7 @@ fun UserCircleAvatar(
                 .fillMaxSize(0.5f)
                 .aspectRatio(1f),
             painter = painterResource(id = R.drawable.icon_avatar),
-            contentDescription = "Default avatar"
+            contentDescription = stringResource(id = R.string.default_avatar_description),
         )
     }, shape = CircleShape, avatar = avatar)
 }
@@ -101,16 +102,20 @@ fun UserSquareAvatar(
     avatar: Avatar = Avatar(null),
 ) {
     BasicAvatar(
-        modifier = modifier.size(EventsTheme.sizes.sizeX24), placeholder = {
+        modifier = modifier.size(EventsTheme.sizes.sizeX24),
+        placeholder = {
             Icon(
                 modifier = Modifier
                     .fillMaxSize(0.66f)
                     .aspectRatio(1f),
                 painter = painterResource(id = R.drawable.icon_avatar),
-                contentDescription = "Default avatar"
+                contentDescription = stringResource(id = R.string.default_avatar_description),
             )
-        }, borderStroke = if (drawBorder) BorderStroke(
+        },
+        borderStroke = if (drawBorder) BorderStroke(
             EventsTheme.sizes.sizeX1, EventsTheme.colors.brandBackground
-        ) else BorderStroke(0.dp, Color.Transparent), shape = RoundedCornerShape(33), avatar = avatar
+        ) else BorderStroke(0.dp, Color.Transparent),
+        shape = RoundedCornerShape(33),
+        avatar = avatar
     )
 }
