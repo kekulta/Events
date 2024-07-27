@@ -9,7 +9,7 @@ import com.kekulta.events.domain.models.status.EventStatus
 import com.kekulta.events.domain.repository.api.EventsRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetCommunityEventsInteractorImpl(
+internal class GetCommunityEventsInteractorImpl(
     private val eventsRepository: EventsRepository,
 ) : GetCommunityEventsInteractor {
     override fun execute(id: CommunityId, offset: Int, limit: Int): Flow<Page<EventModel>> {

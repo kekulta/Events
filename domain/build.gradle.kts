@@ -27,4 +27,11 @@ dependencies {
      */
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+
+    /**
+     * Tests
+     */
+    testImplementation(libs.junit)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

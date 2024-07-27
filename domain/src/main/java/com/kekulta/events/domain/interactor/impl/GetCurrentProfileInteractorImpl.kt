@@ -5,7 +5,7 @@ import com.kekulta.events.domain.models.base.ProfileModel
 import com.kekulta.events.domain.repository.api.ProfileRepository
 import kotlinx.coroutines.flow.StateFlow
 
-class GetCurrentProfileInteractorImpl(
+internal class GetCurrentProfileInteractorImpl(
     private val profileRepository: ProfileRepository,
 ): GetCurrentProfileInteractor {
     override fun execute(): StateFlow<ProfileModel?> {

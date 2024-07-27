@@ -6,7 +6,7 @@ import com.kekulta.events.domain.repository.api.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RegisterInteractorImpl(
+internal class RegisterInteractorImpl(
     private val authRepository: AuthRepository,
 ) : RegisterInteractor {
     override suspend fun execute(info: PersonalInfo) = withContext(Dispatchers.IO) {

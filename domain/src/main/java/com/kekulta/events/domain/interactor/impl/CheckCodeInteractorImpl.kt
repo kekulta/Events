@@ -6,7 +6,7 @@ import com.kekulta.events.domain.repository.api.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class CheckCodeInteractorImpl(
+internal class CheckCodeInteractorImpl(
     private val authRepository: AuthRepository,
 ) : CheckCodeInteractor {
     override suspend fun execute(verificationCode: VerificationCode) = withContext(Dispatchers.IO) {

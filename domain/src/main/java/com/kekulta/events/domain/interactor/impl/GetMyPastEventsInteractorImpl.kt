@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GetMyPastEventsInteractorImpl(
+internal class GetMyPastEventsInteractorImpl(
     private val profileRepository: ProfileRepository,
     private val eventsRepository: EventsRepository,
 ) : GetMyPastEventsInteractor {

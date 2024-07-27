@@ -15,7 +15,7 @@ import com.kekulta.events.domain.interactor.GetEventInteractor
 import com.kekulta.events.domain.interactor.GetEventVisitorsInteractor
 import com.kekulta.events.domain.interactor.GetMyPastEventsInteractor
 import com.kekulta.events.domain.interactor.GetMyPlannedEventsInteractor
-import com.kekulta.events.domain.interactor.IsSubscribedInteractor
+import com.kekulta.events.domain.interactor.IsRegisteredToEventInteractor
 import com.kekulta.events.domain.interactor.LogOutInteractor
 import com.kekulta.events.domain.interactor.RegisterInteractor
 import com.kekulta.events.domain.interactor.RegisterToEventInteractor
@@ -33,7 +33,7 @@ import com.kekulta.events.domain.interactor.impl.GetCurrentProfileInteractorImpl
 import com.kekulta.events.domain.interactor.impl.GetEventInteractorImpl
 import com.kekulta.events.domain.interactor.impl.GetEventVisitorsInteractorImpl
 import com.kekulta.events.domain.interactor.impl.GetMyPlannedEventsInteractorImpl
-import com.kekulta.events.domain.interactor.impl.IsSubscribedInteractorImpl
+import com.kekulta.events.domain.interactor.impl.IsRegisteredToEventInteractorImpl
 import com.kekulta.events.domain.interactor.impl.LogOutInteractorImpl
 import com.kekulta.events.domain.interactor.impl.RegisterInteractorImpl
 import com.kekulta.events.domain.interactor.impl.RegisterToEventInteractorImpl
@@ -62,5 +62,5 @@ internal val interactorsModule = module {
     factoryOf(::GetEventVisitorsInteractorImpl).bind<GetEventVisitorsInteractor>()
     factoryOf(::GetEventVisitorsInteractorImpl).bind<GetEventVisitorsInteractor>()
     factoryOf(::GetCommunityMembersInteractorImpl).bind<GetCommunityMembersInteractor>()
-    factoryOf(::IsSubscribedInteractorImpl).bind<IsSubscribedInteractor>()
+    factoryOf(::IsRegisteredToEventInteractorImpl).bind<IsRegisteredToEventInteractor>()
 }
