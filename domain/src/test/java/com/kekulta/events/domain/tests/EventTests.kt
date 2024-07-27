@@ -1,11 +1,15 @@
 package com.kekulta.events.domain.tests
 
+import com.kekulta.events.common.utils.isFuture
+import com.kekulta.events.common.utils.isPast
 import com.kekulta.events.common.utils.isToday
 import com.kekulta.events.domain.di.interactorsModule
 import com.kekulta.events.domain.di.stubModules
 import com.kekulta.events.domain.interactor.CancelEventRegistrationInteractor
 import com.kekulta.events.domain.interactor.GetActiveEventsInteractor
 import com.kekulta.events.domain.interactor.GetAllEventsInteractor
+import com.kekulta.events.domain.interactor.GetMyPastEventsInteractor
+import com.kekulta.events.domain.interactor.GetMyPlannedEventsInteractor
 import com.kekulta.events.domain.interactor.IsRegisteredToEventInteractor
 import com.kekulta.events.domain.interactor.RegisterToEventInteractor
 import kotlinx.coroutines.flow.first
@@ -98,4 +102,33 @@ class EventTests : KoinComponent {
             assert(event.date.date.isToday())
         }
     }
+
+    @Test
+    fun `Check GetMyPastEventsInteractor return only past events`() = runTest {
+        val getMyPastEventsInteractor = get<GetMyPastEventsInteractor>()
+        val getAllEventsInteractor = get<GetAllEventsInteractor>()
+        val registerToEventInteractor = get<RegisterToEventInteractor>()
+
+        val allEvents = getAllEventsInteractor.execute(0, 50).first()
+        allEvents.forEach { event -> registerToEventInteractor.execute(event.id) }
+
+        val pastEvents = getMyPastEventsInteractor.execute(0, 50).first()
+
+        pastEvents.forEach { event -> assert(event.date.date.isPast()) { "All returned events must be in past." } }
+    }
+
+    @Test
+    fun `Check GetMyPlannedEventsInteractor return only past events`() = runTest {
+        val getMyPlannedEventsInteractor = get<GetMyPlannedEventsInteractor>()
+        val getAllEventsInteractor = get<GetAllEventsInteractor>()
+        val registerToEventInteractor = get<RegisterToEventInteractor>()
+
+        val allEvents = getAllEventsInteractor.execute(0, 50).first()
+        allEvents.forEach { event -> registerToEventInteractor.execute(event.id) }
+
+        val pastEvents = getMyPlannedEventsInteractor.execute(0, 50).first()
+
+        pastEvents.forEach { event -> assert(event.date.date.isFuture() || event.date.date.isToday()) { "All returned events must be in future or today." } }
+    }
+
 }
