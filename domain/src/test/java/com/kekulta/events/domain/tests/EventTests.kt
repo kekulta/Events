@@ -1,8 +1,10 @@
 package com.kekulta.events.domain.tests
 
+import com.kekulta.events.common.utils.isToday
 import com.kekulta.events.domain.di.interactorsModule
 import com.kekulta.events.domain.di.stubModules
 import com.kekulta.events.domain.interactor.CancelEventRegistrationInteractor
+import com.kekulta.events.domain.interactor.GetActiveEventsInteractor
 import com.kekulta.events.domain.interactor.GetAllEventsInteractor
 import com.kekulta.events.domain.interactor.IsRegisteredToEventInteractor
 import com.kekulta.events.domain.interactor.RegisterToEventInteractor
@@ -31,7 +33,7 @@ class EventTests : KoinComponent {
     fun `Check event ids uniqueness`() = runTest {
         val getAllEventsInteractor = get<GetAllEventsInteractor>()
 
-        val page = getAllEventsInteractor.execute(0, 0).first()
+        val page = getAllEventsInteractor.execute(0, 50).first()
 
         val uniqueIds = page.values.map { event -> event.id }.toSet()
 
@@ -83,5 +85,17 @@ class EventTests : KoinComponent {
         val isRegisteredAfterCancel = isRegisteredToEventInteractor.execute(event.id).first()
 
         assert(!isRegisteredAfterCancel) { "Profile must not be registered after cancel." }
+    }
+
+    @Test
+    fun `Check Active Events interactor return only active events`() = runTest {
+        val activeEventsInteractor = get<GetActiveEventsInteractor>()
+
+        val page = activeEventsInteractor.execute(0, 50).first()
+
+        page.forEach { event ->
+            println(event.date)
+            assert(event.date.date.isToday())
+        }
     }
 }

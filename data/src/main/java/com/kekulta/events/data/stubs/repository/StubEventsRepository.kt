@@ -38,6 +38,7 @@ internal class StubEventsRepository(
                 val ids = query.ids.toSet()
 
                 events.map { events ->
+
                     Page(
                         events.filter { event -> event.id in ids }, 0, ids.size
                     )
@@ -46,8 +47,12 @@ internal class StubEventsRepository(
 
             is EventsQuery.Recommendation -> {
                 events.map { events ->
+                    val filteredEvents =
+                        events.filter { event -> event.checkStatus(query.statusList) }
                     Page(
-                        events.drop(query.offset).take(query.limit), query.offset, events.size
+                        filteredEvents.drop(query.offset).take(query.limit),
+                        query.offset,
+                        filteredEvents.size
                     )
                 }
             }
