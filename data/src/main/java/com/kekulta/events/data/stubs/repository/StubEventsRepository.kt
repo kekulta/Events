@@ -1,11 +1,11 @@
-package com.kekulta.events.data.mock.repository
+package com.kekulta.events.data.stubs.repository
 
 import com.kekulta.events.common.utils.isFuture
 import com.kekulta.events.common.utils.isPast
 import com.kekulta.events.common.utils.isToday
-import com.kekulta.events.data.mock.service.MockAuthService
-import com.kekulta.events.data.mock.service.MockEventsRegistrationService
-import com.kekulta.events.data.mock.service.MockEventsService
+import com.kekulta.events.data.stubs.service.StubAuthService
+import com.kekulta.events.data.stubs.service.StubEventsRegistrationService
+import com.kekulta.events.data.stubs.service.StubEventsService
 import com.kekulta.events.domain.models.base.EventModel
 import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.domain.models.id.EventId
@@ -21,10 +21,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
-internal class EventsRepositoryMock(
-    private val authService: MockAuthService,
-    private val eventsService: MockEventsService,
-    private val eventsRegistrationService: MockEventsRegistrationService,
+internal class StubEventsRepository(
+    private val authService: StubAuthService,
+    private val eventsService: StubEventsService,
+    private val eventsRegistrationService: StubEventsRegistrationService,
 ) : EventsRepository {
     private val events = eventsService.fetchEvents()
 

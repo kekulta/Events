@@ -1,9 +1,8 @@
-package com.kekulta.events.data.mock.repository
+package com.kekulta.events.data.stubs.repository
 
-import android.util.Log
-import com.kekulta.events.data.mock.service.MockCommunityMembersService
-import com.kekulta.events.data.mock.service.MockEventsRegistrationService
-import com.kekulta.events.data.mock.service.MockUsersService
+import com.kekulta.events.data.stubs.service.StubCommunityMembersService
+import com.kekulta.events.data.stubs.service.StubEventsRegistrationService
+import com.kekulta.events.data.stubs.service.StubUsersService
 import com.kekulta.events.domain.models.base.UserModel
 import com.kekulta.events.domain.models.pagination.Page
 import com.kekulta.events.domain.models.pagination.UsersQuery
@@ -13,12 +12,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
-internal class UsersRepositoryMock(
-    private val mockUsersService: MockUsersService,
-    private val eventsRegistrationService: MockEventsRegistrationService,
-    private val communityMembersService: MockCommunityMembersService,
+internal class StubUsersRepository(
+    private val stubUsersService: StubUsersService,
+    private val eventsRegistrationService: StubEventsRegistrationService,
+    private val communityMembersService: StubCommunityMembersService,
 ) : UsersRepository {
-    private val users = mockUsersService.fetchUsers()
+    private val users = stubUsersService.fetchUsers()
 
     override fun observeUsersForQuery(query: UsersQuery): Flow<Page<UserModel>> {
         return when (query) {

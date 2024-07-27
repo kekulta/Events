@@ -1,15 +1,15 @@
-package com.kekulta.events.data.mock.service
+package com.kekulta.events.data.stubs.service
 
-import com.kekulta.events.data.mock.functions.mockRegistrations
+import com.kekulta.events.data.stubs.functions.generateStubVisitors
 import com.kekulta.events.domain.models.id.EventId
 import com.kekulta.events.domain.models.id.UserId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-internal class MockEventsRegistrationService {
+internal class StubEventsRegistrationService {
 
-    private val registrations = MutableStateFlow(mockRegistrations(50, 50))
+    private val registrations = MutableStateFlow(generateStubVisitors(50, 50))
 
     fun fetchRegistrations(): Flow<List<Pair<UserId, EventId>>> = registrations
 

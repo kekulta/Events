@@ -1,6 +1,6 @@
-package com.kekulta.events.data.mock.service
+package com.kekulta.events.data.stubs.service
 
-import com.kekulta.events.data.mock.functions.mockProfileModels
+import com.kekulta.events.data.stubs.functions.generateStubProfiles
 import com.kekulta.events.domain.models.base.ProfileModel
 import com.kekulta.events.domain.models.base.UserModel
 import com.kekulta.events.domain.models.id.UserId
@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
-internal class MockUsersService {
-    private var users = MutableStateFlow(mockProfileModels(50))
+internal class StubUsersService {
+    private var users = MutableStateFlow(generateStubProfiles(50))
 
     fun fetchUsers(): Flow<List<UserModel>> {
         return users.map { users ->

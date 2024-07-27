@@ -1,9 +1,9 @@
-package com.kekulta.events.data.mock.repository
+package com.kekulta.events.data.stubs.repository
 
-import com.kekulta.events.data.mock.service.MockAuthService
-import com.kekulta.events.data.mock.service.MockCommunityMembersService
-import com.kekulta.events.data.mock.service.MockCommunityService
-import com.kekulta.events.data.mock.service.MockEventsService
+import com.kekulta.events.data.stubs.service.StubAuthService
+import com.kekulta.events.data.stubs.service.StubCommunityMembersService
+import com.kekulta.events.data.stubs.service.StubCommunityService
+import com.kekulta.events.data.stubs.service.StubEventsService
 import com.kekulta.events.domain.models.base.CommunityModel
 import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.domain.models.id.UserId
@@ -16,11 +16,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
-internal class CommunitiesRepositoryMock(
-    private val authService: MockAuthService,
-    private val communityMembersService: MockCommunityMembersService,
-    private val communityService: MockCommunityService,
-    private val eventsService: MockEventsService,
+internal class StubCommunitiesRepository(
+    private val authService: StubAuthService,
+    private val communityMembersService: StubCommunityMembersService,
+    private val communityService: StubCommunityService,
+    private val eventsService: StubEventsService,
 ) : CommunitiesRepository {
     override fun observeCommunitiesForQuery(query: CommunitiesQuery): Flow<Page<CommunityModel>> {
         return when (query) {

@@ -1,15 +1,15 @@
-package com.kekulta.events.data.mock.service
+package com.kekulta.events.data.stubs.service
 
-import com.kekulta.events.data.mock.functions.mockMembers
+import com.kekulta.events.data.stubs.functions.generateStubMembers
 import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.domain.models.id.UserId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-internal class MockCommunityMembersService {
+internal class StubCommunityMembersService {
 
-    private val members = MutableStateFlow(mockMembers(50, 50))
+    private val members = MutableStateFlow(generateStubMembers(50, 50))
 
     fun fetchMembers(): Flow<List<Pair<UserId, CommunityId>>> = members
 
