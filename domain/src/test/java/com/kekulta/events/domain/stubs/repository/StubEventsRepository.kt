@@ -3,9 +3,6 @@ package com.kekulta.events.domain.stubs.repository
 import com.kekulta.events.common.utils.isFuture
 import com.kekulta.events.common.utils.isPast
 import com.kekulta.events.common.utils.isToday
-import com.kekulta.events.domain.stubs.service.StubAuthService
-import com.kekulta.events.domain.stubs.service.StubEventsRegistrationService
-import com.kekulta.events.domain.stubs.service.StubEventsService
 import com.kekulta.events.domain.models.base.EventModel
 import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.domain.models.id.EventId
@@ -17,6 +14,9 @@ import com.kekulta.events.domain.models.pagination.emptyPage
 import com.kekulta.events.domain.models.status.AuthStatus
 import com.kekulta.events.domain.models.status.EventStatus
 import com.kekulta.events.domain.repository.api.EventsRepository
+import com.kekulta.events.domain.stubs.service.StubAuthService
+import com.kekulta.events.domain.stubs.service.StubEventsRegistrationService
+import com.kekulta.events.domain.stubs.service.StubEventsService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -46,8 +46,12 @@ internal class StubEventsRepository(
 
             is EventsQuery.Recommendation -> {
                 events.map { events ->
+                    val filteredEvents =
+                        events.filter { event -> event.checkStatus(query.statusList) }
                     Page(
-                        events.drop(query.offset).take(query.limit), query.offset, events.size
+                        filteredEvents.drop(query.offset).take(query.limit),
+                        query.offset,
+                        filteredEvents.size
                     )
                 }
             }

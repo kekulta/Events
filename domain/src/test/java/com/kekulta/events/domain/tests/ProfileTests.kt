@@ -40,6 +40,6 @@ class ProfileTests : KoinComponent {
 
         val currentProfile = getCurrentProfileInteractor.execute().first()
 
-        assertNull(currentProfile, "Profile must unauthorized after log out.")
+        assertNull(currentProfile, "Profile must be unauthorized after log out.")
     }
 }
