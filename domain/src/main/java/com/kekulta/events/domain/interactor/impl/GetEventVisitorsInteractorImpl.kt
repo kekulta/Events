@@ -8,7 +8,7 @@ import com.kekulta.events.domain.models.pagination.UsersQuery
 import com.kekulta.events.domain.repository.api.UsersRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetEventVisitorsInteractorImpl(
+internal class GetEventVisitorsInteractorImpl(
     private val usersRepository: UsersRepository,
 ) : GetEventVisitorsInteractor {
     override fun execute(id: EventId, offset: Int, limit: Int): Flow<Page<UserModel>> =

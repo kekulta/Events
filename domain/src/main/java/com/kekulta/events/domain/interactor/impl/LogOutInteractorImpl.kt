@@ -5,7 +5,7 @@ import com.kekulta.events.domain.repository.api.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class LogOutInteractorImpl(
+internal class LogOutInteractorImpl(
     private val authRepository: AuthRepository,
 ) : LogOutInteractor {
     override suspend fun execute() = withContext(Dispatchers.IO) {

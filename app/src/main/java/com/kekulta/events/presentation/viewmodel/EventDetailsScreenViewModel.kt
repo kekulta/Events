@@ -4,7 +4,7 @@ import com.kekulta.events.domain.interactor.CancelEventRegistrationInteractor
 import com.kekulta.events.domain.interactor.GetCurrentProfileInteractor
 import com.kekulta.events.domain.interactor.GetEventInteractor
 import com.kekulta.events.domain.interactor.GetEventVisitorsInteractor
-import com.kekulta.events.domain.interactor.IsSubscribedInteractor
+import com.kekulta.events.domain.interactor.IsRegisteredToEventInteractor
 import com.kekulta.events.domain.interactor.RegisterToEventInteractor
 import com.kekulta.events.domain.models.id.EventId
 import com.kekulta.events.domain.models.pagination.BASE_PAGE_SIZE
@@ -27,7 +27,7 @@ class EventDetailsScreenViewModel(
     private val registerToEventInteractor: RegisterToEventInteractor,
     private val cancelEventRegistrationInteractor: CancelEventRegistrationInteractor,
     private val eventDetailsFormatter: EventDetailsFormatter,
-    private val isSubscribedInteractor: IsSubscribedInteractor,
+    private val isRegisteredToEventInteractor: IsRegisteredToEventInteractor,
 ) : AbstractCoroutineViewModel() {
     private val currId = MutableStateFlow<EventId?>(null)
 
@@ -37,7 +37,7 @@ class EventDetailsScreenViewModel(
                 getEventInteractor.execute(id),
                 getEventVisitorsInteractor.execute(id, 0, BASE_PAGE_SIZE),
                 getCurrentProfileInteractor.execute(),
-                isSubscribedInteractor.execute(id)
+                isRegisteredToEventInteractor.execute(id)
             ) { event, users, profile, isSubscribed ->
                 val vo =
                     event?.let {

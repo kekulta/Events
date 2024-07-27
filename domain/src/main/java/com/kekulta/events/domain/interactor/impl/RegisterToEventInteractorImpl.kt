@@ -6,7 +6,7 @@ import com.kekulta.events.domain.repository.api.EventsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RegisterToEventInteractorImpl(
+internal class RegisterToEventInteractorImpl(
     private val eventsRepository: EventsRepository,
 ) : RegisterToEventInteractor {
     override suspend fun execute(id: EventId) = withContext(Dispatchers.IO) {
