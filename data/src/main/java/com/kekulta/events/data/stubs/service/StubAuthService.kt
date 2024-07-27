@@ -1,4 +1,4 @@
-package com.kekulta.events.data.mock.service
+package com.kekulta.events.data.stubs.service
 
 import com.kekulta.events.domain.models.info.PersonalInfo
 import com.kekulta.events.domain.models.status.AuthStatus
@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 
-internal class MockAuthService(
-    private val mockUsersService: MockUsersService
+internal class StubAuthService(
+    private val stubUsersService: StubUsersService
 ) {
     private val authStatus: MutableStateFlow<AuthStatus> = MutableStateFlow(
         AuthStatus.Authorized(
             requireNotNull(
-                mockUsersService.createProfile(
+                stubUsersService.createProfile(
                     identifier = Identifier.Email(EmailAddress("admin@events.app")),
                     info = PersonalInfo(
                         avatar = Avatar(null),
@@ -47,7 +47,7 @@ internal class MockAuthService(
 
         val newStatus = authStatus.updateAndGet { status ->
             if (status is AuthStatus.NeedsVerification) {
-                val profile = mockUsersService.getProfile(status.identifier)
+                val profile = stubUsersService.getProfile(status.identifier)
 
                 if (profile == null) {
                     AuthStatus.NeedsRegistration(status.identifier)
@@ -63,7 +63,7 @@ internal class MockAuthService(
     fun register(info: PersonalInfo) {
         val newStatus = authStatus.updateAndGet { status ->
             if (status is AuthStatus.NeedsRegistration) {
-                val newUser = mockUsersService.createProfile(
+                val newUser = stubUsersService.createProfile(
                     info = info, identifier = status.identifier
                 )
 
@@ -81,7 +81,7 @@ internal class MockAuthService(
     fun delete() {
         authStatus.update { status ->
             if (status is AuthStatus.Authorized) {
-                mockUsersService.deleteUser(status.id)
+                stubUsersService.deleteUser(status.id)
                 AuthStatus.Unauthorized
             } else {
                 status

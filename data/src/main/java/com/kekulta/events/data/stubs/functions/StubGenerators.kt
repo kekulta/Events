@@ -1,4 +1,4 @@
-package com.kekulta.events.data.mock.functions
+package com.kekulta.events.data.stubs.functions
 
 import com.kekulta.events.common.utils.loremIpsum
 import com.kekulta.events.domain.models.base.CommunityModel
@@ -19,8 +19,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 
-internal fun mockUsers(size: Int): List<UserModel> {
-    val users = mockProfileModels(size).map { profile ->
+internal fun generateStubUsers(size: Int): List<UserModel> {
+    val users = generateStubProfiles(size).map { profile ->
         UserModel(
             id = profile.id,
             name = profile.name,
@@ -34,7 +34,7 @@ internal fun mockUsers(size: Int): List<UserModel> {
     return users
 }
 
-internal fun mockEventModels(size: Int): List<EventModel> {
+internal fun generateStubEvents(size: Int): List<EventModel> {
 
     val places = listOf("Moscow", "SPb", "Kazan", "Tbilisi")
 
@@ -48,10 +48,10 @@ internal fun mockEventModels(size: Int): List<EventModel> {
 
     val tags = listOf("Mobile", "Junior", "Middle", "Senior", "Kotlin", "Android", "Java", "LISP")
 
-    val mocks = List(size) { index ->
+    val stubs = List(size) { index ->
         EventModel(
             id = EventId(index.toString()),
-            community = mockCommunityModels(10)[index % 10].id,
+            community = generateStubCommunities(10)[index % 10].id,
             name = "${names[index % names.size]} #$index",
             description = loremIpsum((500 * index) % 2000),
             avatar = Avatar("https://avatars.githubusercontent.com/u/33986203?s=400&u=e890dc6a3d5835a8d26850faec9a0095809a3243&v=4".takeIf { index % 2 == 0 }),
@@ -62,10 +62,10 @@ internal fun mockEventModels(size: Int): List<EventModel> {
         )
     }
 
-    return mocks
+    return stubs
 }
 
-internal fun mockProfileModels(size: Int): List<ProfileModel> {
+internal fun generateStubProfiles(size: Int): List<ProfileModel> {
     return List(size) { index ->
         ProfileModel(
             id = UserId(index.toString()),
@@ -81,7 +81,7 @@ internal fun mockProfileModels(size: Int): List<ProfileModel> {
     }
 }
 
-internal fun mockCommunityModels(size: Int): List<CommunityModel> {
+internal fun generateStubCommunities(size: Int): List<CommunityModel> {
     val names = listOf("Developer Meeting", "Code'n'code", "Mobile Submarine", "Mobius")
 
     return List(size) { index ->
@@ -94,19 +94,19 @@ internal fun mockCommunityModels(size: Int): List<CommunityModel> {
     }
 }
 
-internal fun mockMembers(communitiesCount: Int, membersMax: Int): List<Pair<UserId, CommunityId>> {
-    val communities = mockCommunityModels(communitiesCount)
+internal fun generateStubMembers(communitiesCount: Int, membersMax: Int): List<Pair<UserId, CommunityId>> {
+    val communities = generateStubCommunities(communitiesCount)
     return communities.mapIndexed { index, community ->
-        mockProfileModels(index % membersMax).map { profile -> profile.id to community.id }
+        generateStubProfiles(index % membersMax).map { profile -> profile.id to community.id }
     }.flatten()
 }
 
-internal fun mockRegistrations(
+internal fun generateStubVisitors(
     eventsCount: Int,
     visitorsMax: Int
 ): List<Pair<UserId, EventId>> {
-    val events = mockEventModels(eventsCount)
+    val events = generateStubEvents(eventsCount)
     return events.mapIndexed { index, event ->
-        mockProfileModels(index % visitorsMax).map { profile -> profile.id to event.id }
+        generateStubProfiles(index % visitorsMax).map { profile -> profile.id to event.id }
     }.flatten()
 }

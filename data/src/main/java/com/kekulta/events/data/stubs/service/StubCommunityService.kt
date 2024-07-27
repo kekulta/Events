@@ -1,6 +1,6 @@
-package com.kekulta.events.data.mock.service
+package com.kekulta.events.data.stubs.service
 
-import com.kekulta.events.data.mock.functions.mockCommunityModels
+import com.kekulta.events.data.stubs.functions.generateStubCommunities
 import com.kekulta.events.domain.models.base.CommunityModel
 import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.domain.models.info.CommunityInfo
@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
-internal class MockCommunityService {
-    private var communities = MutableStateFlow(mockCommunityModels(50))
+internal class StubCommunityService {
+    private var communities = MutableStateFlow(generateStubCommunities(50))
 
     fun fetchCommunities(): Flow<List<CommunityModel>> {
         return communities

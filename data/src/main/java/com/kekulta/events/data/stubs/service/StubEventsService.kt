@@ -1,6 +1,6 @@
-package com.kekulta.events.data.mock.service
+package com.kekulta.events.data.stubs.service
 
-import com.kekulta.events.data.mock.functions.mockEventModels
+import com.kekulta.events.data.stubs.functions.generateStubEvents
 import com.kekulta.events.domain.models.base.EventModel
 import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.domain.models.id.EventId
@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
-internal class MockEventsService {
-    private var events = MutableStateFlow(mockEventModels(50))
+internal class StubEventsService {
+    private var events = MutableStateFlow(generateStubEvents(50))
 
     fun fetchEvents(): Flow<List<EventModel>> {
         return events
