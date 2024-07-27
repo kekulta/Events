@@ -26,12 +26,10 @@ inline fun <T, M> StateFlow<T>.map(
  * Flattens nested [Flow]. Last emitted [Flow] emits value to the collector.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-inline fun <reified T> Flow<Flow<T>>.flattenLatest(): Flow<T> =
-    flatMapLatest { flow -> flow }
+inline fun <reified T> Flow<Flow<T>>.flattenLatest(): Flow<T> = flatMapLatest { flow -> flow }
 
 private class TransformedStateFlow<T>(
-    private val getValue: () -> T,
-    private val flow: Flow<T>
+    private val getValue: () -> T, private val flow: Flow<T>
 ) : StateFlow<T> {
 
     override val replayCache: List<T> get() = listOf(value)
@@ -45,8 +43,7 @@ private class TransformedStateFlow<T>(
  * Returns [StateFlow] from [flow] having initial value from calculation of [getValue]
  */
 fun <T> stateFlow(
-    getValue: () -> T,
-    flow: Flow<T>
+    getValue: () -> T, flow: Flow<T>
 ): StateFlow<T> = TransformedStateFlow(getValue, flow)
 
 /**
@@ -68,20 +65,15 @@ fun <T, R> StateFlow<T>.stateMapLatest(mapper: (T) -> R): StateFlow<R> {
  * Combines all [stateFlows] and transforms them into another [StateFlow] with [transform]
  */
 inline fun <reified T, R> combineStates(
-    vararg stateFlows: StateFlow<T>,
-    crossinline transform: (Array<T>) -> R
-): StateFlow<R> = stateFlow(
-    getValue = { transform(stateFlows.map { it.value }.toTypedArray()) },
-    flow = combine(*stateFlows) { transform(it) }
-)
+    vararg stateFlows: StateFlow<T>, crossinline transform: (Array<T>) -> R
+): StateFlow<R> = stateFlow(getValue = { transform(stateFlows.map { it.value }.toTypedArray()) },
+    flow = combine(*stateFlows) { transform(it) })
 
 /**
  * Variant of [combineStates] for combining 2 state flows
  */
 inline fun <reified T1, reified T2, R> combineStates(
-    flow1: StateFlow<T1>,
-    flow2: StateFlow<T2>,
-    crossinline transform: (T1, T2) -> R
+    flow1: StateFlow<T1>, flow2: StateFlow<T2>, crossinline transform: (T1, T2) -> R
 ) = combineStates(flow1, flow2) { (t1, t2, t3) ->
     transform(
         t1 as T1,
@@ -99,8 +91,6 @@ inline fun <reified T1, reified T2, reified T3, R> combineStates(
     crossinline transform: (T1, T2, T3) -> R
 ) = combineStates(flow1, flow2, flow3) { (t1, t2, t3) ->
     transform(
-        t1 as T1,
-        t2 as T2,
-        t3 as T3
+        t1 as T1, t2 as T2, t3 as T3
     )
 }

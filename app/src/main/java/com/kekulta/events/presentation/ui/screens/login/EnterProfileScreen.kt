@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.AuthStatus
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.domain.models.PersonalInfo
+import com.kekulta.events.domain.models.status.AuthStatus
+import com.kekulta.events.domain.models.values.Avatar
+import com.kekulta.events.domain.models.info.PersonalInfo
 import com.kekulta.events.presentation.ui.navigation.EnterCode
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.Events
@@ -51,7 +51,7 @@ fun EnterProfileScreen(viewModel: EnterProfileScreenViewModel = koinViewModel())
     }
 
     when (state) {
-        is AuthStatus.CodeSent -> navigator.navTo(EnterCode())
+        is AuthStatus.NeedsVerification -> navigator.navTo(EnterCode())
         is AuthStatus.Unauthorized -> navigator.setRoot(EnterPhone())
         is AuthStatus.Authorized -> navigator.setRoot(Events())
         is AuthStatus.NeedsRegistration -> EnterProfileContent(registerProfile = viewModel::register)

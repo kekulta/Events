@@ -1,7 +1,7 @@
 package com.kekulta.events.presentation.ui.navigation
 
-import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.models.CommunityId
+import com.kekulta.events.domain.models.id.EventId
+import com.kekulta.events.domain.models.id.CommunityId
 import kotlinx.serialization.Serializable
 
 /*

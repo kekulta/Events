@@ -26,8 +26,11 @@ kotlinxDateTime = "0.6.0"
 # DI
 koin-bom = "3.5.6"
 
-#Logging
+# Logging
 logcat = "0.1"
+
+# Result
+result = "2.0.0"
 
 # Testing
 junit = "4.13.2"
@@ -123,6 +126,14 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
 # It does look abandoned but it's just a small logging lib, it should be ok
 logcat = { module = "com.squareup.logcat:logcat", version.ref = "logcat" }
 
+### Result
+
+### A multiplatform Result monad for modelling success or failure operations.
+# Core result monad
+result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "result" }
+# coroutineBinding() features
+result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "result" }
+
 ### Testing
 
 ### Programmer-friendly testing framework for Java and the JVM
@@ -131,7 +142,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 ### Android testing library junit integration for Android unit tests
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
 
-### Android testinf library espresso integration for Android UI tests
+### Android testing library espresso integration for Android UI tests
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso" }
 
 [plugins]

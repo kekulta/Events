@@ -1,6 +1,6 @@
 package com.kekulta.events.presentation.formatters
 
-import com.kekulta.events.domain.models.EventModel
+import com.kekulta.events.domain.models.base.EventModel
 import com.kekulta.events.presentation.ui.models.ActiveEventItemVo
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format
@@ -13,7 +13,7 @@ class ActiveEventItemFormatter() {
                 id = model.id,
                 name = model.name,
                 date = model.date.format(DateFormat),
-                location = model.location,
+                location = model.location.location,
                 tags = model.tags,
                 avatar = model.avatar,
             )

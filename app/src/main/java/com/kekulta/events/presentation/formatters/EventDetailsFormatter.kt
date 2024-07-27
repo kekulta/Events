@@ -1,12 +1,10 @@
 package com.kekulta.events.presentation.formatters
 
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.domain.models.EventModel
-import com.kekulta.events.domain.models.ProfileModel
-import com.kekulta.events.domain.models.UserId
-import com.kekulta.events.domain.models.UserModel
-import com.kekulta.events.presentation.ui.models.VisitorVo
+import com.kekulta.events.domain.models.base.EventModel
+import com.kekulta.events.domain.models.base.UserModel
+import com.kekulta.events.domain.models.pagination.Page
 import com.kekulta.events.presentation.ui.models.EventDetailsVo
+import com.kekulta.events.presentation.ui.models.VisitorVo
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format
 import kotlinx.datetime.format.DateTimeFormat
@@ -15,35 +13,29 @@ import kotlinx.datetime.format.char
 class EventDetailsFormatter {
     fun format(
         event: EventModel,
-        users: List<UserModel>,
-        profile: ProfileModel?,
+        users: Page<UserModel>,
+        isAttending: Boolean,
+        isLoggedIn: Boolean,
         format: DateTimeFormat<LocalDateTime> = DateFormat,
     ): EventDetailsVo {
-        val missingUsersCount = (event.visitors.size - users.size).coerceAtLeast(0)
-        val visitors = users.map { user -> VisitorVo(id = user.id, avatar = user.avatar) } + List(
-            missingUsersCount
-        ) { index ->
-            /*
-                Every visitor MUST have an unique id!!
-             */
-            VisitorVo(
-                id = UserId("no-user-$index"),
-                avatar = Avatar(null)
+        val visitors =
+            Page(
+                values = users.map { user -> VisitorVo(id = user.id, avatar = user.avatar) },
+                offset = users.offset,
+                total = users.total,
             )
-        }
-        val isAttending =
-            profile?.id != null && users.firstOrNull { user -> user.id == profile.id } != null
 
         return EventDetailsVo(
             name = event.name,
             description = event.description,
             date = event.date.format(format),
-            location = event.location,
+            location = event.location.location,
             tags = event.tags,
-            mapUrl = event.mapUrl,
+            // Will be changed when actual map introduced
+            mapUrl = "https://i.ibb.co/Lphf2PK/map.jpg",
             visitors = visitors,
             isAttending = isAttending,
-            isAbleToRegister = profile != null,
+            isAbleToRegister = isLoggedIn,
         )
     }
 

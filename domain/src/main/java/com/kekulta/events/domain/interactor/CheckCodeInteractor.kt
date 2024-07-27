@@ -1,7 +1,7 @@
 package com.kekulta.events.domain.interactor
 
-import com.kekulta.events.domain.models.VerificationCode
+import com.kekulta.events.domain.models.values.VerificationCode
 
 interface CheckCodeInteractor {
-    fun execute(verificationCode: VerificationCode): Boolean
+    suspend fun execute(verificationCode: VerificationCode)
 }

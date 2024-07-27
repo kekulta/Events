@@ -1,7 +1,7 @@
 package com.kekulta.events.domain.interactor
 
-import com.kekulta.events.domain.models.PersonalInfo
+import com.kekulta.events.domain.models.info.PersonalInfo
 
 interface RegisterInteractor {
-    fun execute(info: PersonalInfo): Boolean
+    suspend fun execute(info: PersonalInfo)
 }
