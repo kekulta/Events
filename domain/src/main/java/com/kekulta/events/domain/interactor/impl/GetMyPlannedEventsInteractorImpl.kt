@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GetMyPlannedEventsInteractorImpl(
+internal class GetMyPlannedEventsInteractorImpl(
     private val profileRepository: ProfileRepository,
     private val eventsRepository: EventsRepository,
 ) : GetMyPlannedEventsInteractor {

@@ -6,7 +6,7 @@ import com.kekulta.events.domain.repository.api.EventsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class CancelEventRegistrationInteractorImpl(
+internal class CancelEventRegistrationInteractorImpl(
     private val eventsRepository: EventsRepository,
 ) : CancelEventRegistrationInteractor {
 

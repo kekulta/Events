@@ -8,7 +8,7 @@ import com.kekulta.events.domain.models.status.EventStatus
 import com.kekulta.events.domain.repository.api.EventsRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetAllEventsInteractorImpl(
+internal class GetAllEventsInteractorImpl(
     private val eventsRepository: EventsRepository,
 ) : GetAllEventsInteractor {
     override fun execute(offset: Int, limit: Int): Flow<Page<EventModel>> {

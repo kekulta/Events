@@ -7,9 +7,9 @@ import org.koin.test.verify.verify
 
 /**
  * Verify that Koin DI graph is complete.
- *
  */
-class VerifyKoinModules {
+
+class KoinTest {
     @Test
     @OptIn(KoinExperimentalAPI::class)
     fun eventsModule_verify() {
