@@ -1,6 +1,6 @@
 package com.kekulta.events.domain.interactor
 
-import com.kekulta.events.domain.models.AuthStatus
+import com.kekulta.events.domain.models.status.AuthStatus
 import kotlinx.coroutines.flow.StateFlow
 
 interface GetCurrentAuthStatusInteractor {

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.CommunityId
+import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.presentation.ui.models.ScreenState
 import com.kekulta.events.presentation.ui.navigation.CommunityDetails
 import com.kekulta.events.presentation.ui.navigation.requireNavigator

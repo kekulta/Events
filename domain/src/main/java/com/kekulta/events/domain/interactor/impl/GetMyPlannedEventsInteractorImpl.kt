@@ -1,10 +1,13 @@
 package com.kekulta.events.domain.interactor.impl
 
 import com.kekulta.events.domain.interactor.GetMyPlannedEventsInteractor
-import com.kekulta.events.domain.models.EventModel
-import com.kekulta.events.domain.models.UserId
-import com.kekulta.events.domain.repository.api.EventStatus
-import com.kekulta.events.domain.repository.api.EventsQuery
+import com.kekulta.events.domain.models.base.EventModel
+import com.kekulta.events.domain.models.id.UserId
+import com.kekulta.events.domain.models.pagination.BASE_PAGE_SIZE
+import com.kekulta.events.domain.models.pagination.EventsQuery
+import com.kekulta.events.domain.models.pagination.Page
+import com.kekulta.events.domain.models.pagination.emptyPage
+import com.kekulta.events.domain.models.status.EventStatus
 import com.kekulta.events.domain.repository.api.EventsRepository
 import com.kekulta.events.domain.repository.api.ProfileRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,22 +20,23 @@ class GetMyPlannedEventsInteractorImpl(
     private val profileRepository: ProfileRepository,
     private val eventsRepository: EventsRepository,
 ) : GetMyPlannedEventsInteractor {
-    override fun execute(): Flow<List<EventModel>> {
+    override fun execute(offset: Int, limit: Int): Flow<Page<EventModel>> {
         return profileRepository.observeCurrentProfile().flatMapLatest { profile ->
             if (profile != null) {
                 eventsRepository.observeEventsForQuery(
-                    query = userQuery(profile.id)
+                    query = query(profile.id, offset, limit)
                 )
             } else {
-                flow { emit(emptyList()) }
+                flow { emit(emptyPage()) }
             }
         }
     }
 
-    private fun userQuery(id: UserId): EventsQuery.User {
+    private fun query(id: UserId, offset: Int, limit: Int): EventsQuery.User {
         return EventsQuery.User(
             id = id,
-            limit = 25,
+            limit = limit,
+            offset = offset,
             statusList = listOf(EventStatus.ACTIVE, EventStatus.FUTURE)
         )
     }

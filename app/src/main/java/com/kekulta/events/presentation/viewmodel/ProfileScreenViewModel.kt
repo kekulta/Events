@@ -25,5 +25,5 @@ class ProfileScreenViewModel(
                 }
             }
 
-    fun logOut() = logOutInteractor.execute()
+    fun logOut() = launchScope { logOutInteractor.execute() }
 }

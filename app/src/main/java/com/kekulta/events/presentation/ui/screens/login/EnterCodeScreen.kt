@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.AuthStatus
-import com.kekulta.events.domain.models.VerificationCode
+import com.kekulta.events.domain.models.status.AuthStatus
+import com.kekulta.events.domain.models.values.VerificationCode
 import com.kekulta.events.presentation.formatters.format
 import com.kekulta.events.presentation.ui.navigation.EnterPhone
 import com.kekulta.events.presentation.ui.navigation.EnterProfile
@@ -31,7 +30,6 @@ import com.kekulta.events.presentation.ui.widgets.EventsTopBarState
 import com.kekulta.events.presentation.ui.widgets.SetTopBar
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsFilledButton
 import com.kekulta.events.presentation.ui.widgets.base.buttons.EventsTextButton
-import com.kekulta.events.presentation.ui.widgets.base.modifiers.ShakeConfig
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.rememberShakeController
 import com.kekulta.events.presentation.ui.widgets.base.modifiers.shake
 import com.kekulta.events.presentation.viewmodel.EnterCodeScreenViewModel
@@ -52,8 +50,9 @@ fun EnterCodeScreen(
     }
 
     when (val s = state) {
-        is AuthStatus.CodeSent -> EnterCodeContent(
-            number = s.number.format(), checkCode = viewModel::checkCode
+        is AuthStatus.NeedsVerification -> EnterCodeContent(
+            number = s.identifier.number?.format() ?: s.identifier.address?.address
+            ?: "Oops!", checkCode = viewModel::checkCode
         )
 
         is AuthStatus.Unauthorized -> navigator.setRoot(EnterPhone())
@@ -67,7 +66,7 @@ fun EnterCodeScreen(
 }
 
 @Composable
-private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode) -> Boolean) {
+private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode) -> Unit) {
 
     Column(
         modifier = Modifier
@@ -113,10 +112,7 @@ private fun EnterCodeContent(number: String, checkCode: (code: VerificationCode)
                 EventsFilledButton(modifier = Modifier
                     .padding(horizontal = EventsTheme.sizes.sizeX5)
                     .fillMaxWidth(), onClick = {
-                    if (!checkCode(VerificationCode(codeState.text.toString()))) {
-                        shakeController.shake(ShakeConfig(10, translateX = 10f))
-                        codeState.clearText()
-                    }
+                    checkCode(VerificationCode(codeState.text.toString()))
                 }) {
                     Text(stringResource(id = R.string.continue_button))
                 }

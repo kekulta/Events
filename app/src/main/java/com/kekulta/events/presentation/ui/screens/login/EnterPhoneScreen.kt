@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.AuthStatus
-import com.kekulta.events.domain.models.PhoneNumber
+import com.kekulta.events.domain.models.status.AuthStatus
+import com.kekulta.events.domain.models.values.PhoneNumber
 import com.kekulta.events.presentation.ui.navigation.EnterCode
 import com.kekulta.events.presentation.ui.navigation.EnterProfile
 import com.kekulta.events.presentation.ui.navigation.Events
@@ -46,7 +46,7 @@ fun EnterPhoneScreen(
     }
 
     when (state) {
-        is AuthStatus.CodeSent -> navigator.navTo(EnterCode())
+        is AuthStatus.NeedsVerification -> navigator.navTo(EnterCode())
         is AuthStatus.Unauthorized -> EnterPhoneContent(sendCode = viewModel::sendCode)
         is AuthStatus.Authorized -> navigator.setRoot(Events())
         is AuthStatus.NeedsRegistration -> navigator.navTo(EnterProfile())
@@ -94,7 +94,9 @@ private fun EnterPhoneContent(sendCode: (number: PhoneNumber) -> Unit) {
             onClick = {
                 sendCode(
                     PhoneNumber(
-                        code = countryState.value.countryCode, number = numberState.text.toString()
+                        countryCode = countryState.value.countryCode,
+                        prefix = countryState.value.prefix,
+                        number = numberState.text.toString()
                     )
                 )
             }) {

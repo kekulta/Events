@@ -1,6 +1,6 @@
 package com.kekulta.events.domain.interactor
 
-import com.kekulta.events.domain.models.ProfileModel
+import com.kekulta.events.domain.models.base.ProfileModel
 import kotlinx.coroutines.flow.StateFlow
 
 interface GetCurrentProfileInteractor {

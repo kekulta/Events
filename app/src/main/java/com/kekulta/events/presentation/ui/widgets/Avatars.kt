@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kekulta.events.R
-import com.kekulta.events.domain.models.Avatar
+import com.kekulta.events.domain.models.values.Avatar
 import com.kekulta.events.presentation.ui.theme.EventsTheme
 import com.kekulta.events.presentation.ui.widgets.base.avatar.AddBadge
 import com.kekulta.events.presentation.ui.widgets.base.avatar.BasicAvatar

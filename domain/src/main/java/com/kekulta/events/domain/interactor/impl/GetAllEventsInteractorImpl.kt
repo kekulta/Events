@@ -1,23 +1,23 @@
 package com.kekulta.events.domain.interactor.impl
 
 import com.kekulta.events.domain.interactor.GetAllEventsInteractor
-import com.kekulta.events.domain.models.EventModel
-import com.kekulta.events.domain.repository.api.EventStatus
-import com.kekulta.events.domain.repository.api.EventsQuery
+import com.kekulta.events.domain.models.base.EventModel
+import com.kekulta.events.domain.models.pagination.EventsQuery
+import com.kekulta.events.domain.models.pagination.Page
+import com.kekulta.events.domain.models.status.EventStatus
 import com.kekulta.events.domain.repository.api.EventsRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetAllEventsInteractorImpl(
     private val eventsRepository: EventsRepository,
 ) : GetAllEventsInteractor {
-    override fun execute(): Flow<List<EventModel>> {
-        return eventsRepository.observeEventsForQuery(Query)
+    override fun execute(offset: Int, limit: Int): Flow<Page<EventModel>> {
+        return eventsRepository.observeEventsForQuery(query(offset, limit))
     }
 
-    companion object {
-        private val Query = EventsQuery.Recommendation(
-            statusList = listOf(EventStatus.ACTIVE, EventStatus.PAST, EventStatus.FUTURE),
-            limit = 25,
-        )
-    }
+    private fun query(offset: Int, limit: Int) = EventsQuery.Recommendation(
+        statusList = listOf(EventStatus.ANY),
+        limit = limit,
+        offset = offset,
+    )
 }

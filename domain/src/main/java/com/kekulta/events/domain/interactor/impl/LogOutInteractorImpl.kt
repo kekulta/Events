@@ -1,12 +1,14 @@
 package com.kekulta.events.domain.interactor.impl
 
 import com.kekulta.events.domain.interactor.LogOutInteractor
-import com.kekulta.events.domain.repository.api.ProfileRepository
+import com.kekulta.events.domain.repository.api.AuthRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LogOutInteractorImpl(
-    private val profileRepository: ProfileRepository,
+    private val authRepository: AuthRepository,
 ) : LogOutInteractor {
-    override fun execute() {
-        profileRepository.logOut()
+    override suspend fun execute() = withContext(Dispatchers.IO) {
+        authRepository.logout()
     }
 }

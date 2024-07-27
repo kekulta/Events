@@ -1,14 +1,18 @@
 package com.kekulta.events.domain.repository.api
 
-import com.kekulta.events.domain.models.AuthStatus
-import com.kekulta.events.domain.models.PersonalInfo
-import com.kekulta.events.domain.models.PhoneNumber
-import com.kekulta.events.domain.models.VerificationCode
+import com.kekulta.events.domain.models.info.PersonalInfo
+import com.kekulta.events.domain.models.status.AuthStatus
+import com.kekulta.events.domain.models.values.Identifier
+import com.kekulta.events.domain.models.values.VerificationCode
 import kotlinx.coroutines.flow.StateFlow
 
 interface AuthRepository {
     fun observeAuthStatus(): StateFlow<AuthStatus>
-    fun sendCode(number: PhoneNumber): Boolean
-    fun checkCode(code: VerificationCode): Boolean
-    fun register(info: PersonalInfo): Boolean
+
+    suspend fun sendCode(identifier: Identifier)
+    suspend fun checkCode(code: VerificationCode)
+    suspend fun register(info: PersonalInfo)
+    suspend fun logout()
+
+    suspend fun deleteAccount()
 }

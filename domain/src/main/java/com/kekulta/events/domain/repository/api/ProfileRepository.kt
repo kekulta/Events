@@ -1,18 +1,15 @@
 package com.kekulta.events.domain.repository.api
 
-import com.kekulta.events.domain.models.PersonalInfo
-import com.kekulta.events.domain.models.ProfileModel
+import com.kekulta.events.domain.models.base.ProfileModel
+import com.kekulta.events.domain.models.info.PersonalInfo
 import kotlinx.coroutines.flow.StateFlow
 
+/**
+ *  This class is for working with currently logged in profile.
+ *
+ *  For creating or changing profile look at [AuthRepository].
+ */
 interface ProfileRepository {
     fun observeCurrentProfile(): StateFlow<ProfileModel?>
-    fun getCurrentProfile(): ProfileModel?
-    fun logOut(): Boolean
-
-    /*
-        You can't change your id or credentials here.
-        This handle is for changing personal information on account you're currently in.
-        You should use another repository to login or register account.
-     */
-    fun changeProfile(info: PersonalInfo): Boolean
+    fun changeProfile(info: PersonalInfo)
 }

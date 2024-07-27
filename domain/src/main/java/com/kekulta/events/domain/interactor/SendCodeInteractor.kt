@@ -1,7 +1,7 @@
 package com.kekulta.events.domain.interactor
 
-import com.kekulta.events.domain.models.PhoneNumber
+import com.kekulta.events.domain.models.values.Identifier
 
 interface SendCodeInteractor {
-    fun execute(number: PhoneNumber): Boolean
+    suspend fun execute(identifier: Identifier)
 }
