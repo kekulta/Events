@@ -1,10 +1,11 @@
 package com.kekulta.events.domain.repository.api
 
-import com.kekulta.events.domain.models.UserId
-import com.kekulta.events.domain.models.UserModel
+import com.kekulta.events.domain.models.base.UserModel
+import com.kekulta.events.domain.models.id.UserId
+import com.kekulta.events.domain.models.pagination.Page
+import com.kekulta.events.domain.models.pagination.UsersQuery
 import kotlinx.coroutines.flow.Flow
 
 interface UsersRepository {
-    fun observeUser(id: UserId): Flow<UserModel?>
-    fun observeUsers(ids: List<UserId>): Flow<List<UserModel>>
+    fun observeUsersForQuery(query: UsersQuery): Flow<Page<UserModel>>
 }

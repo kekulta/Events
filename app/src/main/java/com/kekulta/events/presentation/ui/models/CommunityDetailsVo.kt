@@ -1,6 +1,6 @@
 package com.kekulta.events.presentation.ui.models
 
-import com.kekulta.events.domain.models.CommunityId
+import com.kekulta.events.domain.models.id.CommunityId
 
 data class CommunityDetailsVo(
     val id: CommunityId,

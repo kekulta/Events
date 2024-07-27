@@ -1,9 +1,10 @@
 package com.kekulta.events.presentation.viewmodel
 
-import com.kekulta.events.domain.models.AuthStatus
-import com.kekulta.events.domain.models.PhoneNumber
 import com.kekulta.events.domain.interactor.GetCurrentAuthStatusInteractor
 import com.kekulta.events.domain.interactor.SendCodeInteractor
+import com.kekulta.events.domain.models.status.AuthStatus
+import com.kekulta.events.domain.models.values.Identifier
+import com.kekulta.events.domain.models.values.PhoneNumber
 import kotlinx.coroutines.flow.StateFlow
 
 class EnterPhoneScreenViewModel(
@@ -12,5 +13,6 @@ class EnterPhoneScreenViewModel(
 ) : AbstractCoroutineViewModel() {
 
     fun observeAuthStatus(): StateFlow<AuthStatus> = getCurrentAuthStatusInteractor.execute()
-    fun sendCode(number: PhoneNumber): Boolean = sendCodeInteractor.execute(number)
+    fun sendCode(number: PhoneNumber) =
+        launchScope { sendCodeInteractor.execute(Identifier.Phone(number)) }
 }

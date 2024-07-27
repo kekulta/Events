@@ -1,91 +1,91 @@
 package com.kekulta.events.data.mock.service
 
-import com.kekulta.events.domain.models.AuthStatus
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.domain.models.PersonalInfo
-import com.kekulta.events.domain.models.PhoneNumber
-import com.kekulta.events.domain.models.UserInfo
-import com.kekulta.events.domain.models.VerificationCode
+import com.kekulta.events.domain.models.info.PersonalInfo
+import com.kekulta.events.domain.models.status.AuthStatus
+import com.kekulta.events.domain.models.values.Avatar
+import com.kekulta.events.domain.models.values.EmailAddress
+import com.kekulta.events.domain.models.values.Identifier
+import com.kekulta.events.domain.models.values.VerificationCode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 
 internal class MockAuthService(
     private val mockUsersService: MockUsersService
 ) {
-    private val authStatus: MutableStateFlow<AuthStatus> =
-        MutableStateFlow(
-            AuthStatus.Authorized(
+    private val authStatus: MutableStateFlow<AuthStatus> = MutableStateFlow(
+        AuthStatus.Authorized(
+            requireNotNull(
                 mockUsersService.createProfile(
-                    UserInfo(
-                        number = PhoneNumber(
-                            code = "+7",
-                            number = "9959177242"
-                        ),
-                        info = PersonalInfo(
-                            avatar = Avatar(null),
-                            name = "Admin",
-                            surname = "Admin",
-                        )
+                    identifier = Identifier.Email(EmailAddress("admin@events.app")),
+                    info = PersonalInfo(
+                        avatar = Avatar(null),
+                        name = "Admin",
+                        surname = "Admin",
                     )
                 )
             )
         )
+    )
 
     fun observeAuthStatus(): StateFlow<AuthStatus> = authStatus.asStateFlow()
 
-    fun sendCode(number: PhoneNumber): Boolean {
-        return authStatus.compareAndSet(AuthStatus.Unauthorized, AuthStatus.CodeSent(number))
+    fun sendCode(identifier: Identifier) {
+        authStatus.compareAndSet(
+            AuthStatus.Unauthorized, AuthStatus.NeedsVerification(identifier)
+        )
     }
 
-    fun checkCode(code: VerificationCode): Boolean {
-        /*
+    fun checkCode(code: VerificationCode) {/*
             We accept only even codes.
          */
         if ((code.code.toIntOrNull() ?: 1) % 2 == 1) {
-            return false
+            return
         }
 
         val newStatus = authStatus.updateAndGet { status ->
-            if (status is AuthStatus.CodeSent) {
-                val profile = mockUsersService.getProfile(status.number)
+            if (status is AuthStatus.NeedsVerification) {
+                val profile = mockUsersService.getProfile(status.identifier)
 
                 if (profile == null) {
-                    AuthStatus.NeedsRegistration(status.number)
+                    AuthStatus.NeedsRegistration(status.identifier)
                 } else {
-                    AuthStatus.Authorized(profile)
+                    AuthStatus.Authorized(profile.id)
                 }
             } else {
                 status
             }
         }
-
-        return newStatus is AuthStatus.NeedsRegistration || newStatus is AuthStatus.Authorized
     }
 
-    fun register(info: PersonalInfo): Boolean {
+    fun register(info: PersonalInfo) {
         val newStatus = authStatus.updateAndGet { status ->
             if (status is AuthStatus.NeedsRegistration) {
                 val newUser = mockUsersService.createProfile(
-                    UserInfo(
-                        number = status.number,
-                        info = info,
-                    )
+                    info = info, identifier = status.identifier
                 )
 
-                AuthStatus.Authorized(newUser)
+                newUser?.let { id -> AuthStatus.Authorized(id) } ?: status
             } else {
                 status
             }
         }
-
-        return newStatus is AuthStatus.Authorized
     }
 
-    fun logOut(): Boolean {
+    fun logout() {
         val newStatus = authStatus.updateAndGet { AuthStatus.Unauthorized }
+    }
 
-        return newStatus == AuthStatus.Unauthorized
+    fun delete() {
+        authStatus.update { status ->
+            if (status is AuthStatus.Authorized) {
+                mockUsersService.deleteUser(status.id)
+                AuthStatus.Unauthorized
+            } else {
+                status
+            }
+        }
     }
 }

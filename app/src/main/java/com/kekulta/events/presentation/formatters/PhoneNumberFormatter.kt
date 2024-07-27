@@ -1,11 +1,11 @@
 package com.kekulta.events.presentation.formatters
 
-import com.kekulta.events.domain.models.PhoneNumber
+import com.kekulta.events.domain.models.values.PhoneNumber
 
 fun PhoneNumber.format(): String {
     val builder = StringBuilder()
 
-    builder.append(code)
+    builder.append(prefix)
     builder.append(" (")
     builder.append(number.substring(0, 3))
     builder.append(") ")

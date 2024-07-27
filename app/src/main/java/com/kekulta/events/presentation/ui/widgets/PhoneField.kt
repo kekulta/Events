@@ -103,7 +103,7 @@ fun PhoneField(
                         contentDescription = null
                     )
                     Text(
-                        text = countryState.value.countryCode,
+                        text = countryState.value.prefix,
                         style = EventsTheme.typography.bodyText1,
                         color = if (numberState.text.isNotEmpty()) EventsTheme.colors.neutralActive else EventsTheme.colors.neutralDisabled
                     )
@@ -125,7 +125,7 @@ fun PhoneField(
                                 contentDescription = null
                             )
                             Text(
-                                text = country.countryCode, color = EventsTheme.colors.neutralActive
+                                text = country.prefix, color = EventsTheme.colors.neutralActive
                             )
                         }
                     }, onClick = {

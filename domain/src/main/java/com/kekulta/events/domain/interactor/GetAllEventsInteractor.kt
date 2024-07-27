@@ -1,8 +1,9 @@
 package com.kekulta.events.domain.interactor
 
-import com.kekulta.events.domain.models.EventModel
+import com.kekulta.events.domain.models.base.EventModel
+import com.kekulta.events.domain.models.pagination.Page
 import kotlinx.coroutines.flow.Flow
 
 interface GetAllEventsInteractor {
-    fun execute(): Flow<List<EventModel>>
+    fun execute(offset: Int, limit: Int): Flow<Page<EventModel>>
 }

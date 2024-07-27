@@ -1,4 +1,4 @@
-package com.kekulta.events.domain.models
+package com.kekulta.events.domain.models.id
 
 import kotlinx.serialization.Serializable
 

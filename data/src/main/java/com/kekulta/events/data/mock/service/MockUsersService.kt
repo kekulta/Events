@@ -1,59 +1,77 @@
 package com.kekulta.events.data.mock.service
 
 import com.kekulta.events.data.mock.functions.mockProfileModels
-import com.kekulta.events.domain.models.PersonalInfo
-import com.kekulta.events.domain.models.PhoneNumber
-import com.kekulta.events.domain.models.ProfileModel
-import com.kekulta.events.domain.models.UserId
-import com.kekulta.events.domain.models.UserInfo
-import com.kekulta.events.domain.models.UserModel
+import com.kekulta.events.domain.models.base.ProfileModel
+import com.kekulta.events.domain.models.base.UserModel
+import com.kekulta.events.domain.models.id.UserId
+import com.kekulta.events.domain.models.info.PersonalInfo
+import com.kekulta.events.domain.models.values.Identifier
+import com.kekulta.events.domain.models.values.includes
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
 internal class MockUsersService {
-    private var users = mockProfileModels(50)
+    private var users = MutableStateFlow(mockProfileModels(50))
 
-    fun fetchUsers(): List<UserModel> {
-        return users.map { profile ->
-            UserModel(
-                id = profile.id,
-                name = profile.info.name,
-                surname = profile.info.surname,
-                avatar = profile.info.avatar,
-            )
-        }
-    }
-
-    fun createProfile(userInfo: UserInfo): ProfileModel {
-        val newUser = ProfileModel(
-            id = UserId(Random.nextInt().toString()),
-            number = userInfo.number,
-            info = userInfo.info,
-        )
-
-        users = users + newUser
-
-        return newUser
-    }
-
-    fun changeProfile(id: UserId, info: PersonalInfo): ProfileModel? {
-        var changedUser: ProfileModel? = null
-
-        users = users.map { user ->
-            if (user.id == id) {
-                user.copy(info = info).also { changedUser = it }
-            } else {
-                user
+    fun fetchUsers(): Flow<List<UserModel>> {
+        return users.map { users ->
+            users.map { user ->
+                UserModel(
+                    id = user.id,
+                    name = user.name,
+                    surname = user.surname,
+                    avatar = user.avatar,
+                    email = null,
+                    number = null,
+                )
             }
         }
+    }
 
-        return changedUser
+    fun createProfile(info: PersonalInfo, identifier: Identifier): UserId? {
+        if (users.value.any { user -> user.identifier.includes(identifier) }) {
+            return null
+        }
+
+        val newUser = ProfileModel(
+            id = UserId(Random.nextInt().toString()),
+            identifier = identifier,
+            name = info.name,
+            surname = info.surname,
+            avatar = info.avatar,
+        )
+
+        users.update { users -> users + newUser }
+
+        return newUser.id
+    }
+
+    fun changeProfile(id: UserId, info: PersonalInfo) {
+        users.update { users ->
+            users.map { user ->
+                if (user.id == id) {
+                    user.copy(
+                        name = info.name, surname = info.surname, avatar = info.avatar,
+                    )
+                } else {
+                    user
+                }
+            }
+        }
     }
 
     fun getProfile(id: UserId): ProfileModel? {
-        return users.firstOrNull { profile -> profile.id == id }
+        return users.value.firstOrNull { user -> user.id == id }
     }
 
-    fun getProfile(number: PhoneNumber): ProfileModel? {
-        return users.firstOrNull { profile -> profile.number == number }
+    fun getProfile(identifier: Identifier): ProfileModel? {
+        return users.value.firstOrNull { user -> user.identifier.includes(identifier) }
+    }
+
+    fun deleteUser(id: UserId) {
+        users.update { users -> users.filterNot { user -> user.id == id } }
     }
 }

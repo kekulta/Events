@@ -1,25 +1,23 @@
 package com.kekulta.events.presentation.formatters
 
 import com.kekulta.events.common.utils.isPast
-import com.kekulta.events.domain.models.EventModel
+import com.kekulta.events.domain.models.base.EventModel
 import com.kekulta.events.presentation.ui.models.EventItemVo
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format
 import kotlinx.datetime.format.char
 
 class EventItemFormatter() {
-    fun format(models: List<EventModel>): List<EventItemVo> {
-        return models.map { model ->
-            EventItemVo(
-                id = model.id,
-                name = model.name,
-                date = model.date.format(DateFormat),
-                location = model.location,
-                tags = model.tags,
-                avatar = model.avatar,
-                isPast = model.date.date.isPast()
-            )
-        }
+    fun format(model: EventModel): EventItemVo {
+        return EventItemVo(
+            id = model.id,
+            name = model.name,
+            date = model.date.format(DateFormat),
+            location = model.location.location,
+            tags = model.tags,
+            avatar = model.avatar,
+            isPast = model.date.date.isPast(),
+        )
     }
 
 

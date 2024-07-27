@@ -3,42 +3,101 @@ package com.kekulta.events.data.mock.repository
 import com.kekulta.events.common.utils.isFuture
 import com.kekulta.events.common.utils.isPast
 import com.kekulta.events.common.utils.isToday
-import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.models.EventModel
-import com.kekulta.events.domain.models.UserId
-import com.kekulta.events.domain.repository.api.EventStatus
-import com.kekulta.events.domain.repository.api.EventsQuery
+import com.kekulta.events.data.mock.service.MockAuthService
+import com.kekulta.events.data.mock.service.MockEventsRegistrationService
+import com.kekulta.events.data.mock.service.MockEventsService
+import com.kekulta.events.domain.models.base.EventModel
+import com.kekulta.events.domain.models.id.CommunityId
+import com.kekulta.events.domain.models.id.EventId
+import com.kekulta.events.domain.models.id.UserId
+import com.kekulta.events.domain.models.info.EventInfo
+import com.kekulta.events.domain.models.pagination.EventsQuery
+import com.kekulta.events.domain.models.pagination.Page
+import com.kekulta.events.domain.models.pagination.emptyPage
+import com.kekulta.events.domain.models.status.AuthStatus
+import com.kekulta.events.domain.models.status.EventStatus
 import com.kekulta.events.domain.repository.api.EventsRepository
-import com.kekulta.events.data.mock.functions.mockEventModels
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.update
 
-@OptIn(ExperimentalCoroutinesApi::class)
-internal class EventsRepositoryMock : EventsRepository {
-    private val eventsMap = mockEventModels(25).associateBy { event -> event.id }.toMutableMap()
+internal class EventsRepositoryMock(
+    private val authService: MockAuthService,
+    private val eventsService: MockEventsService,
+    private val eventsRegistrationService: MockEventsRegistrationService,
+) : EventsRepository {
+    private val events = eventsService.fetchEvents()
 
-    // Set would probably work better but lets not overengineer
-    private val eventsFlow = MutableStateFlow(eventsMap.values.toList())
-
-    override fun observeEventsForQuery(query: EventsQuery): Flow<List<EventModel>> {
+    override fun observeEventsForQuery(query: EventsQuery): Flow<Page<EventModel>> {
         return when (query) {
+            is EventsQuery.Event -> {
+                events.map { events -> Page(events.filter { event -> event.id == query.id }, 0, 1) }
+            }
+
+            is EventsQuery.Events -> {
+                val ids = query.ids.toSet()
+
+                events.map { events ->
+                    Page(
+                        events.filter { event -> event.id in ids }, 0, ids.size
+                    )
+                }
+            }
+
             is EventsQuery.Recommendation -> {
-                eventsFlow.mapLatest { events ->
-                    events.filterEvents(query)
+                events.map { events ->
+                    Page(
+                        events.drop(query.offset).take(query.limit), query.offset, events.size
+                    )
                 }
             }
 
             is EventsQuery.Search -> throw NotImplementedError("Search is not implemented!")
 
+            is EventsQuery.Community -> {
+                events.map { events ->
+                    val filteredEvents = events.filter { event ->
+                        event.community == query.id && event.checkStatus(query.statusList)
+                    }
+                    Page(
+                        filteredEvents.drop(query.offset).take(query.limit),
+                        query.offset,
+                        filteredEvents.size,
+                    )
+                }
+            }
+
             is EventsQuery.User -> {
-                eventsFlow.mapLatest { events ->
-                    events.filterEvents(query) { event ->
-                        event.visitors.contains(
-                            query.id
+                combine(
+                    eventsRegistrationService.fetchRegistrations().map { registrations ->
+                        registrations.mapNotNull { (userId, eventId) -> eventId.takeIf { userId == query.id } }
+                    }, eventsService.fetchEvents()
+                ) { ids, events ->
+                    val idsSet = ids.toSet()
+                    val filteredEvents =
+                        events.filter { event -> event.id in idsSet && event.checkStatus(query.statusList) }
+                    Page(
+                        filteredEvents.drop(query.offset).take(query.limit),
+                        query.offset,
+                        filteredEvents.size
+                    )
+                }
+            }
+
+            is EventsQuery.Subscription -> {
+                combine(
+                    eventsRegistrationService.fetchRegistrations().map { registrations ->
+                        registrations.mapNotNull { (userId, eventId) -> eventId.takeIf { userId == query.userId && eventId == query.eventId } }
+                    }, eventsService.fetchEvents()
+                ) { ids, events ->
+
+                    if (ids.isEmpty()) {
+                        emptyPage<EventModel>()
+                    } else {
+                        Page(
+                            events.filter { event -> event.id == ids.first() },
+                            0,
+                            1,
                         )
                     }
                 }
@@ -46,65 +105,49 @@ internal class EventsRepositoryMock : EventsRepository {
         }
     }
 
-    override fun observeEvent(id: EventId): Flow<EventModel?> {
-        return eventsFlow.map { events -> events.firstOrNull { event -> event.id == id } }
-    }
-
-    override fun observeEvents(ids: List<EventId>): Flow<List<EventModel>> {
-        val idsSet = ids.toSet()
-
-        return eventsFlow.map { events -> events.filter { event -> idsSet.contains(event.id) } }
-    }
-
-    override suspend fun registerForEvent(id: EventId, userId: UserId): Boolean {
-        val event = eventsMap[id] ?: return false
-        val isRegistered = event.visitors.contains(userId)
-        if (isRegistered) {
-            return false
+    override suspend fun registerForEvent(id: EventId) {
+        (authService.observeAuthStatus().value as? AuthStatus.Authorized)?.id?.let { userId ->
+            eventsRegistrationService.register(userId, id)
         }
-        eventsMap[id] = event.copy(visitors = event.visitors + userId)
-        eventsFlow.update { eventsMap.values.toList() }
-
-        return true
     }
 
-    override suspend fun cancelRegistration(id: EventId, userId: UserId): Boolean {
-        val event = eventsMap[id] ?: return false
-        val visitors = event.visitors.filterNot { user -> user.id == userId.id }
-        if (visitors.size == event.visitors.size) {
-            return false
+    override suspend fun cancelRegistration(id: EventId) {
+        (authService.observeAuthStatus().value as? AuthStatus.Authorized)?.id?.let { userId ->
+            eventsRegistrationService.cancel(userId, id)
         }
-        eventsMap[id] = event.copy(visitors = visitors)
-        eventsFlow.update { eventsMap.values.toList() }
-
-        return true
     }
 
-    private fun List<EventModel>.filterEvents(
-        defaultConstraints: EventsQuery,
-        additionalConstraints: ((event: EventModel) -> Boolean)? = null,
-    ): List<EventModel> {
-        return this.filter { event ->
-            (event.checkStatus(defaultConstraints.statusList))
-                    && (additionalConstraints?.invoke(event) ?: true)
-        }.take(defaultConstraints.limit)
+    override suspend fun createEvent(
+        info: EventInfo, communityId: CommunityId?
+    ) {
+        eventsService.createEvent(communityId, info)
+    }
+
+    override suspend fun changeEvent(id: EventId, info: EventInfo) {
+        eventsService.changeEvent(id, info)
+    }
+
+    override suspend fun deleteEvent(id: EventId) {
+        eventsService.deleteEvent(id)
+    }
+
+    override suspend fun kickFromEvent(id: EventId, userId: UserId) {
+        eventsRegistrationService.cancel(userId, id)
     }
 
     private fun EventModel.checkStatus(statusList: List<EventStatus>): Boolean {
-        return (statusList.contains(EventStatus.ACTIVE) && isActive())
-                || (statusList.contains(EventStatus.PAST) && isPast())
-                || (statusList.contains(EventStatus.FUTURE) && isFuture())
+        return statusList.contains(EventStatus.ANY) || (statusList.contains(EventStatus.ACTIVE) && isActive()) || (statusList.contains(
+            EventStatus.PAST
+        ) && isPast()) || (statusList.contains(EventStatus.FUTURE) && isFuture())
     }
 
     private fun EventModel.isActive(): Boolean {
         return date.date.isToday()
     }
 
-
     private fun EventModel.isPast(): Boolean {
         return date.date.isPast()
     }
-
 
     private fun EventModel.isFuture(): Boolean {
         return date.date.isFuture()

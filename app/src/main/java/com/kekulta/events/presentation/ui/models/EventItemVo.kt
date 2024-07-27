@@ -1,7 +1,7 @@
 package com.kekulta.events.presentation.ui.models
 
-import com.kekulta.events.domain.models.Avatar
-import com.kekulta.events.domain.models.EventId
+import com.kekulta.events.domain.models.values.Avatar
+import com.kekulta.events.domain.models.id.EventId
 
 data class EventItemVo(
     val id: EventId,

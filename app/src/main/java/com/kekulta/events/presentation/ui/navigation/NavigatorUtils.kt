@@ -25,9 +25,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.kekulta.events.domain.models.EventId
-import com.kekulta.events.domain.models.CommunityId
-import com.kekulta.events.domain.models.UserId
+import com.kekulta.events.domain.models.id.EventId
+import com.kekulta.events.domain.models.id.CommunityId
+import com.kekulta.events.domain.models.id.UserId
 import com.kekulta.events.presentation.ui.update
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
