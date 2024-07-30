@@ -1,6 +1,6 @@
 package com.kekulta.events.domain.interactor.impl
 
-import com.kekulta.events.domain.interactor.IsSubscribedInteractor
+import com.kekulta.events.domain.interactor.IsRegisteredToEventInteractor
 import com.kekulta.events.domain.models.id.EventId
 import com.kekulta.events.domain.models.id.UserId
 import com.kekulta.events.domain.models.pagination.EventsQuery
@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class IsSubscribedInteractorImpl(
+internal class IsRegisteredToEventInteractorImpl(
     private val authRepository: AuthRepository,
     private val eventsRepository: EventsRepository,
-) : IsSubscribedInteractor {
+) : IsRegisteredToEventInteractor {
     override fun execute(id: EventId): Flow<Boolean> =
         authRepository.observeAuthStatus().flatMapLatest { status ->
             (status as? AuthStatus.Authorized)?.id?.let { userId ->

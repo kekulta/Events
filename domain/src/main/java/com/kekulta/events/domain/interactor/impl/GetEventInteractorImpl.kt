@@ -8,7 +8,7 @@ import com.kekulta.events.domain.repository.api.EventsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetEventInteractorImpl(
+internal class GetEventInteractorImpl(
     private val eventsRepository: EventsRepository,
 ) : GetEventInteractor {
     override fun execute(id: EventId): Flow<EventModel?> {

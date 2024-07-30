@@ -1,11 +1,8 @@
-package com.kekulta.events.data.stubs.repository
+package com.kekulta.events.domain.stubs.repository
 
 import com.kekulta.events.common.utils.isFuture
 import com.kekulta.events.common.utils.isPast
 import com.kekulta.events.common.utils.isToday
-import com.kekulta.events.data.stubs.service.StubAuthService
-import com.kekulta.events.data.stubs.service.StubEventsRegistrationService
-import com.kekulta.events.data.stubs.service.StubEventsService
 import com.kekulta.events.domain.models.base.EventModel
 import com.kekulta.events.domain.models.id.CommunityId
 import com.kekulta.events.domain.models.id.EventId
@@ -17,6 +14,9 @@ import com.kekulta.events.domain.models.pagination.emptyPage
 import com.kekulta.events.domain.models.status.AuthStatus
 import com.kekulta.events.domain.models.status.EventStatus
 import com.kekulta.events.domain.repository.api.EventsRepository
+import com.kekulta.events.domain.stubs.service.StubAuthService
+import com.kekulta.events.domain.stubs.service.StubEventsRegistrationService
+import com.kekulta.events.domain.stubs.service.StubEventsService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -38,7 +38,6 @@ internal class StubEventsRepository(
                 val ids = query.ids.toSet()
 
                 events.map { events ->
-
                     Page(
                         events.filter { event -> event.id in ids }, 0, ids.size
                     )
